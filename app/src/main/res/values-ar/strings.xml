@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GreenDefend</string>
+    <string name="find_out_the_types_of_diseases_various_plants">استكف أنواع أمراض  النبات المختلفة</string>
+    <string name="plant_disease_diagnosis_is_now_within_reach_everyone">تشخيص مرض النبات أصبح في متناول  الجميع</string>
+    <string name="hello_blank_fragment">اهلا ومرحبا</string>
+    <string name="started_now">البدء الان</string>
+    <string name="treat_your_plant_from_home_security">علاج النبات الخاص بك من أمن المنزل</string>
+    <string name="plant_treatment_has_become_easier_with_the_application">معالجة النبات باتت أسهل مع تطبيق</string>
+    <string name="provide_plant_specific_treatment_depending_on_the_disease">تقديم العلاج الخاص بالنبات تبعا للمرض</string>
+    <string name="find_out_the_effective_treatment_of_the_plant_with_just_a_click_in_our_application">معرفة العلاج الفعال للنبات بنقرة ذر في تطبيقنا</string>
+    <string name="next">التالى</string>
+    <string name="green">Green</string>
+    <string name="e_mail">البريد الالكتروني</string>
+    <string name="password">الباسورد</string>
+    <string name="forgot_your_password">نسيت  كلمة المرور</string>
+    <string name="remember">تذكرني</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="login">تسجيل</string>
+    <string name="or_through">او من خلال</string>
+    <string name="phone_or_email">الهاتف او البريد الالكتروني</string>
+    <string name="send">ارسال</string>
+    <string name="enter_code">ادخل الكود</string>
+    <string name="confirm">تأكيد</string>
+</resources>

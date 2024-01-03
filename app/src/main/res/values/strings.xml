@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">GreenDefend</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="find_out_the_types_of_diseases_various_plants">Find out the types of diseases Various plants</string>
+    <string name="plant_disease_diagnosis_is_now_within_reach_everyone">Plant disease diagnosis is now within reach everyone</string>
+    <string name="started_now">started now</string>
+    <string name="treat_your_plant_from_home_security">Treat your plant from home security</string>
+    <string name="plant_treatment_has_become_easier_with_the_application">Plant treatment has become easier with the application</string>
+    <string name="provide_plant_specific_treatment_depending_on_the_disease">Provide plant specific treatment depending on the disease</string>
+    <string name="find_out_the_effective_treatment_of_the_plant_with_just_a_click_in_our_application">Find out the effective treatment of the plant with just a click in our application</string>
+    <string name="next">Next</string>
+    <string name="green">Green</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="forgot_your_password">Forgot your password</string>
+    <string name="remember">Remember</string>
+    <string name="login">Login</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="or_through">Or through</string>
+    <string name="phone_or_email">phone or Email</string>
+    <string name="send">Send</string>
+    <string name="enter_code">Enter code</string>
+    <string name="confirm">Confirm</string>
+</resources>
