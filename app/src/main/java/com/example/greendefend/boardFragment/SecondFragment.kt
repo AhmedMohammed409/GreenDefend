@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentSecondBinding
 
 
@@ -23,6 +24,13 @@ class SecondFragment : Fragment() {
         // Inflate the layout for this fragment
         binding= FragmentSecondBinding.inflate(inflater,container,false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnStartNow.setOnClickListener {
+            findNavController().navigate(SecondFragmentDirections.actionSecondFragmentToThirdFragment())
+        }
     }
 
 }
