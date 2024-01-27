@@ -37,4 +37,24 @@
             android:id="@+id/action_splashFragment_to_firstFragment"
             app:destination="@id/firstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.greendefend.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.example.greendefend.WeatherFragment"
+        android:label="fragment_weather"
+        tools:layout="@layout/fragment_weather" />
+    <fragment
+        android:id="@+id/askingFragment"
+        android:name="com.example.greendefend.AskingFragment"
+        android:label="fragment_asking"
+        tools:layout="@layout/fragment_asking" />
+    <fragment
+        android:id="@+id/forumFragment"
+        android:name="com.example.greendefend.ForumFragment"
+        android:label="fragment_forum"
+        tools:layout="@layout/fragment_forum" />
 </navigation>

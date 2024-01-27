@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.greendefend"
-        minSdk = 29
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -51,10 +51,19 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.6")
-
+    //retrofit and converter
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.5.0")
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
+
+    //pinview
+    implementation ("io.github.chaosleung:pinview:1.4.4")
+
+    //ask permission
+    implementation ("com.karumi:dexter:6.2.3")
 }
 // Allow references to generated code
 kapt {

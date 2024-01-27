@@ -2,8 +2,24 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.GreenDefend" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!--         <item name="colorPrimary">@color/green_button</item>-->
+        <!--        <item name="android:colorPrimaryDark">@color/green_button</item>-->
+        <!--        <item name="android:textColorPrimary">@color/white</item>-->
+        <!--        <item name="android:textColorSecondary">@color/black</item>-->
     </style>
 
     <style name="Theme.GreenDefend" parent="Base.Theme.GreenDefend" />
+
+
+    <style name="style_imagedone" parent="">
+
+        <item name="cornerSizeBottomLeft">25%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="Circular" parent="">
+        <item name="cornerSize">40dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
 </resources>

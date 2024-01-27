@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="black70">#B3000000</color>
+    <color name="ColorPrimary">#3F51B5</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green_button">#388B68</color>
+    <color name="colorToolbar">#80388B68</color>
 </resources>
