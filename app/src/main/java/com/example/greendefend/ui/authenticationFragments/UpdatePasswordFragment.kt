@@ -1,4 +1,4 @@
-package com.example.greendefend.loginFragment
+package com.example.greendefend.ui.authenticationFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

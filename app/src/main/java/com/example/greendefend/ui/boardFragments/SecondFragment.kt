@@ -1,19 +1,17 @@
-package com.example.greendefend.boardFragment
+package com.example.greendefend.ui.boardFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.example.greendefend.databinding.FragmentSplashBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import androidx.viewpager2.widget.ViewPager2
+import com.example.greendefend.R
+import com.example.greendefend.databinding.FragmentSecondBinding
 
 
-class SplashFragment : Fragment() {
- private lateinit var binding: FragmentSplashBinding
+class SecondFragment : Fragment() {
+  private lateinit var binding: FragmentSecondBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -25,16 +23,16 @@ class SplashFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding= FragmentSplashBinding.inflate(inflater,container,false)
+        binding= FragmentSecondBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnNext.setOnClickListener {
 
-        lifecycleScope.launch {
-                delay(1000)
-                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToFirstFragment())
+                requireActivity().findViewById<ViewPager2>(R.id.viewPagerFrgment).currentItem=+1
+
         }
     }
 

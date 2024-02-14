@@ -6,4 +6,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green_button">#388B68</color>
     <color name="colorToolbar">#80388B68</color>
+    <color name="green_name">#388B68</color>
 </resources>

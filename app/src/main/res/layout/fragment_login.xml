@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginFragment.LoginFragment">
+    tools:context=".ui.authenticationFragments.LoginFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-       app:layout_constraintGuide_percent=".15" />
+        app:layout_constraintGuide_percent=".1"
+        />
 
     <LinearLayout
         android:id="@+id/layout_nameapp"
@@ -115,7 +116,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/button_design"
+        android:background="@drawable/button_green"
         android:text="@string/login"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -134,10 +135,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/button_design"
-        android:backgroundTint="@color/white"
+        android:theme="@style/button_style_white"
+        android:textColor="@color/green_button"
         android:text="@string/create_an_account"
         android:textAllCaps="false"
-        android:textColor="@color/green_button"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -168,9 +169,10 @@
             android:id="@+id/btn_logoFacebook"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/white"
             android:contentDescription="logo facebook"
             android:src="@drawable/facebook"
+            android:backgroundTint="@color/white"
+
             tools:ignore="HardcodedText,DuplicateSpeakableTextCheck" />
 
         <ImageButton
@@ -178,7 +180,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
-            android:background="@color/white"
+            android:backgroundTint="@color/white"
             android:contentDescription="logo facebook"
             android:src="@drawable/google"
             tools:ignore="HardcodedText" />
@@ -187,18 +189,14 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="7dp"
+        android:layout_height="5dp"
         android:layout_weight="1"
         android:background="@drawable/round_view"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintWidth_percent=".5"
-         android:layout_marginBottom="30dp"/>
-
-
-
+         android:layout_marginTop="30dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

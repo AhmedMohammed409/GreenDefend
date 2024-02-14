@@ -1,11 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.GreenDefend" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.Theme.GreenDefend" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!--         <item name="colorPrimary">@color/green_button</item>-->
-        <!--        <item name="android:colorPrimaryDark">@color/green_button</item>-->
-        <!--        <item name="android:textColorPrimary">@color/white</item>-->
-        <!--        <item name="android:textColorSecondary">@color/black</item>-->
+        <item name="colorPrimaryVariant">@color/colorToolbar</item>
+                <item name="colorPrimary">@color/green_button</item>
+              <item name="android:colorPrimaryDark">@color/green_button</item>
+                <item name="android:textColorPrimary">@color/black70</item>
+                <item name="android:textColorSecondary">@color/black</item>
     </style>
 
     <style name="Theme.GreenDefend" parent="Base.Theme.GreenDefend" />
@@ -21,5 +22,10 @@
         <item name="cornerSize">40dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
+    <style name="button_style_white" parent="">
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@color/green_button</item>
+    </style>
+    
 
 </resources>

@@ -2,13 +2,13 @@
     <string name="app_name">GreenDefend</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="find_out_the_types_of_diseases_various_plants">Find out the types of diseases Various plants</string>
-    <string name="plant_disease_diagnosis_is_now_within_reach_everyone">Plant disease diagnosis is now within reach everyone</string>
+    <string name="title_onboarding1">Find out the types of diseases Various plants</string>
+    <string name="disception_onboarding1">Plant disease diagnosis is now within reach everyone</string>
     <string name="started_now">started now</string>
-    <string name="treat_your_plant_from_home_security">Treat your plant from home security</string>
-    <string name="plant_treatment_has_become_easier_with_the_application">Plant treatment has become easier with the application</string>
-    <string name="provide_plant_specific_treatment_depending_on_the_disease">Provide plant specific treatment depending on the disease</string>
-    <string name="find_out_the_effective_treatment_of_the_plant_with_just_a_click_in_our_application">Find out the effective treatment of the plant with just a click in our application</string>
+    <string name="title_onboarding2">Treat your plant from home security</string>
+    <string name="disception_onboarding2">Plant treatment has become easier with the application</string>
+    <string name="title_onboarding3">Provide plant specific treatment depending on the disease</string>
+    <string name="disception_onboarding3">Find out the effective treatment of the plant with just a click in our application</string>
     <string name="next">Next</string>
     <string name="green">Green</string>
     <string name="e_mail">E-mail</string>
@@ -54,4 +54,22 @@
     <string name="ask_the_community_and_receive_answers_from_experts">Ask the community and receive answers from experts</string>
     <string name="add_a_question_indicating_the_problem_facing_your_crop">Add a question indicating the problem facing your crop</string>
     <string name="what_does_it_take_for_a_potato_to_grow_well_knowing_that_it_has_about_50_days_in_yellowing_of_leaves">What does it take for a potato to grow well, knowing that it has about 50 days? In yellowing of leaves</string>
+    <string name="enter_the_required_data_below">Enter the required data below</string>
+    <string name="enter_first_name">Enter First Name</string>
+    <string name="enter_middle_name">Enter middle name</string>
+    <string name="enter_last_name">Enter Last name</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="gender">Gender</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="other">Other</string>
+    <string name="profile">profile</string>
+    <string name="home">home</string>
+    <string name="forum">Forum</string>
+    <string name="search_the_forum">Search the forum</string>
+    <string name="please_allow_permission_on_camera">please allow permission on camera</string>
+    <string name="green_defend">GreenDefend</string>
+    <string name="finished">Finished</string>
+    <string name="enter_name">Enter Name</string>
 </resources>

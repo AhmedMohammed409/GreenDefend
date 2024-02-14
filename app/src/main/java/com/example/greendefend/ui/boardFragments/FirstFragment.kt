@@ -1,11 +1,12 @@
-package com.example.greendefend.boardFragment
+package com.example.greendefend.ui.boardFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
@@ -28,8 +29,8 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnStartNow.setOnClickListener {
-            findNavController().navigate(FirstFragmentDirections.actionFirstFragmentToSecondFragment())
+        binding.btnNext.setOnClickListener {
+          requireActivity().findViewById<ViewPager2>(R.id.viewPagerFrgment).currentItem=+1
         }
     }
 

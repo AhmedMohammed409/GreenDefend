@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.greendefend"
-        minSdk = 26
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -49,8 +49,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.6")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.6")
+
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
     //retrofit and converter
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -61,9 +62,20 @@ dependencies {
 
     //pinview
     implementation ("io.github.chaosleung:pinview:1.4.4")
+    //countrycode
+    implementation ("com.hbb20:ccp:2.6.0")
 
     //ask permission
     implementation ("com.karumi:dexter:6.2.3")
+
+    implementation("com.google.android.material:material:1.11.0")
+
+    //spalsh api
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
+
+
+
 }
 // Allow references to generated code
 kapt {

@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".boardFragment.ThirdFragment">
+    tools:context=".ui.boardFragments.ThirdFragment">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="background"
-        android:foreground="@drawable/overlay"
+        android:foreground="@drawable/gradiant"
         android:scaleType="centerCrop"
-        android:src="@drawable/third"
+        android:src="@drawable/background_onboarding3"
         tools:ignore="ContentDescription,HardcodedText" />
 
     <TextView
@@ -23,23 +23,23 @@
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="@string/provide_plant_specific_treatment_depending_on_the_disease"
+        android:text="@string/title_onboarding3"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/txt_disease"
+        app:layout_constraintBottom_toTopOf="@+id/txt_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/txt_disease"
+        android:id="@+id/txt_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="@string/find_out_the_effective_treatment_of_the_plant_with_just_a_click_in_our_application"
+        android:text="@string/disception_onboarding3"
         android:textColor="@color/white"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:weightSum="3"
-        app:layout_constraintBottom_toTopOf="@id/btn_startNow"
+        app:layout_constraintBottom_toTopOf="@id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="10dp">
@@ -82,13 +82,13 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_startNow"
+        android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="35dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/button_design"
+        android:background="@drawable/button_green"
         android:text="@string/started_now"
         android:textColor="@color/white"
         android:textSize="25sp"
@@ -96,6 +96,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
      />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_gravity="center"
+        android:background="@drawable/button_design"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_next"
+        app:layout_constraintWidth_percent=".5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
