@@ -72,4 +72,12 @@
     <string name="green_defend">GreenDefend</string>
     <string name="finished">Finished</string>
     <string name="enter_name">Enter Name</string>
+    <string name="give_an_introduction_about_yourself_to_others">Give an introduction about yourself to others</string>
+    <string name="chage">Chage</string>
+    <string name="treat_your_plant_safely_with_growers_of_the_world">Treat your plant safely with growers of the world</string>
+    <string name="share_green_defend_with_your_friends_and_help_develop_agriculture_and_plant_protection">Share Green Defend with your friends and help develop agriculture and plant protection</string>
+    <string name="share_green_defend">Share Green Defend</string>
+    <string name="we_want_to_hear_your_ideas_and_suggestions">We want to hear your ideas and suggestions</string>
+    <string name="leave_a_rating">Leave a rating</string>
+    <string name="show_more">Show More</string>
 </resources>

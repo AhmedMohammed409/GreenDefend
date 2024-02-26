@@ -73,9 +73,21 @@ dependencies {
     //spalsh api
     implementation("androidx.core:core-splashscreen:1.0.1")
 
+//data store prefrences
+    implementation("androidx.datastore:datastore-preferences:1.0.0-alpha04")
 
+    //courtine
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    //lifecycle
+    val lifecycleVersion = "2.7.0"
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
+    // workmanager
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 
+    // Architectural Components
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
 }
 // Allow references to generated code
 kapt {

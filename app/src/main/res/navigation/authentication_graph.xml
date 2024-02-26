@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/doneFragment"
-        android:name="com.example.greendefend.ui.authenticationFragments.DoneFragment"
+        android:name="com.example.greendefend.ui.authentication.DoneFragment"
         android:label="fragment_done"
         tools:layout="@layout/fragment_done" />
     <fragment
         android:id="@+id/entercodeFragment"
-        android:name="com.example.greendefend.ui.authenticationFragments.EntercodeFragment"
+        android:name="com.example.greendefend.ui.authentication.EntercodeFragment"
         android:label="fragment_entercode"
         tools:layout="@layout/fragment_entercode">
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.greendefend.ui.authenticationFragments.SignupFragment"
+        android:name="com.example.greendefend.ui.authentication.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup">
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.greendefend.ui.authenticationFragments.LoginFragment"
+        android:name="com.example.greendefend.ui.authentication.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgetFragment"
-        android:name="com.example.greendefend.ui.authenticationFragments.ForgetFragment"
+        android:name="com.example.greendefend.ui.authentication.ForgetFragment"
         android:label="fragment_forget"
         tools:layout="@layout/fragment_forget" >
         <action
@@ -51,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/verificationFragment"
-        android:name="com.example.greendefend.ui.authenticationFragments.VerificationFragment"
+        android:name="com.example.greendefend.ui.authentication.VerificationFragment"
         android:label="fragment_verification"
         tools:layout="@layout/fragment_verification" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/updatePasswordFragment"
-        android:name="com.example.greendefend.ui.authenticationFragments.UpdatePasswordFragment"
+        android:name="com.example.greendefend.ui.authentication.UpdatePasswordFragment"
         android:label="fragment_update_password"
         tools:layout="@layout/fragment_update_password" />
 </navigation>

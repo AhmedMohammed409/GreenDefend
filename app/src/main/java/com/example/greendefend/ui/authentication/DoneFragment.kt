@@ -1,4 +1,4 @@
-package com.example.greendefend.ui.authenticationFragments
+package com.example.greendefend.ui.authentication
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -96,6 +96,11 @@ class HomeFragment : Fragment() {
                 }
             }).check()
         }
+
+        binding.imgMoreExpand.setOnClickListener {
+            val visability=if (binding.layoutExpand.visibility==View.GONE){ View.VISIBLE }else{View.GONE}
+            binding.layoutExpand.visibility=visability
+        }
     }
 
 }

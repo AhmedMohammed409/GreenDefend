@@ -2,55 +2,50 @@ package com.example.greendefend
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.preferencesKey
+import androidx.datastore.preferences.createDataStore
+import androidx.lifecycle.lifecycleScope
 import com.example.greendefend.databinding.ActivityMainBinding
-import com.example.greendefend.ui.adapters.ViewPagerAdapter
-import com.example.greendefend.ui.authenticationFragments.AuthenticationActivity
-import com.google.android.material.tabs.TabLayoutMediator
+import com.example.greendefend.ui.authentication.AuthenticationActivity
+import com.example.greendefend.ui.onboarding.OnboardingActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var dataStore:DataStore<androidx.datastore.preferences.core.Preferences>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        binding.viewPagerFrgment.adapter= ViewPagerAdapter(this,this)
-
-        TabLayoutMediator(binding.tablayout,binding.viewPagerFrgment){ _, _ ->}.attach()
-
-
-        if(  binding.viewPagerFrgment.currentItem==2){
-            binding.btnNext.text= getString(R.string.finished)
-        }
-
-
-        binding.btnNext.setOnClickListener {
-
-
-            if (binding.viewPagerFrgment.currentItem > binding.viewPagerFrgment.childCount) {
-
-                val intent = Intent(applicationContext, AuthenticationActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                binding.viewPagerFrgment.setCurrentItem(binding.viewPagerFrgment.currentItem + 1, true)
+dataStore=createDataStore("sherdprefrence")
+        lifecycleScope.launch {
+            if (readShared("sureOnboarding") == true){
+                startActivity(Intent(this@MainActivity,AuthenticationActivity::class.java))
+            }
+            else{
+                startActivity(Intent(this@MainActivity,OnboardingActivity::class.java))
             }
         }
 
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_drawer,menu)
-        return true
 
     }
+    private suspend fun readShared(key:String):Boolean?{
+        val dataStorekey= preferencesKey<Boolean>(key)
+        val prefreces=dataStore.data.first()
+        return prefreces[dataStorekey]
+    }
+
+
+
+
 }

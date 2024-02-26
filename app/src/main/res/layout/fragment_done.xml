@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.authenticationFragments.DoneFragment">
+    tools:context=".ui.authentication.DoneFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_done"
@@ -70,7 +70,7 @@
 
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/view_seperateOne"
         android:layout_width="0dp"
         android:layout_height="7dp"
 
