@@ -25,4 +25,13 @@ class UpdatePasswordFragment : Fragment() {
         return binding.root
     }
 
+    fun isValidPassword(password: String): Boolean {
+        if (password.length < 8) return false
+        if (password.filter { it.isDigit() }.firstOrNull() == null) return false
+        if (password.filter { it.isLetter() }.filter { it.isUpperCase() }.firstOrNull() == null) return false
+        if (password.filter { it.isLetter() }.filter { it.isLowerCase() }.firstOrNull() == null) return false
+        if (password.filter { !it.isLetterOrDigit() }.firstOrNull() == null) return false
+        return true
+    }
+
 }

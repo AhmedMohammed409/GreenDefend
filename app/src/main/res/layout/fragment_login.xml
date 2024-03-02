@@ -14,33 +14,20 @@
         app:layout_constraintGuide_percent=".1"
         />
 
-    <LinearLayout
-        android:id="@+id/layout_nameapp"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/txt_appName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:text="@string/green_defend"
+        android:textColor="@color/black"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline">
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/green"
-            android:textColor="@color/black"
-            android:textSize="45sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Defend"
-            android:textColor="#388B68"
-            android:textSize="45sp"
-            android:textStyle="bold"
-
-            tools:ignore="HardcodedText" />
-    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textfield_email"
@@ -49,7 +36,7 @@
         android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_nameapp">
+        app:layout_constraintTop_toBottomOf="@id/txt_appName">
 
         <EditText
             android:layout_width="match_parent"
@@ -65,7 +52,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textfield_password"
+        android:id="@+id/TextInputLayout_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -79,7 +66,7 @@
             android:layout_height="52dp"
             android:autofillHints="emailAddress"
             android:hint="@string/password"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:padding="15dp"
             android:textColorHint="@color/black"
             android:textSize="20sp"
@@ -96,7 +83,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textfield_password" />
+        app:layout_constraintTop_toBottomOf="@id/TextInputLayout_password" />
 
     <TextView
         android:id="@+id/txt_remember"
@@ -107,7 +94,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textfield_password" />
+        app:layout_constraintTop_toBottomOf="@id/TextInputLayout_password" />
 
     <Button
         android:id="@+id/btn_Login"
@@ -197,6 +184,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent=".5"
          android:layout_marginTop="30dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminate="true"
+        android:visibility="gone"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

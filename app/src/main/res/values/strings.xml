@@ -18,7 +18,7 @@
     <string name="login">Login</string>
     <string name="create_an_account">Create an account</string>
     <string name="or_through">Or through</string>
-    <string name="phone_or_email">phone or Email</string>
+    <string name="phone_or_email">" Email"</string>
     <string name="send">Send</string>
     <string name="enter_code">Enter code</string>
     <string name="confirm">Confirm</string>
@@ -69,7 +69,7 @@
     <string name="forum">Forum</string>
     <string name="search_the_forum">Search the forum</string>
     <string name="please_allow_permission_on_camera">please allow permission on camera</string>
-    <string name="green_defend">GreenDefend</string>
+    <string name="green_defend">Green Defend</string>
     <string name="finished">Finished</string>
     <string name="enter_name">Enter Name</string>
     <string name="give_an_introduction_about_yourself_to_others">Give an introduction about yourself to others</string>
@@ -80,4 +80,10 @@
     <string name="we_want_to_hear_your_ideas_and_suggestions">We want to hear your ideas and suggestions</string>
     <string name="leave_a_rating">Leave a rating</string>
     <string name="show_more">Show More</string>
+    <string name="weather_prediction">weather prediction</string>
+    <string name="no_rain_is_expected_this_week">No rain is expected this week</string>
+    <string name="treat_your_plant_safely">Treat your plant safely with growers of the world</string>
+    <string name="rate_the_green_defend_app">Rate the Green Defend app</string>
+    <string name="checking">Checking</string>
+    <string name="enter_email">Enter Email</string>
 </resources>

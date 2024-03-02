@@ -11,7 +11,13 @@
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:name=".di.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,11 +29,12 @@
         android:theme="@style/Theme.GreenDefend"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.onboarding.OnboardingActivity"
+            android:name=".ui.boarding.OnboardingActivity"
             android:exported="false" >
+
         </activity>
         <activity
-            android:name=".ui.homeFragments.HomeActivity"
+            android:name=".ui.homing.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
@@ -35,7 +42,7 @@
 
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApp.mySplash" >
             <intent-filter>

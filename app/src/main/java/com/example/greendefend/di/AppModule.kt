@@ -1,8 +1,22 @@
 package com.example.greendefend.di
 
-import com.example.greendefend.Constants.Companion.BASE_URL
-import com.example.greendefend.data.remote.ApiService
-import com.example.greendefend.data.remote.MyInterceptor
+import android.app.Application
+import android.content.Context
+import android.graphics.Color
+import android.provider.Settings.System.getString
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.res.ResourcesCompat.getColor
+import com.example.greendefend.Constants.Companion.BaseUrlMachineLearning
+import com.example.greendefend.Constants.Companion.BaseUrlServer
+import com.example.greendefend.Constants.Companion.BaseUrlWeather
+import com.example.greendefend.R
+import com.example.greendefend.remote.ApiServiceMachineLearning
+import com.example.greendefend.remote.ApiServiceServer
+import com.example.greendefend.remote.ApiServiceWeather
+import com.example.greendefend.remote.MyInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,12 +24,12 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
 
     private var client= OkHttpClient.Builder().apply {
         addInterceptor(MyInterceptor())
@@ -23,18 +37,59 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
-        return  Retrofit.Builder().baseUrl(BASE_URL).client(client)
+    @Named("weather")
+    fun provideRetrofitWeather(): Retrofit {
+        return  Retrofit.Builder().baseUrl(BaseUrlWeather)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit):ApiService{
-        return  retrofit.create(ApiService::class.java)
+    fun provideApiServiceWeather(@Named("weather") retrofit: Retrofit): ApiServiceWeather {
+        return  retrofit.create(ApiServiceWeather::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    @Named("server")
+    fun provideRetrofitServer(): Retrofit {
+        return  Retrofit.Builder().baseUrl(BaseUrlServer).client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+    @Provides
+    @Singleton
+    fun provideApiServiceServer(  @Named("server") retrofit: Retrofit): ApiServiceServer {
+        return  retrofit.create(ApiServiceServer::class.java)
+    }
+
+    @Provides
+    @Singleton
+    @Named("learning")
+    fun provideRetrofitMachineLearning(): Retrofit {
+        return  Retrofit.Builder().baseUrl(BaseUrlMachineLearning).client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+    @Provides
+    @Singleton
+    fun provideApiServiceMachineLearning(@Named("learning") retrofit: Retrofit): ApiServiceMachineLearning {
+        return  retrofit.create(ApiServiceMachineLearning::class.java)
     }
 
 
 
+//
+//    @Provides
+//    @Singleton
+//    fun provideProjectName():SpannableString{
+//        val span=SpannableString(R.string.green_defend.toString())
+//        val fcBlack= ForegroundColorSpan(Color.BLACK)
+//        val fcGreen= ForegroundColorSpan(getColor(R.color.green_name,Context.))
+//        val size=getString(R.string.green_defend).length
+//        span.setSpan(fcBlack,0,size/2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        span.setSpan(fcGreen,size/2,size, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//    }
 
 }

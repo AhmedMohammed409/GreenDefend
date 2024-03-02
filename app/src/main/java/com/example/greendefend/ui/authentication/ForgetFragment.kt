@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentForgetBinding
@@ -30,9 +31,14 @@ class ForgetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSend.setOnClickListener {
-            findNavController().navigate(ForgetFragmentDirections.actionForgetFragmentToVerificationFragment())
+            if (checkEmail(binding.etEmail.text.toString())){
+            findNavController().navigate(ForgetFragmentDirections.actionForgetFragmentToVerificationFragment())}
+            else{
+            Toast.makeText(requireContext(),"Please Enter Correct Email",Toast.LENGTH_SHORT).show()}
         }
     }
-
+private fun checkEmail(email:String):Boolean{
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()&&email.isNotEmpty()
+}
 
 }
