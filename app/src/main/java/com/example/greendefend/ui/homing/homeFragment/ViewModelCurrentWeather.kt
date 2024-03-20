@@ -11,9 +11,6 @@ import com.example.greendefend.repository.RemoteRepositoryImp
 import com.example.greendefend.utli.Info
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.Locale
 import javax.inject.Inject
 
 
@@ -22,19 +19,26 @@ class ViewModelCurrentWeather @Inject constructor(private var remoteRepositoryIm
     ViewModel() {
 
 
-    var currentWeatherMutableLiveData = MutableLiveData<Response<CurrentWeather>>()
-    fun getCurrentWeather(latitude: Float, longitude: Float) {
+
+        private var currentMutableLiveData=MutableLiveData<CurrentWeather>()
+    val currentLiveData:LiveData<CurrentWeather> get() = currentMutableLiveData
+    fun getCurrentWeather(latitude: Float, longitude: Float){
         val info = Info()
         viewModelScope.launch {
-            val result = remoteRepositoryImp.getCurrentWeather(
+
+          val result= remoteRepositoryImp.getCurrentWeather(
                 Constants.key,
                 "$latitude,$longitude",
                 1,
                 info.getDate(),
-                info.getLanguage()
-            )
-            currentWeatherMutableLiveData.postValue(result)
+                info.getLanguage())
 
+            if (result.isSuccessful){
+                currentMutableLiveData.value=result.body()
+            }
+            else{
+                Log.i("MSG error",result.message())
+            }
 
         }
     }

@@ -46,24 +46,24 @@ Toast.makeText(requireContext(),"${args.latitude},${args.longitude}",Toast.LENGT
 //        binding.recyclerView.adapter=adapterRV
 
 
-        observeWeather()
+//        observeWeather()
 
     }
 
-    private fun observeWeather(){
-        viewModel.getWeather(args.latitude,args.longitude)
-        viewModel.weatherLiveData.observe(requireActivity()){
-
-            if (it.isSuccessful){
-//               adapterRV.submitList(it.body())
-                Toast.makeText(requireContext(),"Succesfull",Toast.LENGTH_LONG).show()
-
-            }
-            else {
-                Toast.makeText(requireContext(), "Found error to get weather", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
+//    private fun observeWeather(){
+//        viewModel.getWeather(args.latitude,args.longitude)
+//        viewModel.weatherLiveData.observe(requireActivity()){
+//
+//            if (it.isSuccessful){
+////               adapterRV.submitList(it.body())
+//                Toast.makeText(requireContext(),"Succesfull",Toast.LENGTH_LONG).show()
+//
+//            }
+//            else {
+//                Toast.makeText(requireContext(), "Found error to get weather", Toast.LENGTH_LONG).show()
+//            }
+//        }
+//    }
 
 
 }

@@ -133,12 +133,15 @@ class HomeFragment : Fragment() {
 
     private fun observeWeather(latitude:Float,longitude:Float){
         viewModel.getCurrentWeather(latitude,longitude)
-        viewModel.currentWeatherMutableLiveData.observe(viewLifecycleOwner) {
+        viewModel.currentLiveData.observe(viewLifecycleOwner) {
 
-            if (it.isSuccessful) {
-                binding.currentWeather = it.body()
+            if (it!=null) {
+                binding.currentWeather = it
                 binding.progressBar.visibility = View.GONE
-                Glide.with(requireContext()).load("http://api.weatherapi.com${it.body()!!.current!!.condition!!.icon}").into(binding.imgWeather)
+                Glide.with(requireContext()).load("http://api.weatherapi.com${it.current!!.condition!!.icon}").into(binding.imgWeather)
+            }
+            else{
+                Toast.makeText(requireContext(),"Not Connect",Toast.LENGTH_SHORT).show()
             }
         }
     }
