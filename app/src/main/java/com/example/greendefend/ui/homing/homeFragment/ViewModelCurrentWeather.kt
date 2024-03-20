@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.greendefend.Constants
 import com.example.greendefend.model.weather.CurrentWeather
 import com.example.greendefend.repository.RemoteRepositoryImp
+import com.example.greendefend.utli.Info
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -17,18 +18,22 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ViewModelCurrentWeather @Inject constructor(private var remoteRepositoryImp: RemoteRepositoryImp):ViewModel() {
+class ViewModelCurrentWeather @Inject constructor(private var remoteRepositoryImp: RemoteRepositoryImp) :
+    ViewModel() {
 
-    private val currentTime=System.currentTimeMillis()
-    private val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-    private val date= formatter.format(currentTime)!!
-    private val lang= Locale.getDefault().language
 
- var currentWeatherMutableLiveData=MutableLiveData<Response<CurrentWeather>>()
-fun getCurrentWeather(latitude:Float,longitude:Float){
+    var currentWeatherMutableLiveData = MutableLiveData<Response<CurrentWeather>>()
+    fun getCurrentWeather(latitude: Float, longitude: Float) {
+        val info = Info()
         viewModelScope.launch {
-            val result=remoteRepositoryImp.getCurrentWeather(Constants.key,"$latitude,$longitude",1,date,lang)
-              currentWeatherMutableLiveData.postValue(result)
+            val result = remoteRepositoryImp.getCurrentWeather(
+                Constants.key,
+                "$latitude,$longitude",
+                1,
+                info.getDate(),
+                info.getLanguage()
+            )
+            currentWeatherMutableLiveData.postValue(result)
 
 
         }

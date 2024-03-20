@@ -12,6 +12,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -21,7 +22,6 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-
 
 
 class HomeFragment : Fragment() {
@@ -138,6 +138,7 @@ class HomeFragment : Fragment() {
             if (it.isSuccessful) {
                 binding.currentWeather = it.body()
                 binding.progressBar.visibility = View.GONE
+                Glide.with(requireContext()).load("http://api.weatherapi.com${it.body()!!.current!!.condition!!.icon}").into(binding.imgWeather)
             }
         }
     }
