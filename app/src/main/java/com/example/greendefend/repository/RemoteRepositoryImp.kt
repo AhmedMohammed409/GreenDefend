@@ -51,7 +51,8 @@ class RemoteRepositoryImp @Inject constructor(
         days: Int,
         date: String,
         lang: String
-    ):Response<CurrentWeather> = withContext(Dispatchers.IO){ apiServiceWeather.getCurrentWeather(key, location, days, date, lang)}
+    ):Response<CurrentWeather> {
+        return apiServiceWeather.getCurrentWeather(key, location, days, date, lang)}
 
 
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.Constants
+import com.example.greendefend.model.weather.CurrentWeather
 import com.example.greendefend.model.weather.Weather
 import com.example.greendefend.repository.RemoteRepositoryImp
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,12 +23,12 @@ class ViewModelWeather @Inject constructor(private var remoteRepositoryImp: Remo
     private val date= formatter.format(currentTime)!!
     private val lang= Locale.getDefault().language
 
-      var weatherLiveData=MutableLiveData<Response<Weather>>()
+      var weatherLiveData=MutableLiveData<Response<CurrentWeather>>()
 
     fun getWeather(latitude:Float,longitude:Float){
         viewModelScope.launch {
-            val result=remoteRepositoryImp.getWeather(Constants.key,"$latitude,$longitude",1,date,lang)
-            weatherLiveData.value=result
+            val result=remoteRepositoryImp.getCurrentWeather(Constants.key,"${latitude},${longitude}",1,date,lang)
+       weatherLiveData.value=result
         }
     }
 
