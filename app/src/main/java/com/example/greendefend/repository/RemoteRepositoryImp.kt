@@ -1,9 +1,7 @@
 package com.example.greendefend.repository
 
-import androidx.lifecycle.LiveData
 import com.example.greendefend.model.RegisterData
 import com.example.greendefend.model.weather.CurrentWeather
-import com.example.greendefend.model.weather.Weather
 import com.example.greendefend.remote.ApiServiceServer
 import com.example.greendefend.remote.ApiServiceWeather
 import kotlinx.coroutines.Dispatchers
