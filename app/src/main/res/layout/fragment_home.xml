@@ -207,27 +207,15 @@
                                     app:layout_constraintTop_toBottomOf="@id/txt_location"
                                     tools:ignore="ContentDescription,ImageContrastCheck" />
 
-                                <TextView
-                                    android:id="@+id/txt_time"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:textSize="20sp"
-                                    android:text="@{currentWeather.location.localtime}"
-                                    app:layout_constraintBottom_toBottomOf="@+id/txt_temperature"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/txt_temperature"
-                                    app:layout_constraintTop_toTopOf="@+id/txt_temperature"
-                                    tools:ignore="HardcodedText"
-                                    tools:text="2024-03-19 3:22" />
 
                                 <TextView
                                     android:id="@+id/txt_temperature"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginStart="10dp"
+                                    android:layout_marginStart="20dp"
                                     android:textSize="30sp"
+
                                     android:text="@{currentWeather.current.tempC.toString()}"
                                     app:layout_constraintBottom_toBottomOf="@id/img_weather"
                                     app:layout_constraintStart_toEndOf="@id/img_weather"

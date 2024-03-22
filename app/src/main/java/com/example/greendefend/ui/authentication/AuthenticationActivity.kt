@@ -1,12 +1,22 @@
 package com.example.greendefend.ui.authentication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.greendefend.R
+import androidx.appcompat.app.AppCompatActivity
+import com.example.greendefend.databinding.ActivityAuthenticationBinding
 
 class AuthenticationActivity : AppCompatActivity() {
+
+    private lateinit var binding:ActivityAuthenticationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_authentication)
+        binding= ActivityAuthenticationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+
+
+
     }
+
+
 }
