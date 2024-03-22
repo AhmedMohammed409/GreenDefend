@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.greendefend.R
+import com.example.greendefend.data.viewmodel.ViewModelDataStore
 import com.example.greendefend.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -35,7 +36,6 @@ class HomeFragment : Fragment() {
     private val viewModel: ViewModelCurrentWeather by lazy{
         ViewModelProvider(requireActivity())[ViewModelCurrentWeather::class.java]
     }
-
     override fun onAttach(context: Context) {
         getCurrentLocation()
         super.onAttach(context)

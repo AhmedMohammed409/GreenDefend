@@ -18,8 +18,9 @@ import com.example.greendefend.ui.homing.HomeActivity
 
 class LoginFragment : Fragment() {
    private lateinit var binding: FragmentLoginBinding
-//    @Inject
-//    lateinit var spannableString:SpannableString
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -37,6 +38,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
 
         val span=SpannableString(getString(R.string.green_defend))
         val fcBlack= ForegroundColorSpan(Color.BLACK)
@@ -56,6 +60,8 @@ class LoginFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             startActivity(Intent(requireActivity(),HomeActivity::class.java)) }
+
     }
+
 
 }

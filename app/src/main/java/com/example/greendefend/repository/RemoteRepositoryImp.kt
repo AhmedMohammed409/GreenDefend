@@ -4,8 +4,6 @@ import com.example.greendefend.model.RegisterData
 import com.example.greendefend.model.weather.CurrentWeather
 import com.example.greendefend.remote.ApiServiceServer
 import com.example.greendefend.remote.ApiServiceWeather
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -15,8 +13,6 @@ class RemoteRepositoryImp @Inject constructor(
     private var apiServiceWeather: ApiServiceWeather
 
 ) {
-
-
     fun signup(
         firstName: String,
         middleName: String,

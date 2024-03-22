@@ -1,31 +1,25 @@
 package com.example.greendefend.di
 
-import android.app.Application
 import android.content.Context
-import android.graphics.Color
-import android.provider.Settings.System.getString
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.res.ResourcesCompat.getColor
 import com.example.greendefend.Constants.Companion.BaseUrlMachineLearning
 import com.example.greendefend.Constants.Companion.BaseUrlServer
 import com.example.greendefend.Constants.Companion.BaseUrlWeather
-import com.example.greendefend.R
 import com.example.greendefend.remote.ApiServiceMachineLearning
 import com.example.greendefend.remote.ApiServiceServer
 import com.example.greendefend.remote.ApiServiceWeather
 import com.example.greendefend.remote.MyInterceptor
+import com.example.greendefend.repository.DataStoreRepositoryImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -34,6 +28,14 @@ object AppModule {
     private var client= OkHttpClient.Builder().apply {
         addInterceptor(MyInterceptor())
     }.build()
+
+
+    @Provides
+    @Singleton
+    fun provideDataStore(@ApplicationContext context: Context)=DataStoreRepositoryImp(context)
+
+
+
 
     @Provides
     @Singleton
