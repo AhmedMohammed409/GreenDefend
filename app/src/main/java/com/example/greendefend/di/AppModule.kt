@@ -1,6 +1,9 @@
 package com.example.greendefend.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.createDataStore
 import com.example.greendefend.Constants.Companion.BaseUrlMachineLearning
 import com.example.greendefend.Constants.Companion.BaseUrlServer
 import com.example.greendefend.Constants.Companion.BaseUrlWeather
@@ -8,7 +11,6 @@ import com.example.greendefend.remote.ApiServiceMachineLearning
 import com.example.greendefend.remote.ApiServiceServer
 import com.example.greendefend.remote.ApiServiceWeather
 import com.example.greendefend.remote.MyInterceptor
-import com.example.greendefend.repository.DataStoreRepositoryImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +34,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDataStore(@ApplicationContext context: Context)=DataStoreRepositoryImp(context)
+    fun createDataStore(@ApplicationContext context: Context):DataStore<Preferences>{
+        return context.createDataStore("GreenDefend")
+    }
 
 
 

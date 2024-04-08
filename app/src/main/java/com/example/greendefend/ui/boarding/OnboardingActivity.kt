@@ -47,14 +47,13 @@ private val listInfoFragment by lazy {
         binding= ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModelDataStore.addOrReplaceValue("Token","")
+        viewModelDataStore.save("Token","")
 
-        viewModelDataStore.value.observe(this@OnboardingActivity) {
-            if (it == "true") {
+            if (viewModelDataStore.get("sureOnboarding").toString() == "true") {
                 startActivity(Intent(this@OnboardingActivity, AuthenticationActivity::class.java))
                 finish()
             }
-        }
+
 
         //viewpager2 &adapter
         binding.viewPagerFrgment.adapter = ViewPagerAdapter(this, listInfoFragment)
@@ -64,7 +63,7 @@ private val listInfoFragment by lazy {
         binding.btnNext.setOnClickListener {
             if (binding.viewPagerFrgment.currentItem > binding.viewPagerFrgment.childCount) {
                 lifecycleScope.launch {
-                 viewModelDataStore.addOrReplaceValue("sureOnboarding","true")
+                 viewModelDataStore.save("sureOnboarding","true")
                 }
                 val intent = Intent(this, AuthenticationActivity::class.java)
                 startActivity(intent)

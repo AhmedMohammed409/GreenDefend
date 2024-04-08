@@ -22,9 +22,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
-        lifecycleScope.launch {    viewModelDataStore.getValue("sureOnboarding").observe(this@MainActivity) {
+        lifecycleScope.launch {
 
-            if (it!=true.toString()){
+
+            if (viewModelDataStore.get("sureOnboarding").toString()!="true"){
                 startActivity(Intent(this@MainActivity, OnboardingActivity::class.java))
                 finish()
             }
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
                 finish()
 
-            }
         }}
 
 
