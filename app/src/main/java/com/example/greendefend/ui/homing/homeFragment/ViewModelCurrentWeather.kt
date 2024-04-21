@@ -1,16 +1,16 @@
 package com.example.greendefend.ui.homing.homeFragment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.Constants
-import com.example.greendefend.model.weather.CurrentWeather
-import com.example.greendefend.repository.RemoteRepositoryImp
+import com.example.greendefend.date.local.weather.CurrentWeather
+import com.example.greendefend.date.repository.RemoteRepositoryImp
 import com.example.greendefend.utli.Info
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okio.IOException
 import javax.inject.Inject
 
 
@@ -19,28 +19,45 @@ class ViewModelCurrentWeather @Inject constructor(private var remoteRepositoryIm
     ViewModel() {
 
 
+    fun rest(){
+        remoteRepositoryImp.rest()
+    }
+    val serverResponse: LiveData<String> get() = remoteRepositoryImp.serverResponse
+    val connectionError: LiveData<String> get() = remoteRepositoryImp.connectionError
 
-        private var currentMutableLiveData=MutableLiveData<CurrentWeather>()
-    val currentLiveData:LiveData<CurrentWeather> get() = currentMutableLiveData
-    fun getCurrentWeather(latitude: Float, longitude: Float){
-        val info = Info()
-        viewModelScope.launch {
+        private val resultMutableLiveData=MutableLiveData<CurrentWeather>()
+    val resultLiveData:LiveData<CurrentWeather> get() = resultMutableLiveData
+    fun getCurrentWeather(latitude: Float, longitude: Float)=viewModelScope.launch {
 
-          val result= remoteRepositoryImp.getCurrentWeather(
+        try {
+
+            val info = Info()
+            val result=remoteRepositoryImp.getCurrentWeather(
                 Constants.key,
                 "$latitude,$longitude",
                 1,
                 info.getDate(),
                 info.getLanguage())
-
             if (result.isSuccessful){
-                currentMutableLiveData.value=result.body()
+                if (result.body()!=null){
+                    resultMutableLiveData.value=result.body()
+                    remoteRepositoryImp.serverResponse.value="Sucessfull"
+                }
+                else{
+                    remoteRepositoryImp.connectionError.value=result.message()
+                }
             }
-            else{
-                Log.i("MSG error",result.message())
-            }
-
+        }catch (e :IOException){
+            remoteRepositoryImp.connectionError.value="Sucessfull"
+        }catch (e:Exception){
+            remoteRepositoryImp.connectionError.value=e.message
         }
+
+
+
+
     }
+
+
 
 }

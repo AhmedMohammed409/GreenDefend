@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_forumFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_forumFragment_to_askingFragment"
+            app:destination="@id/askingFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -57,7 +60,12 @@
         tools:layout="@layout/fragment_checking" />
     <fragment
         android:id="@+id/changeProfileFragment"
-        android:name="com.example.greendefend.ChangeProfileFragment"
+        android:name="com.example.greendefend.ui.homing.ChangeProfileFragment"
         android:label="fragment_changeprofile"
         tools:layout="@layout/fragment_changeprofile" />
+    <fragment
+        android:id="@+id/askingFragment"
+        android:name="com.example.greendefend.ui.homing.AskingFragment"
+        android:label="fragment_asking"
+        tools:layout="@layout/fragment_asking" />
 </navigation>

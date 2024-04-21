@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.greendefend.model.OnboardingModel
+import com.example.greendefend.date.local.OnboardingModel
 import com.example.greendefend.databinding.FragmentBoardingBinding
 
 

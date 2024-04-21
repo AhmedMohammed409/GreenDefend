@@ -39,11 +39,12 @@
         app:layout_constraintTop_toBottomOf="@id/txt_appName">
 
         <EditText
+            android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:autofillHints="emailAddress"
             android:hint="@string/e_mail"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:padding="15dp"
             android:textColorHint="@color/black"
             android:textSize="20sp"
@@ -62,6 +63,7 @@
         app:passwordToggleEnabled="true">
 
         <EditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:autofillHints="emailAddress"
@@ -197,6 +199,8 @@
         android:indeterminate="true"
         android:visibility="gone"
         />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

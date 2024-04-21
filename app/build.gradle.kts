@@ -52,6 +52,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.4.4")
+    implementation("androidx.room:room-common:2.6.1")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.3.0")
+    implementation("com.google.android.gms:play-services-tflite-acceleration-service:16.0.0-beta01")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -78,7 +81,7 @@ dependencies {
     implementation ("io.github.chaosleung:pinview:1.4.4")
     //countrycode
     implementation ("com.hbb20:ccp:2.6.0")
-
+    implementation ("com.hbb20:android-country-picker:0.0.7")
     //ask permission
     implementation ("com.karumi:dexter:6.2.3")
 

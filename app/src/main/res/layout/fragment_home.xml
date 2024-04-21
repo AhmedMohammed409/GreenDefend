@@ -7,7 +7,7 @@
 <data>
     <variable
         name="currentWeather"
-        type="com.example.greendefend.model.weather.CurrentWeather" />
+        type="com.example.greendefend.date.local.weather.CurrentWeather" />
 </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -223,15 +223,7 @@
                                     tools:text="@string/_18_c" />
 
 
-                                <TextView
-                                    android:id="@+id/note_sun"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="@string/sunset_5_30pm"
-                                    android:textColor="#CC000000"
-                                    android:textSize="20sp"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/img_weather" />
+
 
                                 <TextView
                                     android:id="@+id/note_weather"
@@ -241,7 +233,7 @@
                                     android:textSize="20sp"
                                     android:text="@{currentWeather.current.condition.text}"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/note_sun"
+                                    app:layout_constraintTop_toBottomOf="@id/img_weather"
                                     tools:text="@string/the_weather_is_cloudy_today_and_sunny_at_times_n_today_is_a_bad_day_to_use_pesticides" />
 
                                 <TextView
@@ -263,7 +255,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:indeterminate="true"
-                                    android:visibility="visible"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"

@@ -24,7 +24,7 @@
                >
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="177dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/background_change_profile"
                     />
@@ -35,12 +35,13 @@
                     android:layout_alignParentBottom="true"
                     app:cardCornerRadius="50dp">
                     <ImageView
+                        android:id="@+id/img_profile"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/profile_fares"
 
-                        />
+                        android:contentDescription="@string/profile" />
                 </androidx.cardview.widget.CardView>
 
 
@@ -51,15 +52,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/enter_name"
-            android:layout_margin="10dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginStart="10dp"
+            />
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/user_name"
+           android:layout_margin="5dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_name"
-            android:layout_margin="10dp"
+            android:text="@string/introduce_yourself_to_others"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            />
+        <EditText
+            android:id="@+id/et_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/always_be_happy"
+            android:layout_margin="5dp"
+            android:inputType="text"
+           />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/country"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
             />
 
+        <com.hbb20.CountryPickerView
+            android:id="@+id/countrypicker"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_green"
+            android:text="@string/chage"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+           />
     </LinearLayout>
 </ScrollView>
 

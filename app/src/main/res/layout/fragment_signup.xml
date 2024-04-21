@@ -56,10 +56,11 @@
             app:layout_constraintTop_toBottomOf="@id/txt_enterInfo">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_firstName"
+                android:id="@+id/et_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/enter_first_name"
+                android:hint="@string/full_name"
+                android:autofillHints="name"
                 android:inputType="text"
                 tools:ignore="TextContrastCheck" />
 
@@ -72,19 +73,7 @@
             android:layout_margin="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_firstName">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_secondName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:hint="@string/enter_middle_name"
-                android:inputType="text"
-                android:textColorHint="#546E7A"
-                tools:ignore="TextContrastCheck" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_firstName"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TextInputLayout_lastName"
@@ -92,18 +81,7 @@
             android:layout_margin="5dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_middleName">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_lastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_last_name"
-                android:inputType="text"
-                android:textColorHint="#546E7A"
-                tools:ignore="TextContrastCheck" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_middleName"/>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TextInputLayout_email"
             android:layout_width="match_parent"
@@ -117,23 +95,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_email"
-                android:inputType="text"
+                android:autofillHints="emailAddress"
+                android:inputType="textEmailAddress"
                 android:textColorHint="#546E7A"
                 tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/countrycode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:ccp_defaultPhoneCode="20"
-            app:layout_constraintWidth_percent=".35"
-            app:layout_constraintBottom_toBottomOf="@+id/TextInputLayout_phone"
-            app:layout_constraintEnd_toStartOf="@+id/TextInputLayout_phone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_email" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TextInputLayout_phone"
@@ -142,100 +109,9 @@
 
             android:layout_weight="1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/countrycode"
-            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_phoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
-
-                android:hint="@string/enter_phone_number"
-                android:inputType="phone"
-                android:padding="15dp"
-                android:textColorHint="@color/black"
-                android:textSize="20sp"
-                tools:ignore="TouchTargetSizeCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_email" />
 
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/txt_birth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="@string/date_of_birth"
-            app:drawableEndCompat="@drawable/circle_question_svgrepo_com"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_phone" />
-
-        <DatePicker
-            android:id="@+id/data_packer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            android:spinnersShown="true"
-            app:layout_constraintHeight_percent=".2"
-            app:layout_constraintTop_toBottomOf="@id/txt_birth"
-            tools:visibility="gone" />
-
-
-        <TextView
-            android:id="@+id/txt_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:text="@string/gender"
-            app:drawableEndCompat="@drawable/circle_question_svgrepo_com"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/data_packer" />
-
-        <RadioGroup
-            android:id="@+id/radiogroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_gender"
-            android:weightSum="4"
-            android:gravity="center"
-            android:layout_margin="5dp">
-
-            <RadioButton
-                android:id="@+id/rb_Famale"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/female"
-                android:layout_weight="1"
-
-                />
-
-            <RadioButton
-                android:id="@+id/rb_male"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/male"
-                android:layout_weight="1"
-                android:checked="true"/>
-
-            <RadioButton
-                android:id="@+id/rb_other"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/other"
-                android:layout_weight="1"/>
-        </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TextInputLayout_password"
@@ -244,14 +120,14 @@
             android:layout_margin="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radiogroup"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:autofillHints="emailAddress"
+                android:autofillHints="password"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColorHint="#546E7A"
@@ -275,7 +151,7 @@
                 android:id="@+id/et_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:autofillHints="emailAddress"
+                android:autofillHints="password"
                 android:hint="@string/confirm"
                 android:inputType="textPassword"
                 android:textColorHint="@color/black"
@@ -297,6 +173,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/TextInputLayout_Confirm" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="5dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_email"
+            android:text="@string/i_agree_to_send_the_latest_offers_from_the_green_defend_application" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:indeterminate="true"
+            android:visibility="gone"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

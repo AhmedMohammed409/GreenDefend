@@ -5,15 +5,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.greendefend.data.viewmodel.ViewModelDataStore
+import com.example.greendefend.viewmodels.ViewModelDataStore
 import com.example.greendefend.ui.authentication.AuthenticationActivity
 import com.example.greendefend.ui.boarding.OnboardingActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-
 class MainActivity : AppCompatActivity() {
     private val viewModelDataStore: ViewModelDataStore by lazy{
         ViewModelProvider(this)[ViewModelDataStore::class.java]
@@ -22,10 +19,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
-        lifecycleScope.launch {
-
-
-            if (viewModelDataStore.get("sureOnboarding").toString()!="true"){
+        viewModelDataStore.get("sureOnBoarding")
+        viewModelDataStore.value.observe(this) {
+            if (it!="true"){
                 startActivity(Intent(this@MainActivity, OnboardingActivity::class.java))
                 finish()
             }
@@ -33,12 +29,13 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
                 finish()
 
-        }}
-
-
-
-
+            }
         }
+
+
+    }
+
+
 
 
 

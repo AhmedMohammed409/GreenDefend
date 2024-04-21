@@ -40,6 +40,9 @@ private lateinit var binding:FragmentForumBinding
         binding.searchBar.setOnClickListener {
             findNavController().navigate(ForumFragmentDirections.actionForumFragmentToSearchFragment())
         }
+        binding.btnAsk.setOnClickListener {
+            findNavController().navigate(ForumFragmentDirections.actionForumFragmentToAskingFragment())
+        }
 
     }
 

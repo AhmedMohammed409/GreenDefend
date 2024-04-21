@@ -3,7 +3,7 @@ package com.example.greendefend.ui.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.greendefend.model.OnboardingModel
+import com.example.greendefend.date.local.OnboardingModel
 import com.example.greendefend.ui.boarding.BoardingFragment
 
 class ViewPagerAdapter(

@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.greendefend.R
-import com.example.greendefend.data.viewmodel.ViewModelDataStore
+import com.example.greendefend.viewmodels.ViewModelDataStore
 import com.example.greendefend.databinding.ActivityOnboardingBinding
-import com.example.greendefend.model.OnboardingModel
+import com.example.greendefend.date.local.OnboardingModel
 import com.example.greendefend.ui.adapters.ViewPagerAdapter
 import com.example.greendefend.ui.authentication.AuthenticationActivity
 import com.google.android.material.tabs.TabLayoutMediator
@@ -48,13 +48,7 @@ private val listInfoFragment by lazy {
         setContentView(binding.root)
 
         viewModelDataStore.save("Token","")
-
-            if (viewModelDataStore.get("sureOnboarding").toString() == "true") {
-                startActivity(Intent(this@OnboardingActivity, AuthenticationActivity::class.java))
-                finish()
-            }
-
-
+        
         //viewpager2 &adapter
         binding.viewPagerFrgment.adapter = ViewPagerAdapter(this, listInfoFragment)
         TabLayoutMediator(binding.tablayout, binding.viewPagerFrgment) { _, _ -> }.attach()
@@ -63,7 +57,7 @@ private val listInfoFragment by lazy {
         binding.btnNext.setOnClickListener {
             if (binding.viewPagerFrgment.currentItem > binding.viewPagerFrgment.childCount) {
                 lifecycleScope.launch {
-                 viewModelDataStore.save("sureOnboarding","true")
+                 viewModelDataStore.save("sureOnBoarding","true")
                 }
                 val intent = Intent(this, AuthenticationActivity::class.java)
                 startActivity(intent)

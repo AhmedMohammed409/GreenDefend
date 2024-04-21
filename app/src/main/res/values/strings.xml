@@ -86,4 +86,10 @@
     <string name="rate_the_green_defend_app">Rate the Green Defend app</string>
     <string name="checking">Checking</string>
     <string name="enter_email">Enter Email</string>
+    <string name="full_name">Full Name</string>
+    <string name="i_agree_to_send_the_latest_offers_from_the_green_defend_application">I agree to send the latest offers from the Green Defend application</string>
+    <string name="user_name">User Name</string>
+    <string name="introduce_yourself_to_others">Introduce yourself to others</string>
+    <string name="always_be_happy">Always be happy</string>
+    <string name="country">Country</string>
 </resources>

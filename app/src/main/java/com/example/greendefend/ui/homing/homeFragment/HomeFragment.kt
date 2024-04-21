@@ -2,43 +2,62 @@ package com.example.greendefend.ui.homing.homeFragment
 
 import android.Manifest.permission
 import android.annotation.SuppressLint
-import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private  var latitude: Float?= 0F
     private var longitude: Float ?= 0F
     private lateinit var binding: FragmentHomeBinding
+    private var permissions = arrayOf(permission.ACCESS_FINE_LOCATION,permission.ACCESS_COARSE_LOCATION)
+    private val permissionLauncher by lazy {
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val granted = permissions.entries.all { it.value }
+            if (granted) {
+               getCurrentLocation()
+            } else {
+                Toast.makeText(requireContext(), "No Permission Granted", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility=View.GONE
+            }
+        }
+    }
+
+    private fun hasPermission(permissions: Array<String>): Boolean =
+        permissions.all {
+            ActivityCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+        }
+
+    private fun chekPermissionOrShowDialog() {
+        if (hasPermission(permissions)){
+            getCurrentLocation()
+        }
+        else{ permissionLauncher.launch(permissions)
+        }
+
+    }
+
     private val mFusedLocationProviderClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(requireContext())
     }
+    private val viewModel: ViewModelCurrentWeather by viewModels()
 
-    private val viewModel: ViewModelCurrentWeather by lazy{
-        ViewModelProvider(requireActivity())[ViewModelCurrentWeather::class.java]
-    }
-    override fun onAttach(context: Context) {
-        getCurrentLocation()
-        super.onAttach(context)
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -57,8 +76,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        observeWeather(latitude!!.toFloat(), longitude!!.toFloat())
+        chekPermissionOrShowDialog()
+       weatherAndObserve(latitude!!, longitude!!)
 
         val actiotogle = ActionBarDrawerToggle(
             requireActivity(), binding.drawer, binding.toolbar, R.string.open, R.string.close)
@@ -80,7 +99,6 @@ class HomeFragment : Fragment() {
             }
             binding.noteWeather.visibility=visability
             binding.txtMoreWeather.visibility=visability
-            binding.noteSun.visibility=visability
         }
 
 
@@ -90,62 +108,53 @@ class HomeFragment : Fragment() {
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
         val task = mFusedLocationProviderClient.lastLocation
-        if (cheekPermission()) {
-            task.addOnSuccessListener {
-               latitude=it.latitude.toFloat()
-                longitude=it.longitude.toFloat()
-            }
-
-        } else {
-            Toast.makeText(requireContext(), "Failed Permision", Toast.LENGTH_SHORT).show()
+        task.addOnSuccessListener {
+            latitude=it.latitude.toFloat()
+            longitude=it.longitude.toFloat()
         }
     }
 
-    private fun cheekPermission(): Boolean {
-        var isGranted = true
-        Dexter.withContext(requireContext()).withPermissions(
-            permission.ACCESS_COARSE_LOCATION,
-            permission.ACCESS_FINE_LOCATION,
-            permission.INTERNET
-        ).withListener(object : MultiplePermissionsListener {
-            override fun onPermissionsChecked(p0: MultiplePermissionsReport?) =
-                if (!p0!!.areAllPermissionsGranted()) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Please allows permison",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    isGranted = false
-                } else {
-                }
 
-            override fun onPermissionRationaleShouldBeShown(
-                p0: MutableList<PermissionRequest>?,
-                p1: PermissionToken?
-            ) {
-                p1!!.continuePermissionRequest()
-            }
-        }).check()
-
-        return isGranted
-    }
-
-    private fun observeWeather(latitude:Float,longitude:Float){
-        viewModel.getCurrentWeather(latitude,longitude)
-        viewModel.currentLiveData.observe(viewLifecycleOwner) {
-
-            if (it!=null) {
+    private fun observeWeather() {
+        viewModel.getCurrentWeather(latitude!!.toFloat(),longitude!!.toFloat())
+        viewModel.resultLiveData.observe(viewLifecycleOwner) {
                 binding.currentWeather = it
                 binding.progressBar.visibility = View.GONE
-                Glide.with(requireContext()).load("http://api.weatherapi.com${it.current!!.condition!!.icon}").into(binding.imgWeather)
+//                Glide.with(requireContext())
+//                    .load("http://api.weatherapi.com${it.current?.condition?.icon}")
+//                    .into(binding.imgWeather)
+
+        }
+
+    }
+    private fun weatherAndObserve(latitude: Float, longitude:Float) {
+        viewModel.getCurrentWeather(latitude, longitude)
+        viewModel.connectionError.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                viewModel.rest()
             }
-            else{
-                Toast.makeText(requireContext(),"Not Connect",Toast.LENGTH_SHORT).show()
+        }
+        viewModel.serverResponse.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                viewModel.rest()
+            }
+        }
+
+        viewModel.resultLiveData.observe(viewLifecycleOwner){
+            if (it!=null) {
+                binding.progressBar.visibility = View.GONE
+                binding.currentWeather=it
             }
         }
     }
 
 
+    }
 
 
-}
+
+

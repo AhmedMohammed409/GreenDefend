@@ -12,6 +12,8 @@ import com.example.greendefend.databinding.FragmentWeatherBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 
+
+@AndroidEntryPoint
 class WeatherFragment : Fragment() {
 private lateinit var binding:FragmentWeatherBinding
 

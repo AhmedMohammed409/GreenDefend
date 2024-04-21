@@ -9,7 +9,11 @@
         android:id="@+id/doneFragment"
         android:name="com.example.greendefend.ui.authentication.DoneFragment"
         android:label="fragment_done"
-        tools:layout="@layout/fragment_done" />
+        tools:layout="@layout/fragment_done" >
+        <action
+            android:id="@+id/action_doneFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/entercodeFragment"
         android:name="com.example.greendefend.ui.authentication.EntercodeFragment"
@@ -18,6 +22,9 @@
         <action
             android:id="@+id/action_entercodeFragment_to_doneFragment"
             app:destination="@id/doneFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
