@@ -29,16 +29,17 @@ interface RemoteRepository {
         fileUri: Uri,
         fileRealPath: String
     ): Response<ResponseBody>
+    suspend fun addImage(
+        id: String,
+        fileUri: Uri,
+        fileRealPath: String
+    ): Response<ResponseBody>
 
     suspend fun login(login: Login):Response<ResponseLogin>
 
     suspend fun confirmAccount(confirm: Confirm):Response<String>
 
-    suspend fun AddImage(
-        id: String,
-        fileUri: Uri,
-        fileRealPath: String
-    ): Response<ResponseBody>
+
     suspend fun AddComment(
        comment: Comment
     ): Response<String>
