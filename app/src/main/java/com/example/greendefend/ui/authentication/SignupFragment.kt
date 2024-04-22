@@ -1,0 +1,100 @@
+package com.example.greendefend.ui.authentication
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.greendefend.databinding.FragmentSignupBinding
+import com.example.greendefend.date.local.account.User
+import com.example.greendefend.ui.homing.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class SignupFragment : Fragment() {
+    private lateinit var binding: FragmentSignupBinding
+    private val viewModelAccount: ViewModelAccount by viewModels()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {}
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding = FragmentSignupBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnSend.setOnClickListener {
+
+            signUpAndObserve(
+                User(
+                    binding.etName.text.toString(),
+                    binding.etEmail.text.toString(),
+                    binding.etPassword.text.toString(),
+                    binding.etConfirm.text.toString()
+                )
+            )
+        }
+
+    }
+
+    private fun validationPassword(password: String, confirm: String): Boolean {
+        if (password.length < 8) {
+            binding.TextInputLayoutPassword.error =
+                "please enter Correct password contain number and symbols and minimum 8 max 24 "
+            return false
+        } else if (password != confirm) {
+            binding.TextInputLayoutConfirm.error = "please enter Confirm same Password"
+            return false
+        }
+        binding.TextInputLayoutPassword.isErrorEnabled = false
+        binding.TextInputLayoutConfirm.isErrorEnabled = false
+        return true
+    }
+
+    private fun signUpAndObserve(user: User) {
+        viewModelAccount.signup(user)
+
+        viewModelAccount.serverResponse.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                viewModelAccount.rest()
+               findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToEntercodeFragment(user.email.toString()))
+            }
+        }
+
+        viewModelAccount.connectionError.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                viewModelAccount.rest()
+            }
+        }
+
+
+    }
+
+
+//    validationName(binding.etName.text.toString()) &&
+
+//    private fun validationName(name: String): Boolean {
+//        return !(name.contains("[0-9]".toRegex()) || name.isEmpty())
+//    }
+
+
+}
+   
+
