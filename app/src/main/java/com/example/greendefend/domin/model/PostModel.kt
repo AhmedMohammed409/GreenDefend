@@ -1,4 +1,4 @@
-package com.example.greendefend.date.local
+package com.example.greendefend.domin.model
 
 data class PostModel(
     var name:String?="Fares",

@@ -3,7 +3,7 @@ package com.example.greendefend.ui.homing.weatherFragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.Constants
-import com.example.greendefend.date.local.weather.CurrentWeather
+import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.date.repository.RemoteRepositoryImp
 import com.example.greendefend.utli.Info
 import dagger.hilt.android.lifecycle.HiltViewModel

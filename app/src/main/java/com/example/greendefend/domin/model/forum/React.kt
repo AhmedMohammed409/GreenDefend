@@ -1,4 +1,4 @@
-package com.example.greendefend.date.local.forum
+package com.example.greendefend.domin.model.forum
 
 import com.google.gson.annotations.SerializedName
 

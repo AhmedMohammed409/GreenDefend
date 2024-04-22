@@ -1,11 +1,11 @@
-package com.example.greendefend.date.repository
+package com.example.greendefend.domin.repository
 
 import android.net.Uri
-import com.example.greendefend.date.local.account.Confirm
-import com.example.greendefend.date.local.account.Login
-import com.example.greendefend.date.local.account.ResponseLogin
-import com.example.greendefend.date.local.account.User
-import com.example.greendefend.date.local.forum.Comment
+import com.example.greendefend.domin.model.account.Confirm
+import com.example.greendefend.domin.model.account.Login
+import com.example.greendefend.domin.model.account.ResponseLogin
+import com.example.greendefend.domin.model.account.User
+import com.example.greendefend.domin.model.forum.Comment
 import okhttp3.ResponseBody
 import retrofit2.Response
 

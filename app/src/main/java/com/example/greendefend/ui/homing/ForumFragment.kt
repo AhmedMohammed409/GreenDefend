@@ -9,7 +9,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentForumBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ForumFragment : Fragment() {
 private lateinit var binding:FragmentForumBinding
     override fun onCreate(savedInstanceState: Bundle?) {

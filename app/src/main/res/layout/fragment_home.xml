@@ -7,7 +7,7 @@
 <data>
     <variable
         name="currentWeather"
-        type="com.example.greendefend.date.local.weather.CurrentWeather" />
+        type="com.example.greendefend.domin.model.weather.CurrentWeather" />
 </data>
 
     <androidx.drawerlayout.widget.DrawerLayout

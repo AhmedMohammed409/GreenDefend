@@ -37,7 +37,6 @@ object NetworkModule {
     fun provideAccountApi(): ApiServiceServer {
         return  Retrofit.Builder().baseUrl(Constants.BaseUrlService)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
             .build().create(ApiServiceServer::class.java)
     }
 

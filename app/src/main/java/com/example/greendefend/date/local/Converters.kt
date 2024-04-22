@@ -1,4 +1,4 @@
-package com.example.greendefend.domin.model
+package com.example.greendefend.date.local
 
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters

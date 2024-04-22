@@ -3,6 +3,7 @@ package com.example.greendefend.ui.homing
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,21 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
+import com.example.greendefend.ui.authentication.ViewModelAccount
+import com.example.greendefend.utli.getAvailableInternalMemorySize
+import com.example.greendefend.utli.getFilePathFromUri
+import com.example.greendefend.utli.getFileSize
+import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 
+@AndroidEntryPoint
 class ChangeProfileFragment : Fragment() {
-private lateinit var binding: FragmentChangeprofileBinding
+    private lateinit var binding: FragmentChangeprofileBinding
+    private val viewModelAccount:ViewModelAccount by viewModels ()
+    lateinit var selectedfile:Uri
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -25,19 +36,23 @@ private lateinit var binding: FragmentChangeprofileBinding
             } else {
                 Toast.makeText(requireContext(), "No Permission Granted", Toast.LENGTH_SHORT).show()
             }
-    }
+        }
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode== Activity.RESULT_OK){
-                val selectedfile = result.data!!.data
+            if (result.resultCode == Activity.RESULT_OK) {
+                 selectedfile = result.data!!.data!!
                 binding.imgProfile.setImageURI(selectedfile)
-            }else{
-                Toast.makeText(requireContext(), "Not selected or diferent type", Toast.LENGTH_SHORT)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Not selected or diferent type",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             }
 
 
-    }
+        }
 
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -47,14 +62,17 @@ private lateinit var binding: FragmentChangeprofileBinding
 
     private fun hasPermission(permissions: Array<String>): Boolean =
         permissions.all {
-            ActivityCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                it
+            ) == PackageManager.PERMISSION_GRANTED
         }
 
     private fun pick() {
-        if (hasPermission(permissions)){
+        if (hasPermission(permissions)) {
             selectImage()
-        }
-        else{ permissionLauncher.launch(permissions)
+        } else {
+            permissionLauncher.launch(permissions)
         }
 
     }
@@ -70,7 +88,7 @@ private lateinit var binding: FragmentChangeprofileBinding
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding= FragmentChangeprofileBinding.inflate(inflater,container,false)
+        binding = FragmentChangeprofileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -80,7 +98,40 @@ private lateinit var binding: FragmentChangeprofileBinding
         binding.imgProfile.setOnClickListener {
             pick()
         }
+        binding.btnChange.setOnClickListener {
+            uplaoadAndObserve(
+                binding.etName.text.toString(),
+                binding.etBio.text.toString(),
+                binding.countrypicker.transitionName,
+                selectedfile
+
+            )
+        }
     }
 
+    fun uplaoadAndObserve(fullName:String,bio:String,country:String,fileUri: Uri) {
+        if (getFileSize(requireActivity(), selectedfile) < getAvailableInternalMemorySize()){
+            viewModelAccount.editProfile("0bd6d620-912e-410a-91d6-d8c9d424265c",
+                fullName,bio,country,fileUri,  getFilePathFromUri(requireActivity(),
+                selectedfile,viewModelAccount))
 
-}
+        }
+
+        viewModelAccount.serverResponse.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
+                Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+                binding.progressBar.visibility=View.GONE
+                File(requireContext().cacheDir,viewModelAccount.fileName.value.toString()).delete()
+                viewModelAccount.rest()
+            }
+
+        }
+        viewModelAccount.connectionError.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+            binding.progressBar.visibility=View.GONE
+            viewModelAccount.rest()
+        }
+    }
+
+    }
+

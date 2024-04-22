@@ -3,14 +3,15 @@ package com.example.greendefend.date.repository
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
-import com.example.greendefend.date.local.account.Confirm
-import com.example.greendefend.date.local.account.Login
-import com.example.greendefend.date.local.account.ResponseLogin
-import com.example.greendefend.date.local.account.User
-import com.example.greendefend.date.local.forum.Comment
-import com.example.greendefend.date.local.weather.CurrentWeather
+import com.example.greendefend.domin.model.account.Confirm
+import com.example.greendefend.domin.model.account.Login
+import com.example.greendefend.domin.model.account.ResponseLogin
+import com.example.greendefend.domin.model.account.User
+import com.example.greendefend.domin.model.forum.Comment
+import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.date.remote.ApiServiceServer
 import com.example.greendefend.date.remote.ApiServiceWeather
+import com.example.greendefend.domin.repository.RemoteRepository
 import dagger.hilt.android.qualifiers.ActivityContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -80,7 +81,10 @@ class RemoteRepositoryImp @Inject constructor(
         fileUri: Uri,
         fileRealPath: String
     ): Response<ResponseBody> {
-       apiServiceServer.addPost()
+        val fileToSend = prepareFilePart("PostImage", fileRealPath,fileUri)
+        val idRequestBody = id.toResponseBody("text/plain".toMediaTypeOrNull())
+        val postRequestBody = postValue.toResponseBody("text/plain".toMediaTypeOrNull())
+        return apiServiceServer.addPost(idRequestBody,postRequestBody,fileToSend)
     }
 
     override suspend fun login(login: Login): Response<ResponseLogin> =apiServiceServer.login(login)
@@ -88,7 +92,7 @@ class RemoteRepositoryImp @Inject constructor(
 
     override suspend fun confirmAccount(confirm: Confirm): Response<String> =apiServiceServer.confirm(confirm)
 
-    override suspend fun AddImage(
+    override suspend fun addImage(
         id: String,
         fileUri: Uri,
         fileRealPath: String

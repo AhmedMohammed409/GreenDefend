@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentLoginBinding
-import com.example.greendefend.date.local.account.Login
+import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.ui.homing.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 

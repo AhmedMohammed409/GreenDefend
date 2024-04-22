@@ -1,107 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.homing.ChangeProfileFragment">
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <androidx.cardview.widget.CardView
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp">
-            <RelativeLayout
+            android:layout_height="match_parent"
+           >
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               >
-                <ImageView
+                app:cardCornerRadius="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="177dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/background_change_profile"
-                    />
-                <androidx.cardview.widget.CardView
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/background_change_profile" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        app:cardCornerRadius="50dp">
+
+                        <ImageView
+                            android:id="@+id/img_profile"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:contentDescription="@string/profile"
+                            android:scaleType="centerCrop"
+
+                            android:src="@drawable/profile_fares" />
+                    </androidx.cardview.widget.CardView>
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:layout_margin="15dp"
+                android:text="@string/enter_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView_background" />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:autofillHints="name"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:text="@string/user_name"
+                app:layout_constraintTop_toBottomOf="@id/txt_name"
+                tools:layout_editor_absoluteX="15dp" />
+
+                <TextView
+                    android:id="@+id/txt_Introduce"
+                    app:layout_constraintTop_toBottomOf="@id/et_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                    android:text="@string/introduce_yourself_to_others"
+                    android:gravity="center"/>
+                <ProgressBar
+                    android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true"
-                    app:cardCornerRadius="50dp">
-                    <ImageView
-                        android:id="@+id/img_profile"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/profile_fares"
-
-                        android:contentDescription="@string/profile" />
-                </androidx.cardview.widget.CardView>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
 
-            </RelativeLayout>
+            <EditText
+                android:id="@+id/et_bio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:text="@string/always_be_happy"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_Introduce" />
 
-        </androidx.cardview.widget.CardView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/enter_name"
-            android:layout_marginTop="35dp"
-            android:layout_marginStart="10dp"
-            />
-        <EditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/user_name"
-           android:layout_margin="5dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/introduce_yourself_to_others"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            />
-        <EditText
-            android:id="@+id/et_introduce"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/always_be_happy"
-            android:layout_margin="5dp"
-            android:inputType="text"
-           />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/country"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            />
+            <TextView
+                android:id="@+id/txt_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               app:layout_constraintTop_toBottomOf="@id/et_bio"
+                android:layout_margin="15dp"
+                android:text="@string/country"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-        <com.hbb20.CountryPickerView
-            android:id="@+id/countrypicker"
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/btn_change"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/button_green"
-            android:text="@string/chage"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-           />
-    </LinearLayout>
-</ScrollView>
 
-</RelativeLayout>
+
+            <com.hbb20.CountryPickerView
+                android:id="@+id/countrypicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_country"
+                />
+            
+            <Button
+                app:layout_constraintTop_toBottomOf="@id/countrypicker"
+               app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/btn_change"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_green"
+                android:text="@string/chage"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.greendefend.date.local.weather
+package com.example.greendefend.domin.model.weather
 
 import com.google.gson.annotations.SerializedName
 

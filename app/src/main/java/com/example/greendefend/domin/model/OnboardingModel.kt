@@ -1,4 +1,4 @@
-package com.example.greendefend.date.local
+package com.example.greendefend.domin.model
 
 import com.example.greendefend.R
 

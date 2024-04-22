@@ -20,8 +20,6 @@ object AppModule {
 
 
 
-
-
     @Provides
     @ActivityContext
     fun provideContext(application: Application): Context {

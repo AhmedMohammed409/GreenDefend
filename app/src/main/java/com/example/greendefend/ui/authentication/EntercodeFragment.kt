@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.databinding.FragmentEntercodeBinding
-import com.example.greendefend.date.local.account.Confirm
+import com.example.greendefend.domin.model.account.Confirm
 
 
 class EntercodeFragment: Fragment() {

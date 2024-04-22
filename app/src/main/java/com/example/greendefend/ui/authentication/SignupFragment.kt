@@ -1,6 +1,5 @@
 package com.example.greendefend.ui.authentication
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentSignupBinding
-import com.example.greendefend.date.local.account.User
-import com.example.greendefend.ui.homing.HomeActivity
+import com.example.greendefend.domin.model.account.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -77,7 +75,6 @@ class SignupFragment : Fragment() {
 
         viewModelAccount.connectionError.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 binding.progressBar.visibility = View.GONE
                 viewModelAccount.rest()

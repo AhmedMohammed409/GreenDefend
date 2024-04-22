@@ -1,7 +1,7 @@
 package com.example.greendefend.date.remote
 
-import com.example.greendefend.date.local.weather.CurrentWeather
-import com.example.greendefend.date.local.weather.Weather
+import com.example.greendefend.domin.model.weather.CurrentWeather
+import com.example.greendefend.domin.model.weather.Weather
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
