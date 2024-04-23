@@ -1,4 +1,4 @@
-package com.example.greendefend.ui.authentication
+package com.example.greendefend.domin.useCase
 
 import android.net.Uri
 import android.util.Log
@@ -6,10 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.greendefend.data.repository.RemoteRepositoryImp
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.User
-import com.example.greendefend.date.repository.RemoteRepositoryImp
+import com.example.greendefend.domin.model.forum.Comment
+import com.example.greendefend.domin.model.forum.React
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -153,10 +155,65 @@ class ViewModelAccount @Inject constructor(private var repositoryImp: RemoteRepo
 
              }
 
-
-
         }
+     suspend fun addComment(comment: Comment) {
+         viewModelScope.launch {
+             try {
+                 val result=  repositoryImp.addComment(comment)
 
+                 if (result.isSuccessful){
+                     repositoryImp.serverResponse.value=result.message()
+                 }
+                 else{
+                     repositoryImp.connectionError.value="Password is irrcorect"
+                 }
+             }
+             catch (e:IOException)
+             {
+                 e.printStackTrace()
+                 repositoryImp.connectionError.value="Internet is not connect"
+             }
+             catch (e:HttpRetryException){
+                 repositoryImp.connectionError.value="Server Not Response "
+                 e.printStackTrace()
+             }
+             catch (ex :Exception){
+                 repositoryImp.connectionError.value=ex.message
+
+             }
+
+         }
+
+    }
+
+     suspend fun addReact(react: React){
+         viewModelScope.launch {
+             try {
+                 val result=  repositoryImp.addReact(react)
+
+                 if (result.isSuccessful){
+                     repositoryImp.serverResponse.value=result.message()
+                 }
+                 else{
+                     repositoryImp.connectionError.value="Password is irrcorect"
+                 }
+             }
+             catch (e:IOException)
+             {
+                 e.printStackTrace()
+                 repositoryImp.connectionError.value="Internet is not connect"
+             }
+             catch (e:HttpRetryException){
+                 repositoryImp.connectionError.value="Server Not Response "
+                 e.printStackTrace()
+             }
+             catch (ex :Exception){
+                 repositoryImp.connectionError.value=ex.message
+
+             }
+
+         }
+    }
      fun editProfile(id: String,
                             fullName: String,
                             bio: String,
@@ -189,6 +246,8 @@ class ViewModelAccount @Inject constructor(private var repositoryImp: RemoteRepo
 
         }
     }
+
+
 
 
     }

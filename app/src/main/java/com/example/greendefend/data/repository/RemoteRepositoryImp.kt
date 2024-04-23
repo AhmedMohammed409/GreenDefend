@@ -11,6 +11,7 @@ import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.date.remote.ApiServiceServer
 import com.example.greendefend.date.remote.ApiServiceWeather
+import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.repository.RemoteRepository
 import dagger.hilt.android.qualifiers.ActivityContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -91,6 +92,13 @@ class RemoteRepositoryImp @Inject constructor(
 
 
     override suspend fun confirmAccount(confirm: Confirm): Response<String> =apiServiceServer.confirm(confirm)
+    override suspend fun addComment(comment: Comment): Response<String> {
+       return apiServiceServer.addComment(comment)
+    }
+
+    override suspend fun addReact(react: React): Response<String> {
+      return apiServiceServer.addReact(react)
+    }
 
     override suspend fun addImage(
         id: String,
@@ -100,13 +108,7 @@ class RemoteRepositoryImp @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun AddComment(comment: Comment): Response<String> {
-        TODO("Not yet implemented")
-    }
 
-    override suspend fun AddReact(comment: Comment): Response<String> {
-        TODO("Not yet implemented")
-    }
 
     private fun prepareFilePart(partName: String,fileRealPath: String,fileUri: Uri): MultipartBody.Part {
         val file =File(fileRealPath)

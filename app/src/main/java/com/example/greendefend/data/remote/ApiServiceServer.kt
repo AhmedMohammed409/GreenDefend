@@ -4,6 +4,8 @@ import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
+import com.example.greendefend.domin.model.forum.Comment
+import com.example.greendefend.domin.model.forum.React
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -18,15 +20,15 @@ import retrofit2.http.Part
 interface ApiServiceServer {
 
 
-    @Headers("Content-Type:application/json,accept:application/json")
+    @Headers("Content-Type:application/json")
     @POST("Account/Login")
     suspend fun login(@Body login: Login): Response<ResponseLogin>
 
 
-    @Headers("Content-Type:application/json,accept:application/json")
+    @Headers("Content-Type:application/json")
     @POST("Account/Confirm")
     suspend fun confirm(confirm: Confirm): Response<String>
-    @Headers("Content-Type:application/json")
+    @Headers("Content-Type:application/json,accept:application/json")
     @POST("Account/Register")
      suspend fun signup(@Body user: User):Response<String>
 
@@ -42,7 +44,7 @@ interface ApiServiceServer {
          @Part file: MultipartBody.Part?
      ):Response<ResponseBody>
 
-    @Headers("Content-Type:multipart/form-data")
+    @Headers("Content-Type:multipart/form-data,accept:application/json")
     @Multipart
     @POST("Account/EditProfile")
     suspend fun addPost(
@@ -50,6 +52,20 @@ interface ApiServiceServer {
         @Part("PostValue") postValue: ResponseBody,
         @Part file: MultipartBody.Part?
     ):Response<ResponseBody>
+
+
+    @Headers("Content-Type:application/json,accept:application/json")
+    @POST("forum/AddComment")
+    suspend fun addComment(
+       @Body comment: Comment
+    ): Response<String>
+
+
+    @Headers("Content-Type:application/json,accept:application/json")
+    @POST("forum/AddReact")
+    suspend fun addReact(
+       @Body react: React
+    ): Response<String>
 
 
 }
