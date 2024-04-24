@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentLoginBinding
 import com.example.greendefend.domin.model.account.Login
+import com.example.greendefend.domin.useCase.AccountViewModel
 import com.example.greendefend.ui.homing.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 
-    private val viewModelAccount: ViewModelAccount by viewModels()
+    private val viewModelAccount: AccountViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +84,8 @@ class LoginFragment : Fragment() {
                 Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
                 binding.progressBar.visibility = View.GONE
                 viewModelAccount.rest()
-               startActivity(Intent(requireContext(),HomeActivity::class.java))
+               startActivity(Intent(requireActivity(),HomeActivity::class.java))
+                requireActivity().finish()
             }
         }
 

@@ -91,6 +91,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"
+                    android:indeterminate="true"
                     />
 
 
@@ -117,15 +119,16 @@
 
 
 
-            <com.hbb20.CountryPickerView
-                android:id="@+id/countrypicker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:minHeight="48dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_country"
-                />
+         <com.hbb20.CountryCodePicker
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/countrypicker"
+             app:layout_constraintTop_toBottomOf="@id/txt_country"
+             app:layout_constraintStart_toStartOf="parent"
+             android:layout_margin="15dp"
+             android:transitionName="Egypt"
+             app:ccp_defaultNameCode="+20"
+             />
             
             <Button
                 app:layout_constraintTop_toBottomOf="@id/countrypicker"

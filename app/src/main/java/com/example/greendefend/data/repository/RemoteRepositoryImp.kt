@@ -1,17 +1,17 @@
-package com.example.greendefend.date.repository
+package com.example.greendefend.data.repository
 
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import com.example.greendefend.data.remote.ApiServiceServer
+import com.example.greendefend.data.remote.ApiServiceWeather
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
-import com.example.greendefend.domin.model.weather.CurrentWeather
-import com.example.greendefend.date.remote.ApiServiceServer
-import com.example.greendefend.date.remote.ApiServiceWeather
 import com.example.greendefend.domin.model.forum.React
+import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.domin.repository.RemoteRepository
 import dagger.hilt.android.qualifiers.ActivityContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -56,25 +56,8 @@ class RemoteRepositoryImp @Inject constructor(
         return apiServiceServer.signup(user)
     }
 
-    override suspend fun editProfile(
-        id: String,
-        fullName: String,
-        bio: String,
-        country: String,
-        fileUri: Uri,
-        fileRealPath: String
-    ): Response<ResponseBody> {
-
-        val fileToSend = prepareFilePart("key", fileRealPath,fileUri)
-        val idRequestBody = id.toResponseBody("text/plain".toMediaTypeOrNull())
-        val fullNameRequestBody = fullName.toResponseBody("text/plain".toMediaTypeOrNull())
-        val bioRequestBody = bio.toResponseBody("text/plain".toMediaTypeOrNull())
-        val countryRequestBody = country.toResponseBody("text/plain".toMediaTypeOrNull())
-
-       return apiServiceServer.editProfile(idRequestBody,fullNameRequestBody,bioRequestBody,countryRequestBody,fileToSend)
-
-
-    }
+    override suspend fun editProfile(body: RequestBody?): Response<ResponseBody?> {
+       return apiServiceServer.editProfile(body!!) }
 
     override suspend fun addPost(
         id: String,

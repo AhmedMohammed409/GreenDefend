@@ -1,8 +1,10 @@
 package com.example.greendefend.ui.homing
+
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -13,9 +15,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentCheckingBinding
-import com.example.greendefend.ml.ModelUnquant
-import com.google.android.gms.tflite.acceleration.Model
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
@@ -24,6 +25,7 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 
 class CheckingFragment : Fragment() {
     private lateinit var bitmap: Bitmap
+    private  var uri: Uri?=null
     private val listDisease by lazy {
         requireActivity().assets.open("label2.txt").bufferedReader().readLines()
     }
@@ -36,20 +38,24 @@ class CheckingFragment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "No Permission Granted", Toast.LENGTH_SHORT).show()
             }
-    }
-    private val resultLauncher=
+        }
+    private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-if (result.resultCode== Activity.RESULT_OK){
-    val selectedfile = result.data!!.data
-    bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver,selectedfile)
-    binding.imgCamera.setImageURI(selectedfile)
-}else{
-    Toast.makeText(requireContext(), "Not selected or diferent type", Toast.LENGTH_SHORT)
-        .show()
-}
+            if (result.resultCode == Activity.RESULT_OK) {
+                uri = result.data!!.data!!
+                bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
+                binding.imgCamera.setImageURI(uri)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Not selected",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
 
 
-    }
+        }
 
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -59,81 +65,71 @@ if (result.resultCode== Activity.RESULT_OK){
 
     private fun hasPermission(permissions: Array<String>): Boolean =
         permissions.all {
-            ActivityCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                it
+            ) == PackageManager.PERMISSION_GRANTED
         }
 
     private fun pick() {
-        if (hasPermission(permissions)){
+        if (hasPermission(permissions)) {
             selectImage()
-        }
-        else{ permissionLauncher.launch(permissions)
+        } else {
+            permissionLauncher.launch(permissions)
         }
 
     }
 
 
-private lateinit var binding: FragmentCheckingBinding
-private var imageProcessor = ImageProcessor.Builder()
+    private lateinit var binding: FragmentCheckingBinding
+    private var imageProcessor = ImageProcessor.Builder()
         .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR)).build()
 
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    arguments?.let {} }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {}
+    }
 
-override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-): View {
-    binding = FragmentCheckingBinding.inflate(inflater, container, false)
-    return binding.root
-}
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentCheckingBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-//        cheekPermission()
-
-    pick()
-    binding.btnChecking.setOnClickListener { model2() }
-}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
-private fun model() {
-    var tensorImage = TensorImage(DataType.FLOAT32)
-    tensorImage.load(bitmap)
-    tensorImage = imageProcessor.process(tensorImage)
-    val model = ModelUnquant.newInstance(requireContext())
-    val inputFeature0 =
-        TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+        pick()
+        binding.btnChecking.setOnClickListener {
+            val result = model()
+            Log.e("index",    result.toString())
+            if (uri !=null){
+                findNavController().navigate(
+                    CheckingFragmentDirections.actionCheckingFragmentToDiagnosticResultsFragment(
+                        uri!!,
+                        result)
+                )
+            }else{
+                Toast.makeText(requireContext(),"Not Select Image",Toast.LENGTH_SHORT).show()
+            }
 
-    inputFeature0.loadBuffer(tensorImage.buffer)
-    // Runs model inference and gets result.
-    val outputs = model.process(inputFeature0)
-    val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
 
-    var maxId = 0
-    outputFeature0.forEachIndexed { index, fl ->
-        if (outputFeature0[maxId] < fl) {
-            maxId = index
         }
     }
-    val value = listDisease[maxId]
-    binding.imgCamera.visibility = View.GONE
-    binding.txtResult.visibility = View.VISIBLE
-    binding.txtResult.text = value
-    Log.i("testing MI", value)
-// Releases model resources if no longer used.
-    model.close()
-}
 
-    fun model2(){
+
+    fun model(): Int {
         var tensorImage = TensorImage(DataType.FLOAT32)
         tensorImage.load(bitmap)
         tensorImage = imageProcessor.process(tensorImage)
         val model = com.example.greendefend.ml.Model.newInstance(requireContext())
 
 // Creates inputs for reference.
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+        val inputFeature0 =
+            TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
         inputFeature0.loadBuffer(tensorImage.buffer)
 
 // Runs model inference and gets result.
@@ -146,17 +142,13 @@ private fun model() {
                 maxId = index
             }
         }
-        val value = listDisease[maxId]
-        binding.imgCamera.visibility = View.GONE
-        binding.txtResult.visibility = View.VISIBLE
-        binding.txtResult.text = value
-        Log.i("testing MI", value)
-
-// Releases model resources if no longer used.
         model.close()
+        Log.e("Max id ",maxId.toString())
+        return maxId
+
+
     }
 }
-
 
 
 //

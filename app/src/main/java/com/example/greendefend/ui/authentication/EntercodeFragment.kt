@@ -1,6 +1,8 @@
 package com.example.greendefend.ui.authentication
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +13,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.databinding.FragmentEntercodeBinding
 import com.example.greendefend.domin.model.account.Confirm
+import com.example.greendefend.domin.useCase.AccountViewModel
 
 
 class EntercodeFragment: Fragment() {
    private lateinit var binding: FragmentEntercodeBinding
    private val args:EntercodeFragmentArgs by navArgs()
-    private val  viewModelAccount:ViewModelAccount by viewModels()
+    private val  viewModelAccount: AccountViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,8 +38,30 @@ class EntercodeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSend.setOnClickListener {
-            findNavController().navigate(EntercodeFragmentDirections.actionEntercodeFragmentToDoneFragment())
+            binding.progressBar.visibility = View.VISIBLE
+
+
+
+
         }
+
+        binding.pinview.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (binding.pinview.text!!.length==4){
+                    enterCodeAndObserve(Confirm(binding.pinview.text.toString().toInt(),args.email))
+                }else{
+                    Toast.makeText(requireContext(),"Enter 4 digits code",Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                TODO("Not yet implemented")
+            }
+        })
 
     }
 

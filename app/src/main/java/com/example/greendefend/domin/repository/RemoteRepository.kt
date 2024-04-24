@@ -6,8 +6,11 @@ import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
+import com.example.greendefend.domin.model.forum.React
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
+import retrofit2.http.Body
 
 interface RemoteRepository {
 
@@ -15,13 +18,8 @@ interface RemoteRepository {
     suspend fun register(user: User):Response<String>
  
     suspend fun editProfile(
-        id: String,
-        fullName: String,
-        bio: String,
-        country: String,
-        fileUri: Uri,
-        fileRealPath: String
-    ): Response<ResponseBody>
+       body:RequestBody?
+    ): Response<ResponseBody?>
 
     suspend fun addPost(
         id: String,
@@ -40,12 +38,12 @@ interface RemoteRepository {
     suspend fun confirmAccount(confirm: Confirm):Response<String>
 
 
-    suspend fun AddComment(
+    suspend fun addComment(
        comment: Comment
     ): Response<String>
 
-    suspend fun AddReact(
-        comment: Comment
+    suspend fun addReact(
+        react: React
     ): Response<String>
     fun getInfo()
 

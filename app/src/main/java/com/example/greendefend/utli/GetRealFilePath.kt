@@ -8,12 +8,12 @@ import android.net.Uri
 import android.os.Environment
 import android.os.StatFs
 import android.webkit.MimeTypeMap
-import com.example.greendefend.ui.authentication.ViewModelAccount
+import com.example.greendefend.domin.useCase.AccountViewModel
 import java.io.*
 import java.util.*
 
 
-internal fun getFilePathFromUri(context: Context, uri: Uri,serverViewModel: ViewModelAccount): String =
+internal fun getFilePathFromUri(context: Context, uri: Uri,serverViewModel: AccountViewModel): String =
     if (uri.path?.contains("file://") == true) {
         uri.path!!
     } else {
@@ -21,7 +21,7 @@ internal fun getFilePathFromUri(context: Context, uri: Uri,serverViewModel: View
     }
 
 @SuppressLint("SuspiciousIndentation")
-private fun getFileFromContentUri(context: Context, contentUri: Uri, serverViewModel: ViewModelAccount): File {
+private fun getFileFromContentUri(context: Context, contentUri: Uri, serverViewModel: AccountViewModel): File {
 
     val fileExtension = getFileExtension(context, contentUri) ?: ""
     val fileName = "temp_file.$fileExtension"

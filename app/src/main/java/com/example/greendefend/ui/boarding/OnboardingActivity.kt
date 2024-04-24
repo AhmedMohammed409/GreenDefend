@@ -3,23 +3,27 @@ package com.example.greendefend.ui.boarding
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.greendefend.R
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.onboardingOpenedState_Key
 import com.example.greendefend.databinding.ActivityOnboardingBinding
 import com.example.greendefend.domin.model.OnboardingModel
 import com.example.greendefend.ui.adapters.ViewPagerAdapter
 import com.example.greendefend.ui.authentication.AuthenticationActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class OnboardingActivity : AppCompatActivity() {
     private lateinit var binding:ActivityOnboardingBinding
 
-private val dataStoreViewModel:DataStoreViewModel by viewModels()
+@Inject lateinit var dataStoreRepositoryImpl: DataStorePrefrenceImpl
 
 private val listInfoFragment by lazy {
     mutableListOf(
@@ -51,8 +55,9 @@ private val listInfoFragment by lazy {
 
         binding.btnNext.setOnClickListener {
             if (binding.viewPagerFrgment.currentItem > binding.viewPagerFrgment.childCount) {
-                dataStoreViewModel.onGetStartedBtnClicked()
-
+                lifecycleScope.launch{
+                    dataStoreRepositoryImpl.putPreference(onboardingOpenedState_Key,true)
+                }
                 val intent = Intent(this, AuthenticationActivity::class.java)
                 startActivity(intent)
                 finish()

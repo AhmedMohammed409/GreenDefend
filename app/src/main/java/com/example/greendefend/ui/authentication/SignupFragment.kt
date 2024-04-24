@@ -10,12 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentSignupBinding
 import com.example.greendefend.domin.model.account.User
+import com.example.greendefend.domin.useCase.AccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignupFragment : Fragment() {
     private lateinit var binding: FragmentSignupBinding
-    private val viewModelAccount: ViewModelAccount by viewModels()
+    private val viewModelAccount: AccountViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
@@ -34,7 +35,7 @@ class SignupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnSend.setOnClickListener {
-
+            binding.progressBar.visibility = View.VISIBLE
             signUpAndObserve(
                 User(
                     binding.etName.text.toString(),

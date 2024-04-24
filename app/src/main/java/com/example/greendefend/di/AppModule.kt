@@ -4,19 +4,20 @@ import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.preferences.preferencesDataStore
+import com.example.greendefend.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    private val Context.appDataStore by preferencesDataStore(Constants.APP_DATA_STORE_NAME)
 
 
 
@@ -25,11 +26,14 @@ object AppModule {
     fun provideContext(application: Application): Context {
         return application
     }
-
     @Provides
-    fun createDataStore(@ApplicationContext context: Context):DataStore<Preferences>{
-        return context.createDataStore("GreenDefend")
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+        return context.appDataStore
     }
+
+
+
+
 
 //
 //    @Provides

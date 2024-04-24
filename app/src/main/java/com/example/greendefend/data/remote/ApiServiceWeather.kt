@@ -1,4 +1,4 @@
-package com.example.greendefend.date.remote
+package com.example.greendefend.data.remote
 
 import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.domin.model.weather.Weather

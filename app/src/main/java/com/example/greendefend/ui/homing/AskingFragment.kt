@@ -14,7 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import com.example.greendefend.databinding.FragmentAskingBinding
-import com.example.greendefend.ui.authentication.ViewModelAccount
+import com.example.greendefend.domin.useCase.ForumViewModel
 import com.example.greendefend.utli.getAvailableInternalMemorySize
 import com.example.greendefend.utli.getFilePathFromUri
 import com.example.greendefend.utli.getFileSize
@@ -48,7 +48,7 @@ class AskingFragment : Fragment() {
 
 
         }
-    private val viewModelAccount:ViewModelAccount by viewModels()
+    private val viewModelFourm: ForumViewModel by viewModels()
 
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -94,34 +94,34 @@ class AskingFragment : Fragment() {
         }
         binding.btnSend.setOnClickListener {
             binding.progressBar.visibility=View.VISIBLE
-            postAndObserve()
+//            postAndObserve()
         }
 
 
     }
-    fun postAndObserve(){
-        if (selectedfile!=null){
-            if (getFileSize(requireActivity(), selectedfile!!)< getAvailableInternalMemorySize()){
-                viewModelAccount.addPost(id="0bd6d620-912e-410a-91d6-d8c9d424265c",binding.etPost.text.toString(), selectedfile!!,
-                    getFilePathFromUri(requireActivity(), selectedfile!!,viewModelAccount))
-            }
-
-            viewModelAccount.serverResponse.observe(viewLifecycleOwner){
-                if (it.isNotEmpty()){
-                    Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-                    binding.progressBar.visibility=View.GONE
-                    File(requireContext().cacheDir,viewModelAccount.fileName.value.toString()).delete()
-                    viewModelAccount.rest()
-                }
-
-            }
-            viewModelAccount.connectionError.observe(viewLifecycleOwner){
-                Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-                binding.progressBar.visibility=View.GONE
-                viewModelAccount.rest()
-            }
-        }
-    }
+//    fun postAndObserve(){
+//        if (selectedfile!=null){
+//            if (getFileSize(requireActivity(), selectedfile!!)< getAvailableInternalMemorySize()){
+//                viewModelFourm.addPost(id="0bd6d620-912e-410a-91d6-d8c9d424265c",binding.etPost.text.toString(), selectedfile!!,
+//                    getFilePathFromUri(requireActivity(), selectedfile!!,))
+//            }
+//
+//            viewModelFourm.serverResponse.observe(viewLifecycleOwner){
+//                if (it.isNotEmpty()){
+//                    Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+//                    binding.progressBar.visibility=View.GONE
+//                    File(requireContext().cacheDir,viewModelFourm.fileName.value.toString()).delete()
+//                    viewModelFourm.rest()
+//                }
+//
+//            }
+//            viewModelFourm.connectionError.observe(viewLifecycleOwner){
+//                Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+//                binding.progressBar.visibility=View.GONE
+//                viewModelFourm.rest()
+//            }
+//        }
+//    }
 
 
 }

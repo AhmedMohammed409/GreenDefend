@@ -44,7 +44,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
 
@@ -75,14 +75,16 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-livedata:$lifecycleVersion")
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
+    //Dagger - Hilt
+    implementation ("com.google.dagger:hilt-android:2.48")
+    kapt ("com.google.dagger:hilt-android-compiler:2.48")
+    kapt ("androidx.hilt:hilt-compiler:1.2.0")
 
     //pinview
     implementation ("io.github.chaosleung:pinview:1.4.4")
     //countrycode
     implementation ("com.hbb20:ccp:2.6.0")
-    implementation ("com.hbb20:android-country-picker:0.0.7")
+
     //ask permission
     implementation ("com.karumi:dexter:6.2.3")
 
@@ -92,8 +94,9 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
 //data store prefrences
-    implementation("androidx.datastore:datastore-preferences:1.0.0-alpha04")
-
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    //DataStore
+//    implementation("androidx.datastore:datastore-preferences:1.1.0-alpha05")
     //courtine
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 

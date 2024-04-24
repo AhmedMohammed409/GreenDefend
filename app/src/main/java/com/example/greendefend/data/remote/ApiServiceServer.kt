@@ -1,4 +1,4 @@
-package com.example.greendefend.date.remote
+package com.example.greendefend.data.remote
 
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
@@ -7,6 +7,7 @@ import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.forum.React
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -20,31 +21,25 @@ import retrofit2.http.Part
 interface ApiServiceServer {
 
 
-    @Headers("Content-Type:application/json")
+
     @POST("Account/Login")
     suspend fun login(@Body login: Login): Response<ResponseLogin>
 
 
-    @Headers("Content-Type:application/json")
+
     @POST("Account/Confirm")
     suspend fun confirm(confirm: Confirm): Response<String>
-    @Headers("Content-Type:application/json,accept:application/json")
+
     @POST("Account/Register")
      suspend fun signup(@Body user: User):Response<String>
 
 
-     @Headers("Content-Type:multipart/form-data")
-     @Multipart
-     @PUT("Account/EditProfile")
-     suspend fun editProfile(
-         @Part("id") id: ResponseBody,
-         @Part("FullName") fullName: ResponseBody,
-         @Part("Bio") bio: ResponseBody,
-         @Part("Country") country: ResponseBody,
-         @Part file: MultipartBody.Part?
-     ):Response<ResponseBody>
 
-    @Headers("Content-Type:multipart/form-data,accept:application/json")
+
+     @PUT("Account/EditProfile")
+     suspend fun editProfile(@Body body: RequestBody):Response<ResponseBody?>
+
+
     @Multipart
     @POST("Account/EditProfile")
     suspend fun addPost(

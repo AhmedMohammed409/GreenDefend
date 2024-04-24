@@ -1,6 +1,8 @@
 package com.example.greendefend.domin.useCase
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.data.repository.RemoteRepositoryImp
@@ -13,8 +15,20 @@ import java.net.HttpRetryException
 import javax.inject.Inject
 
 @HiltViewModel
-class FourmViewModel @Inject constructor(val remoteRepositoryImp: RemoteRepositoryImp):ViewModel() {
+class ForumViewModel @Inject constructor(val remoteRepositoryImp: RemoteRepositoryImp):ViewModel() {
+    private val _fileName = MutableLiveData("")
+    val fileName: LiveData<String>
+        get() = _fileName
 
+    // new added
+    fun setFileName(name:String) {
+        _fileName.value = name
+    }
+    fun rest(){
+        remoteRepositoryImp.rest()
+    }
+    val serverResponse: LiveData<String> get() = remoteRepositoryImp.serverResponse
+    val connectionError: LiveData<String> get() = remoteRepositoryImp.connectionError
     fun addPost(id: String,
                 postValue: String,
                 fileUri: Uri,

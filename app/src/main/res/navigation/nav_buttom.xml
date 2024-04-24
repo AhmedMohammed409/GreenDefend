@@ -57,7 +57,11 @@
         android:id="@+id/checkingFragment"
         android:name="com.example.greendefend.ui.homing.CheckingFragment"
         android:label="fragment_checking"
-        tools:layout="@layout/fragment_checking" />
+        tools:layout="@layout/fragment_checking" >
+        <action
+            android:id="@+id/action_checkingFragment_to_diagnosticResultsFragment"
+            app:destination="@id/diagnosticResultsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/changeProfileFragment"
         android:name="com.example.greendefend.ui.homing.ChangeProfileFragment"
@@ -68,4 +72,16 @@
         android:name="com.example.greendefend.ui.homing.AskingFragment"
         android:label="fragment_asking"
         tools:layout="@layout/fragment_asking" />
+    <fragment
+        android:id="@+id/diagnosticResultsFragment"
+        android:name="com.example.greendefend.ui.homing.DiagnosticResultsFragment"
+        android:label="fragment_diagnostic_results"
+        tools:layout="@layout/fragment_diagnostic_results" >
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -14,9 +14,8 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
-import com.example.greendefend.ui.authentication.ViewModelAccount
+import com.example.greendefend.domin.useCase.AccountViewModel
 import com.example.greendefend.utli.getAvailableInternalMemorySize
-import com.example.greendefend.utli.getFilePathFromUri
 import com.example.greendefend.utli.getFileSize
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -25,8 +24,8 @@ import java.io.File
 @AndroidEntryPoint
 class ChangeProfileFragment : Fragment() {
     private lateinit var binding: FragmentChangeprofileBinding
-    private val viewModelAccount:ViewModelAccount by viewModels ()
-    lateinit var selectedfile:Uri
+    private val viewModelAccount: AccountViewModel by viewModels ()
+    private  var selectedfile:Uri?=null
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -99,21 +98,21 @@ class ChangeProfileFragment : Fragment() {
             pick()
         }
         binding.btnChange.setOnClickListener {
+            binding.progressBar.visibility=View.VISIBLE
             uplaoadAndObserve(
                 binding.etName.text.toString(),
                 binding.etBio.text.toString(),
-                binding.countrypicker.transitionName,
-                selectedfile
+              "Egypt",
+                selectedfile!!
 
             )
         }
     }
 
-    fun uplaoadAndObserve(fullName:String,bio:String,country:String,fileUri: Uri) {
-        if (getFileSize(requireActivity(), selectedfile) < getAvailableInternalMemorySize()){
+    private fun uplaoadAndObserve(fullName:String,bio:String,country:String,fileUri: Uri) {
+        if (getFileSize(requireActivity(), fileUri) < getAvailableInternalMemorySize()){
             viewModelAccount.editProfile("0bd6d620-912e-410a-91d6-d8c9d424265c",
-                fullName,bio,country,fileUri,  getFilePathFromUri(requireActivity(),
-                selectedfile,viewModelAccount))
+                fullName,bio,country,fileUri)
 
         }
 
