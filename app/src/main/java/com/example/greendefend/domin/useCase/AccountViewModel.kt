@@ -5,12 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.greendefend.Constants
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.data.repository.RemoteRepositoryImp
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
+import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.io.IOException
 import java.net.HttpRetryException
 import javax.inject.Inject
@@ -22,7 +27,10 @@ class AccountViewModel @Inject constructor(
     private var addSkillUseCase: AddSkillUseCase
 ) :
     ViewModel() {
+
+
     private val _fileName = MutableLiveData("")
+
     val fileName: LiveData<String>
         get() = _fileName
 
@@ -66,10 +74,11 @@ class AccountViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val result = repositoryImp.login(login)
-
                 if (result.isSuccessful) {
                     repositoryImp.serverResponse.value = result.message()
-                    Log.i("Id", result.body().toString())
+                    Log.i("response",result.body().toString())
+                    Constants.Token= result.body()!!.token.toString()
+//                    repositoryImp.addResult(result.body()!!)
                 } else {
                     repositoryImp.connectionError.value = "Password is irrcorect"
                 }
@@ -82,8 +91,8 @@ class AccountViewModel @Inject constructor(
                 repositoryImp.connectionError.value = e.message
 
             }
-
         }
+
 
     }
 
@@ -126,6 +135,7 @@ class AccountViewModel @Inject constructor(
 
                 val result=repositoryImp.editProfile(multipart)
 
+
                 if (result.isSuccessful) {
                     repositoryImp.serverResponse.value = result.message()
                 } else {
@@ -134,7 +144,9 @@ class AccountViewModel @Inject constructor(
                         result.errorBody().toString() + "\n massage ${result.message()}}"
                     )
                     repositoryImp.connectionError.value = result.errorBody().toString()
+
                 }
+
             } catch (e: IOException) {
                 repositoryImp.connectionError.value = "Internet is not connect"
             } catch (e: HttpRetryException) {
@@ -157,5 +169,7 @@ class AccountViewModel @Inject constructor(
 
 
 
+//GlobalScope.launch (Dispatchers.IO){
 
+//}
 

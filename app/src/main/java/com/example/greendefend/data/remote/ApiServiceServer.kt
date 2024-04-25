@@ -49,14 +49,12 @@ interface ApiServiceServer {
     ):Response<ResponseBody>
 
 
-    @Headers("Content-Type:application/json,accept:application/json")
     @POST("forum/AddComment")
     suspend fun addComment(
        @Body comment: Comment
     ): Response<String>
 
 
-    @Headers("Content-Type:application/json,accept:application/json")
     @POST("forum/AddReact")
     suspend fun addReact(
        @Body react: React

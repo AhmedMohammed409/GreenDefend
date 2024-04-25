@@ -33,7 +33,7 @@ class ViewModelCurrentWeather @Inject constructor(private var remoteRepositoryIm
 
             val info = Info()
             val result=remoteRepositoryImp.getCurrentWeather(
-                Constants.key,
+                Constants.KEY,
                 "$latitude,$longitude",
                 1,
                 info.getDate(),

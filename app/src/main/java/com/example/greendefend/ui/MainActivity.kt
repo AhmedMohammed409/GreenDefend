@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         lifecycleScope.launch {
-
             dataStoreRepositoryImpl.getPreference(onboardingOpenedState_Key,false).collect{
                 when(it){
                     true->{ startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))

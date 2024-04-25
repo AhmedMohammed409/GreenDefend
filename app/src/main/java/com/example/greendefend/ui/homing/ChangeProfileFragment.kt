@@ -110,17 +110,13 @@ class ChangeProfileFragment : Fragment() {
     }
 
     private fun uplaoadAndObserve(fullName:String,bio:String,country:String,fileUri: Uri) {
-        if (getFileSize(requireActivity(), fileUri) < getAvailableInternalMemorySize()){
-            viewModelAccount.editProfile("0bd6d620-912e-410a-91d6-d8c9d424265c",
-                fullName,bio,country,fileUri)
 
-        }
-
+        viewModelAccount.editProfile("0bd6d620-912e-410a-91d6-d8c9d424265c",
+            fullName,bio,"Eg",fileUri)
         viewModelAccount.serverResponse.observe(viewLifecycleOwner){
             if (it.isNotEmpty()){
                 Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
                 binding.progressBar.visibility=View.GONE
-                File(requireContext().cacheDir,viewModelAccount.fileName.value.toString()).delete()
                 viewModelAccount.rest()
             }
 

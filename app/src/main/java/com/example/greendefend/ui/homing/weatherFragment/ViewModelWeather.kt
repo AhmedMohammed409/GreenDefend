@@ -21,7 +21,7 @@ class ViewModelWeather @Inject constructor(private var remoteRepositoryImp: Remo
     fun getWeather(latitude: Float, longitude: Float):Response<CurrentWeather> {
         viewModelScope.launch {
             val result = remoteRepositoryImp.getCurrentWeather(
-                Constants.key,
+                Constants.KEY,
                 "${latitude},${longitude}",
                 1,
                 Info().getDate(),

@@ -131,14 +131,12 @@ class HomeFragment : Fragment() {
         viewModel.getCurrentWeather(latitude, longitude)
         viewModel.connectionError.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 binding.progressBar.visibility = View.GONE
                 viewModel.rest()
             }
         }
         viewModel.serverResponse.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 binding.progressBar.visibility = View.GONE
                 viewModel.rest()
             }

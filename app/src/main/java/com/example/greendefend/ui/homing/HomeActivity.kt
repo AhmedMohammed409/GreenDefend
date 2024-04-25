@@ -6,16 +6,20 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.greendefend.R
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding:ActivityHomeBinding
+    @Inject lateinit var dataStorePrefrenceImpl:DataStorePrefrenceImpl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment

@@ -1,6 +1,7 @@
 package com.example.greendefend.domin.model.account
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ResponseLogin(
     @SerializedName("fullName") var fullName: String? = null,
@@ -12,4 +13,4 @@ data class ResponseLogin(
     @SerializedName("isAuthenticated") var isAuthenticated: Boolean? = null,
     @SerializedName("address") var address: String? = null,
     @SerializedName("expier") var expier: String? = null
-)
+): Serializable

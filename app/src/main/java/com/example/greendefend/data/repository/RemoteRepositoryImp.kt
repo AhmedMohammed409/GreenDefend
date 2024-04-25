@@ -14,6 +14,8 @@ import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.domin.repository.RemoteRepository
 import dagger.hilt.android.qualifiers.ActivityContext
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -27,6 +29,7 @@ import javax.inject.Inject
 
 class RemoteRepositoryImp @Inject constructor(
     @ActivityContext private var ctx:Context,
+    private var dataStorePrefrenceImpl: DataStorePrefrenceImpl,
     private var apiServiceServer: ApiServiceServer,
     private var apiServiceWeather: ApiServiceWeather
 
@@ -39,6 +42,14 @@ class RemoteRepositoryImp @Inject constructor(
     fun rest(){
          connectionError.value=""
          serverResponse.value=""
+    }
+    suspend fun addResult(responseLogin: ResponseLogin){
+            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Token_KEY, responseLogin.token!!)
+            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Name_KEY, responseLogin.fullName!!)
+            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Email_KEY, responseLogin.email!!)
+            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Country_KEY, responseLogin.region!!)
+            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Bio_KEY, responseLogin.message!!)
+
     }
 
     suspend fun getCurrentWeather(

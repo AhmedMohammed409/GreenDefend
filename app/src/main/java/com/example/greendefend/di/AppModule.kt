@@ -17,8 +17,9 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    private val Context.appDataStore by preferencesDataStore(Constants.APP_DATA_STORE_NAME)
 
+
+    private val Context.appDataStore by preferencesDataStore(Constants.APP_DATA_STORE_NAME)
 
 
     @Provides
