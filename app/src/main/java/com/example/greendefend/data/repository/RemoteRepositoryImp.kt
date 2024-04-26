@@ -14,8 +14,6 @@ import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.domin.repository.RemoteRepository
 import dagger.hilt.android.qualifiers.ActivityContext
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -28,8 +26,7 @@ import javax.inject.Inject
 
 
 class RemoteRepositoryImp @Inject constructor(
-    @ActivityContext private var ctx:Context,
-    private var dataStorePrefrenceImpl: DataStorePrefrenceImpl,
+    private var ctx: Context,
     private var apiServiceServer: ApiServiceServer,
     private var apiServiceWeather: ApiServiceWeather
 
@@ -43,14 +40,7 @@ class RemoteRepositoryImp @Inject constructor(
          connectionError.value=""
          serverResponse.value=""
     }
-    suspend fun addResult(responseLogin: ResponseLogin){
-            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Token_KEY, responseLogin.token!!)
-            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Name_KEY, responseLogin.fullName!!)
-            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Email_KEY, responseLogin.email!!)
-            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Country_KEY, responseLogin.region!!)
-            dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.Bio_KEY, responseLogin.message!!)
 
-    }
 
     suspend fun getCurrentWeather(
         key: String,
@@ -70,17 +60,17 @@ class RemoteRepositoryImp @Inject constructor(
     override suspend fun editProfile(body: RequestBody?): Response<ResponseBody?> {
        return apiServiceServer.editProfile(body!!) }
 
-    override suspend fun addPost(
-        id: String,
-        postValue: String,
-        fileUri: Uri,
-        fileRealPath: String
-    ): Response<ResponseBody> {
-        val fileToSend = prepareFilePart("PostImage", fileRealPath,fileUri)
-        val idRequestBody = id.toResponseBody("text/plain".toMediaTypeOrNull())
-        val postRequestBody = postValue.toResponseBody("text/plain".toMediaTypeOrNull())
-        return apiServiceServer.addPost(idRequestBody,postRequestBody,fileToSend)
-    }
+//    override suspend fun addPost(
+//        id: String,
+//        postValue: String,
+//        fileUri: Uri,
+//        fileRealPath: String
+//    ): Response<ResponseBody> {
+//        val fileToSend = prepareFilePart("PostImage", fileRealPath,fileUri)
+//        val idRequestBody = id.toResponseBody("text/plain".toMediaTypeOrNull())
+//        val postRequestBody = postValue.toResponseBody("text/plain".toMediaTypeOrNull())
+//        return apiServiceServer.addPost(idRequestBody,postRequestBody,fileToSend)
+//    }
 
     override suspend fun login(login: Login): Response<ResponseLogin> =apiServiceServer.login(login)
 
@@ -104,14 +94,12 @@ class RemoteRepositoryImp @Inject constructor(
 
 
 
-    private fun prepareFilePart(partName: String,fileRealPath: String,fileUri: Uri): MultipartBody.Part {
-        val file =File(fileRealPath)
-        val requestFile: RequestBody =
-            file.asRequestBody(ctx.contentResolver.getType(fileUri)!!.toMediaTypeOrNull())
-        return MultipartBody.Part.createFormData(partName,file.name,requestFile)
-
-
-    }
+//    private fun prepareFilePart(partName: String,fileRealPath: String,fileUri: Uri): MultipartBody.Part {
+//        val file =File(fileRealPath)
+//        val requestFile: RequestBody =
+//            file.asRequestBody(ctx.contentResolver.getType(fileUri)!!.toMediaTypeOrNull())
+//        return MultipartBody.Part.createFormData(partName,file.name,requestFile)
+//    }
 
 
 

@@ -1,17 +1,13 @@
 package com.example.greendefend.di
 
-import android.app.Application
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import com.example.greendefend.Constants
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 
 @Module
@@ -19,18 +15,16 @@ import dagger.hilt.components.SingletonComponent
 object AppModule {
 
 
-    private val Context.appDataStore by preferencesDataStore(Constants.APP_DATA_STORE_NAME)
 
 
     @Provides
-    @ActivityContext
-    fun provideContext(application: Application): Context {
-        return application
+    fun provideContext(@ApplicationContext appContext: Context): Context {
+        return appContext
     }
+
     @Provides
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return context.appDataStore
-    }
+    @Singleton
+    fun provideDataStoreRepository( context: Context)=DataStorePrefrenceImpl(context)
 
 
 

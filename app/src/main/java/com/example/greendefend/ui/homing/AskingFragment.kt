@@ -5,21 +5,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.greendefend.databinding.FragmentAskingBinding
 import com.example.greendefend.domin.useCase.ForumViewModel
-import com.example.greendefend.utli.getAvailableInternalMemorySize
-import com.example.greendefend.utli.getFilePathFromUri
-import com.example.greendefend.utli.getFileSize
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
 
 @AndroidEntryPoint
 class AskingFragment : Fragment() {

@@ -13,17 +13,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
 import com.example.greendefend.domin.useCase.AccountViewModel
-import com.example.greendefend.utli.getAvailableInternalMemorySize
-import com.example.greendefend.utli.getFileSize
+import com.example.greendefend.domin.useCase.AddSkillUseCase
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class ChangeProfileFragment : Fragment() {
     private lateinit var binding: FragmentChangeprofileBinding
+    @Inject lateinit var addSkillUseCase: AddSkillUseCase
     private val viewModelAccount: AccountViewModel by viewModels ()
     private  var selectedfile:Uri?=null
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -99,34 +101,40 @@ class ChangeProfileFragment : Fragment() {
         }
         binding.btnChange.setOnClickListener {
             binding.progressBar.visibility=View.VISIBLE
-            uplaoadAndObserve(
-                binding.etName.text.toString(),
-                binding.etBio.text.toString(),
-              "Egypt",
-                selectedfile!!
 
-            )
-        }
-    }
 
-    private fun uplaoadAndObserve(fullName:String,bio:String,country:String,fileUri: Uri) {
+            lifecycleScope.launch {
+                try {
 
-        viewModelAccount.editProfile("0bd6d620-912e-410a-91d6-d8c9d424265c",
-            fullName,bio,"Eg",fileUri)
-        viewModelAccount.serverResponse.observe(viewLifecycleOwner){
-            if (it.isNotEmpty()){
-                Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-                binding.progressBar.visibility=View.GONE
-                viewModelAccount.rest()
+                    addSkillUseCase.invoke(  binding.etName.text.toString(),
+                        binding.etBio.text.toString(),
+                        "Welcome","Egypt",
+                        selectedfile!!)
+                }catch (e :Exception){
+                    e.printStackTrace()            }
+
             }
-
-        }
-        viewModelAccount.connectionError.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-            binding.progressBar.visibility=View.GONE
-            viewModelAccount.rest()
         }
     }
+
+//    private fun uplaoadAndObserve(fullName:String,bio:String,country:String,fileUri: Uri) {
+//
+//
+//
+//        viewModelAccount.serverResponse.observe(viewLifecycleOwner){
+//            if (it.isNotEmpty()){
+//                Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+//                binding.progressBar.visibility=View.GONE
+//                viewModelAccount.rest()
+//            }
+//
+//        }
+//        viewModelAccount.connectionError.observe(viewLifecycleOwner){
+//            Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+//            binding.progressBar.visibility=View.GONE
+//            viewModelAccount.rest()
+//        }
+//    }
 
     }
 

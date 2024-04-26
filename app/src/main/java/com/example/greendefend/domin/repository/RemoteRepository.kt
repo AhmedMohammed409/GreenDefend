@@ -21,12 +21,12 @@ interface RemoteRepository {
        body:RequestBody?
     ): Response<ResponseBody?>
 
-    suspend fun addPost(
-        id: String,
-        postValue: String,
-        fileUri: Uri,
-        fileRealPath: String
-    ): Response<ResponseBody>
+//    suspend fun addPost(
+//        id: String,
+//        postValue: String,
+//        fileUri: Uri,
+//        fileRealPath: String
+//    ): Response<ResponseBody>
     suspend fun addImage(
         id: String,
         fileUri: Uri,

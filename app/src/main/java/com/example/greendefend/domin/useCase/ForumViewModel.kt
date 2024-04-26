@@ -29,41 +29,41 @@ class ForumViewModel @Inject constructor(val remoteRepositoryImp: RemoteReposito
     }
     val serverResponse: LiveData<String> get() = remoteRepositoryImp.serverResponse
     val connectionError: LiveData<String> get() = remoteRepositoryImp.connectionError
-    fun addPost(id: String,
-                postValue: String,
-                fileUri: Uri,
-                fileRealPath: String
-
-    )=viewModelScope.launch {
-
-        viewModelScope.launch {
-            try {
-                val result= remoteRepositoryImp.addPost(id, postValue,fileUri,fileRealPath)
-
-                if (result.isSuccessful){
-                    remoteRepositoryImp.serverResponse.value=result.message()
-                }
-                else{
-                    remoteRepositoryImp.connectionError.value="Password is irrcorect"
-                }
-            }
-            catch (e: IOException)
-            {
-                e.printStackTrace()
-                remoteRepositoryImp.connectionError.value="Internet is not connect"
-            }
-            catch (e: HttpRetryException){
-                remoteRepositoryImp.connectionError.value="Server Not Response "
-                e.printStackTrace()
-            }
-            catch (ex :Exception){
-                remoteRepositoryImp.connectionError.value=ex.message
-
-            }
-
-        }
-
-    }
+//    fun addPost(id: String,
+//                postValue: String,
+//                fileUri: Uri,
+//                fileRealPath: String
+//
+//    )=viewModelScope.launch {
+//
+//        viewModelScope.launch {
+//            try {
+//                val result= remoteRepositoryImp.addPost(id, postValue,fileUri,fileRealPath)
+//
+//                if (result.isSuccessful){
+//                    remoteRepositoryImp.serverResponse.value=result.message()
+//                }
+//                else{
+//                    remoteRepositoryImp.connectionError.value="Password is irrcorect"
+//                }
+//            }
+//            catch (e: IOException)
+//            {
+//                e.printStackTrace()
+//                remoteRepositoryImp.connectionError.value="Internet is not connect"
+//            }
+//            catch (e: HttpRetryException){
+//                remoteRepositoryImp.connectionError.value="Server Not Response "
+//                e.printStackTrace()
+//            }
+//            catch (ex :Exception){
+//                remoteRepositoryImp.connectionError.value=ex.message
+//
+//            }
+//
+//        }
+//
+//    }
     suspend fun addComment(comment: Comment) {
         viewModelScope.launch {
             try {
