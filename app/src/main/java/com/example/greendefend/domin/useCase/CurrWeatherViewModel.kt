@@ -1,4 +1,4 @@
-package com.example.greendefend.ui.homing.homeFragment
+package com.example.greendefend.ui.homing.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

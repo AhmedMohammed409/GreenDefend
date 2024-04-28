@@ -23,13 +23,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
+    private var  addSkillUseCase: AddSkillUseCase,
     private var dataStorePrefrenceImpl: DataStorePrefrenceImpl,
-    private var repositoryImp: RemoteRepositoryImp,
-    private var addSkillUseCase: AddSkillUseCase
+    private var repositoryImp: RemoteRepositoryImp
 ) :
     ViewModel() {
 
-//    private var responseLogin = MutableLiveData<ResponseLogin>()
 
 
     fun rest() {
@@ -101,15 +100,12 @@ class AccountViewModel @Inject constructor(
             try {
                 val result = repositoryImp.login(login)
                 if (result.isSuccessful) {
-
                   if (result.body()!=null){
-//                      saveInDataStore(result.body()!!)
                       repositoryImp.serverResponse.value = result.message()
-                      Log.i("response", result.body().toString())
-                      Constants.Token = result.body()!!.token.toString()
+                      Constants.Token = result.body()!!.token!!
+                      Constants.Id=result.body()!!.userId!!
                   }
-       
-//                    repositoryImp.addResult(result.body()!!)
+
                 } else {
                     repositoryImp.connectionError.value = "Password is irrcorect"
                 }
@@ -150,49 +146,36 @@ class AccountViewModel @Inject constructor(
         }
 
     }
-//    fun editProfile(
-//        id: String,
-//        fullName: String,
-//        bio: String,
-//        country: String,
-//        imageUri: Uri
-//    ) {
-//        viewModelScope.launch {
-//            try {
-//                val multipart = addSkillUseCase.invoke(id, fullName, bio, country, imageUri)
-//                val result = repositoryImp.editProfile(multipart)
-//
-//                if (result.isSuccessful) {
-//                    repositoryImp.serverResponse.value = result.message()
-//                } else {
-//                    Log.e(
-//                        "msgErr",
-//                        result.errorBody().toString() + "\n massage ${result.message()}}"
-//                    )
-//                    repositoryImp.connectionError.value = result.errorBody().toString()
-//
-//                }
-//
-//            } catch (e: IOException) {
-//                repositoryImp.connectionError.value = "Internet is not connect"
-//            } catch (e: HttpRetryException) {
-//                repositoryImp.connectionError.value = "Server Not Response "
-//                e.printStackTrace()
-//            } catch (ex: Exception) {
-//                repositoryImp.connectionError.value = ex.message
-//
-//            }
-//
-//        }
-//
-//
-//    }
+    fun edit( id: String,
+              fullName: String,
+              bio: String,
+              country: String,
+              imageUri: Uri?){
+        viewModelScope.launch {
+            try {
+                val multipart=addSkillUseCase.invoke(id, fullName, bio, country, imageUri)
+                val result=repositoryImp.editProfile(multipart)
+                if (result.isSuccessful){
+                    repositoryImp.serverResponse.value="Sucessfull"
+                    Log.e("MS Error",result.body().toString()+result.message()+result.errorBody())
+                }else{
+                    Log.e("MS Error",result.body().toString()+result.message()+result.errorBody())
+                    repositoryImp.serverResponse.value="failed"
+                }
+            }catch (e:IOException){
+                repositoryImp.serverResponse.value="Not connection"
+            }catch (e:HttpRetryException){
+                repositoryImp.serverResponse.value="server not response"
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
+        }
+    }
+
 
 
 }
 
 
-//GlobalScope.launch (Dispatchers.IO){
-
-//}
 
