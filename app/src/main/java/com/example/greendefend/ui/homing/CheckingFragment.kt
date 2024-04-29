@@ -26,9 +26,9 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 class CheckingFragment : Fragment() {
     private lateinit var bitmap: Bitmap
     private  var uri: Uri?=null
-    private val listDisease by lazy {
-        requireActivity().assets.open("label2.txt").bufferedReader().readLines()
-    }
+//    private val listDisease by lazy {
+//        requireActivity().assets.open("label2.txt").bufferedReader().readLines()
+//    }
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->

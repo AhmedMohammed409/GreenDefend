@@ -13,13 +13,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.databinding.FragmentEntercodeBinding
 import com.example.greendefend.domin.model.account.Confirm
-import com.example.greendefend.domin.useCase.AccountViewModel
+import com.example.greendefend.domin.useCase.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 
 class EntercodeFragment: Fragment() {
    private lateinit var binding: FragmentEntercodeBinding
    private val args:EntercodeFragmentArgs by navArgs()
-    private val  viewModelAccount: AccountViewModel by viewModels()
+    private val  viewModelAccount: AuthViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentAskingBinding
 import com.example.greendefend.domin.useCase.ForumViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AskingFragment : Fragment() {
    private lateinit var binding: FragmentAskingBinding
-   private  var selectedfile:Uri?=null
+    private lateinit var selectedfile:Uri
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -34,7 +36,7 @@ class AskingFragment : Fragment() {
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode== Activity.RESULT_OK){
-                val selectedfile = result.data!!.data
+                 selectedfile = result.data!!.data!!
                 binding.imgPost.setImageURI(selectedfile)
                 binding.btnAddImage.visibility=View.GONE
             }else{
@@ -83,41 +85,25 @@ class AskingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnAddImage.setOnClickListener {
-            pick()
-
-
-        }
+        binding.btnAddImage.setOnClickListener { pick() }
         binding.btnSend.setOnClickListener {
             binding.progressBar.visibility=View.VISIBLE
-//            postAndObserve()
+           addpostAndObserve(binding.etPost.text.toString(),selectedfile)
+
         }
 
 
     }
-//    fun postAndObserve(){
-//        if (selectedfile!=null){
-//            if (getFileSize(requireActivity(), selectedfile!!)< getAvailableInternalMemorySize()){
-//                viewModelFourm.addPost(id="0bd6d620-912e-410a-91d6-d8c9d424265c",binding.etPost.text.toString(), selectedfile!!,
-//                    getFilePathFromUri(requireActivity(), selectedfile!!,))
-//            }
-//
-//            viewModelFourm.serverResponse.observe(viewLifecycleOwner){
-//                if (it.isNotEmpty()){
-//                    Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-//                    binding.progressBar.visibility=View.GONE
-//                    File(requireContext().cacheDir,viewModelFourm.fileName.value.toString()).delete()
-//                    viewModelFourm.rest()
-//                }
-//
-//            }
-//            viewModelFourm.connectionError.observe(viewLifecycleOwner){
-//                Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-//                binding.progressBar.visibility=View.GONE
-//                viewModelFourm.rest()
-//            }
-//        }
-//    }
+
+    private fun addpostAndObserve(post:String, uri: Uri?){
+        viewModelFourm.addPost(Constants.Id,post,uri!!)
+        viewModelFourm.serverResponse.observe(viewLifecycleOwner){
+            binding.progressBar.visibility=View.GONE
+            Toast.makeText(requireContext(),it,Toast.LENGTH_SHORT).show()
+            findNavController().navigate(AskingFragmentDirections.actionAskingFragmentToForumFragment())
+        }
+    }
+
 
 
 }

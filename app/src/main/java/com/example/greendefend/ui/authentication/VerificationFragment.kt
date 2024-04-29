@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentVerificationBinding
 
 
@@ -15,7 +16,6 @@ class VerificationFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {}
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,9 +24,9 @@ class VerificationFragment : Fragment() {
         binding=FragmentVerificationBinding.inflate(inflater,container,false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.txtAppName.text=Constants.provideProjectName(requireContext())
         binding.btnSend.setOnClickListener {
             findNavController().navigate(VerificationFragmentDirections.actionVerificationFragmentToUpdatePasswordFragment())
         }

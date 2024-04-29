@@ -12,34 +12,20 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".1"
         />
-
-    <LinearLayout
-        android:id="@+id/layout_nameapp"
+    <TextView
+        android:id="@+id/txt_appName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline">
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        android:gravity="center"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        tools:text="GreenDefend"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/green"
-            android:textColor="@color/black"
-            android:textSize="45sp"
-            android:textStyle="bold" />
+        />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Defend"
-            android:textColor="#388B68"
-            android:textSize="45sp"
-            android:textStyle="bold"
 
-            tools:ignore="HardcodedText" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/txt_forget"
@@ -53,7 +39,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_nameapp" />
+        app:layout_constraintTop_toBottomOf="@id/txt_appName" />
 
 
     <com.google.android.material.textfield.TextInputLayout

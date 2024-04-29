@@ -1,4 +1,4 @@
-package com.example.greendefend.ui.homing.weatherFragment
+package com.example.greendefend.ui.homing.weather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

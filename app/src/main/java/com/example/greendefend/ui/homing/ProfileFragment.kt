@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.greendefend.Constants
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentProfileBinding
 
@@ -32,7 +33,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+binding.txtAppName.text=Constants.provideProjectName(requireContext())
         val actiotogle = ActionBarDrawerToggle(
             requireActivity(),
             binding.drawer,

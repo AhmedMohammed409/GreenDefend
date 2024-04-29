@@ -2,21 +2,16 @@ package com.example.greendefend.domin.useCase
 
 import android.content.Context
 import android.net.Uri
-import com.example.greendefend.data.repository.RemoteRepositoryImp
 import com.example.greendefend.utli.ConvertUriToFile.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.ResponseBody
-import retrofit2.Response
 import javax.inject.Inject
 
-class AddSkillUseCase @Inject constructor(
-    private val remoteRepositoryImp: RemoteRepositoryImp,
-    val context: Context) {
+class EditProfileUseCase @Inject constructor(val context: Context) {
 
 
-   suspend  operator fun invoke(
+   operator fun invoke(
        id: String,
        fullName: String,
        bio: String,

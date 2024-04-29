@@ -11,7 +11,6 @@ import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.onboardingOpenedState_Key
 import com.example.greendefend.databinding.ActivityOnboardingBinding
 import com.example.greendefend.domin.model.OnboardingModel
-import com.example.greendefend.ui.adapters.ViewPagerAdapter
 import com.example.greendefend.ui.authentication.AuthenticationActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint

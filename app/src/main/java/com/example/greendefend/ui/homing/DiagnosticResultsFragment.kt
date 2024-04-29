@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.example.greendefend.data.local.Converters
 import com.example.greendefend.databinding.FragmentDiagnosticResultsBinding
 import com.example.greendefend.domin.model.Disease
 import com.example.greendefend.utli.Info
@@ -21,7 +20,6 @@ class DiagnosticResultsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {}
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

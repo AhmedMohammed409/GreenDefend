@@ -1,4 +1,4 @@
-package com.example.greendefend.ui.adapters
+package com.example.greendefend.ui.boarding
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

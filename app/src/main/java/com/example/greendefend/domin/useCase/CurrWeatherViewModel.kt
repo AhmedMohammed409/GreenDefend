@@ -1,4 +1,4 @@
-package com.example.greendefend.ui.homing.home
+package com.example.greendefend.domin.useCase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,19 +11,20 @@ import com.example.greendefend.utli.Info
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okio.IOException
+import java.net.HttpRetryException
 import javax.inject.Inject
 
 
 @HiltViewModel
-class ViewModelCurrentWeather @Inject constructor(private var remoteRepositoryImp: RemoteRepositoryImp) :
+class CurrWeatherViewModel @Inject constructor(private var remoteRepositoryImp: RemoteRepositoryImp) :
     ViewModel() {
+    private var connectionErrorMutable=MutableLiveData<String>()
+    private var serverResponseMutable= MutableLiveData<String>()
+
+    val serverResponse: LiveData<String> get() =serverResponseMutable
+    val connectionError: LiveData<String> get() = connectionErrorMutable
 
 
-    fun rest(){
-        remoteRepositoryImp.rest()
-    }
-    val serverResponse: LiveData<String> get() = remoteRepositoryImp.serverResponse
-    val connectionError: LiveData<String> get() = remoteRepositoryImp.connectionError
 
         private val resultMutableLiveData=MutableLiveData<CurrentWeather>()
     val resultLiveData:LiveData<CurrentWeather> get() = resultMutableLiveData
@@ -41,16 +42,20 @@ class ViewModelCurrentWeather @Inject constructor(private var remoteRepositoryIm
             if (result.isSuccessful){
                 if (result.body()!=null){
                     resultMutableLiveData.value=result.body()
-                    remoteRepositoryImp.serverResponse.value="Sucessfull"
+                   serverResponseMutable.value="Sucessfull"
                 }
                 else{
-                    remoteRepositoryImp.connectionError.value=result.message()
+                   connectionErrorMutable.value=result.message()
                 }
             }
         }catch (e :IOException){
-            remoteRepositoryImp.connectionError.value="Sucessfull"
-        }catch (e:Exception){
-            remoteRepositoryImp.connectionError.value=e.message
+           connectionErrorMutable.value="Sucessfull"
+        }catch (e:HttpRetryException){
+            e.printStackTrace()
+           connectionErrorMutable.value="Server Not Response"
+        }
+        catch (e:Exception){
+           connectionErrorMutable.value=e.message
         }
 
 

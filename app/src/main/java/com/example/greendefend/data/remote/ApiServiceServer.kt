@@ -5,17 +5,16 @@ import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
+import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.Multipart
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Part
 
 
 interface ApiServiceServer {
@@ -27,6 +26,7 @@ interface ApiServiceServer {
 
 
 
+
     @POST("Account/Confirm")
     suspend fun confirm(confirm: Confirm): Response<String>
 
@@ -35,20 +35,17 @@ interface ApiServiceServer {
 
 
 
-
      @PUT("Account/EditProfile")
      suspend fun editProfile(@Body body: RequestBody):Response<ResponseBody?>
 
 
-    @Multipart
-    @POST("Account/EditProfile")
+    @POST("forum/AddPost")
     suspend fun addPost(
-        @Part("UserId") id: ResponseBody,
-        @Part("PostValue") postValue: ResponseBody,
-        @Part file: MultipartBody.Part?
-    ):Response<ResponseBody>
+        @Body body: RequestBody?
+    ):Response<ResponseBody?>
 
-
+    @GET("forum/GetPosts")
+    suspend fun getPosts():Response<List<Post>>
     @POST("forum/AddComment")
     suspend fun addComment(
        @Body comment: Comment

@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentForgetBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ForgetFragment : Fragment() {
   private lateinit var binding: FragmentForgetBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,7 @@ class ForgetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.txtAppName.text=Constants.provideProjectName(requireContext())
         binding.btnSend.setOnClickListener {
             if (checkEmail(binding.etEmail.text.toString())){
             findNavController().navigate(ForgetFragmentDirections.actionForgetFragmentToVerificationFragment())}

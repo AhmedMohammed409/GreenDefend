@@ -20,25 +20,21 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-
-
-
     @Provides
-    fun provideHttpClient(  ):OkHttpClient{
+    fun provideHttpClient():OkHttpClient{
         val httpLoggingInterceptor=HttpLoggingInterceptor()
         return  OkHttpClient().newBuilder().apply {
             addInterceptor{ chain ->
                 val newRequest=chain.request().newBuilder()
-                Log.e("Token",Constants.Token)
                 newRequest.addHeader("Accept","application/json")
                 newRequest.addHeader("Authorization","Bearer ${Constants.Token}")
-                newRequest.addHeader("Content-Type","application/json")
+                newRequest.addHeader("Content-Type", "application/json")
                 chain.proceed(newRequest.build())
             }
             addInterceptor(httpLoggingInterceptor)
-            readTimeout(12,TimeUnit.MINUTES)
-            writeTimeout(12,TimeUnit.MINUTES)
-            callTimeout(12,TimeUnit.MINUTES)
+            readTimeout(4,TimeUnit.MINUTES)
+            writeTimeout(4,TimeUnit.MINUTES)
+            callTimeout(4,TimeUnit.MINUTES)
         }.build()
     }
 

@@ -13,21 +13,22 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
-import com.example.greendefend.domin.useCase.AccountViewModel
-import com.example.greendefend.domin.useCase.AddSkillUseCase
+import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.domin.useCase.EditProfileUseCase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class ChangeProfileFragment : Fragment() {
     private lateinit var binding: FragmentChangeprofileBinding
-    @Inject lateinit var addSkillUseCase: AddSkillUseCase
-    private val viewModelAccount: AccountViewModel by viewModels ()
-    private  var selectedfile:Uri?=null
+    @Inject
+    lateinit var addSkillUseCase: EditProfileUseCase
+    private val accountViewModel: AuthViewModel by viewModels()
+    private var selectedfile: Uri? = null
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -41,7 +42,7 @@ class ChangeProfileFragment : Fragment() {
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                 selectedfile = result.data!!.data!!
+                selectedfile = result.data!!.data!!
                 binding.imgProfile.setImageURI(selectedfile)
             } else {
                 Toast.makeText(
@@ -100,41 +101,30 @@ class ChangeProfileFragment : Fragment() {
             pick()
         }
         binding.btnChange.setOnClickListener {
-            binding.progressBar.visibility=View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
+
+            observe(
+                Constants.Id, binding.etName.text.toString(),
+                binding.etBio.text.toString(),
+                "Italin",
+                selectedfile!!
+            )
 
 
-            lifecycleScope.launch {
-                try {
-
-                    addSkillUseCase.invoke(  binding.etName.text.toString(),
-                        binding.etBio.text.toString(),
-                        "Welcome","Egypt",
-                        selectedfile!!)
-                }catch (e :Exception){
-                    e.printStackTrace()            }
-
-            }
         }
     }
 
-//    private fun uplaoadAndObserve(fullName:String,bio:String,country:String,fileUri: Uri) {
-//
-//
-//
-//        viewModelAccount.serverResponse.observe(viewLifecycleOwner){
-//            if (it.isNotEmpty()){
-//                Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-//                binding.progressBar.visibility=View.GONE
-//                viewModelAccount.rest()
-//            }
-//
-//        }
-//        viewModelAccount.connectionError.observe(viewLifecycleOwner){
-//            Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-//            binding.progressBar.visibility=View.GONE
-//            viewModelAccount.rest()
-//        }
-//    }
+    private fun observe(id: String, name: String, bio: String, country: String, uri: Uri) {
+        accountViewModel.edit(id, name, bio, country, uri)
+        accountViewModel.serverResponse.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            binding.progressBar.visibility = View.GONE
+            accountViewModel.rest()
+            findNavController().
+            navigate(ChangeProfileFragmentDirections.actionChangeProfileFragmentToProfileFragment())
+        }
 
     }
+
+}
 

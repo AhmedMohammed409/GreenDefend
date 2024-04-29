@@ -5,15 +5,17 @@ import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.greendefend.Constants
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.data.repository.RemoteRepositoryImp
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
+import com.example.greendefend.utli.ApiHandler
+import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -22,25 +24,28 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class AccountViewModel @Inject constructor(
-    private var  addSkillUseCase: AddSkillUseCase,
+class AuthViewModel @Inject constructor(
+    private var addSkillUseCase: EditProfileUseCase,
     private var dataStorePrefrenceImpl: DataStorePrefrenceImpl,
     private var repositoryImp: RemoteRepositoryImp
 ) :
-    ViewModel() {
+    ViewModel() ,ApiHandler{
 
+    private var connectionErrorMutable = MutableLiveData<String>()
+    private var serverResponseMutable = MutableLiveData<String>()
 
+    private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
+    val responseLiveData: LiveData<NetworkResult<Any>> get() = responseMutableLiveData
+    val serverResponse: LiveData<String> get() = serverResponseMutable
+    val connectionError: LiveData<String> get() = connectionErrorMutable
 
     fun rest() {
-        repositoryImp.rest()
+        connectionErrorMutable.value = ""
+        serverResponseMutable.value = ""
     }
 
-    val serverResponse: LiveData<String> get() = repositoryImp.serverResponse
-    val connectionError: LiveData<String> get() = repositoryImp.connectionError
-
-
     private fun saveInDataStore(responseLogin: ResponseLogin) {
-        viewModelScope.launch{
+        viewModelScope.launch {
             dataStorePrefrenceImpl.putPreference(
                 DataStorePrefrenceImpl.Token_KEY,
                 responseLogin.token!!
@@ -78,50 +83,25 @@ class AccountViewModel @Inject constructor(
             val result = repositoryImp.register(user)
 
             if (result.isSuccessful) {
-                repositoryImp.serverResponse.value = result.message()
+                serverResponseMutable.value = result.message()
             } else {
-                repositoryImp.connectionError.value = "Email Already Registered"
+                connectionErrorMutable.value = "Email Already Registered"
 
             }
 
         } catch (e: HttpRetryException) {
-            repositoryImp.connectionError.value = "Server Not Response "
+            connectionErrorMutable.value = "Server Not Response "
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()
-            repositoryImp.connectionError.value = "Internet is not connect"
+            connectionErrorMutable.value = "Internet is not connect"
         }
-
 
     }
 
-    fun login(login: Login) {
-        viewModelScope.launch {
-            try {
-                val result = repositoryImp.login(login)
-                if (result.isSuccessful) {
-                  if (result.body()!=null){
-                      repositoryImp.serverResponse.value = result.message()
-                      Constants.Token = result.body()!!.token!!
-                      Constants.Id=result.body()!!.userId!!
-                  }
 
-                } else {
-                    repositoryImp.connectionError.value = "Password is irrcorect"
-                }
-            } catch (e: IOException) {
-                repositoryImp.connectionError.value = "Internet is not connect"
-            } catch (e: HttpRetryException) {
-                repositoryImp.connectionError.value = "Server Not Response "
-                e.printStackTrace()
-            } catch (e: Exception) {
-                repositoryImp.connectionError.value = e.message
+         suspend fun login(login: Login)=handleApi { repositoryImp.login(login) }
 
-            }
-        }
-
-
-    }
 
     fun confirm(confirm: Confirm) {
         viewModelScope.launch {
@@ -129,17 +109,17 @@ class AccountViewModel @Inject constructor(
                 val result = repositoryImp.confirmAccount(confirm)
 
                 if (result.isSuccessful) {
-                    repositoryImp.serverResponse.value = result.message()
+                  serverResponseMutable.value = result.message()
                 } else {
-                    repositoryImp.connectionError.value = "Password is irrcorect"
+                 connectionErrorMutable.value = "Password is irrcorect"
                 }
             } catch (e: IOException) {
-                repositoryImp.connectionError.value = "Internet is not connect"
+               connectionErrorMutable.value = "Internet is not connect"
             } catch (e: HttpRetryException) {
-                repositoryImp.connectionError.value = "Server Not Response "
+               connectionErrorMutable.value = "Server Not Response "
                 e.printStackTrace()
             } catch (ex: Exception) {
-                repositoryImp.connectionError.value = ex.message
+              connectionErrorMutable.value = ex.message
 
             }
 
@@ -156,16 +136,16 @@ class AccountViewModel @Inject constructor(
                 val multipart=addSkillUseCase.invoke(id, fullName, bio, country, imageUri)
                 val result=repositoryImp.editProfile(multipart)
                 if (result.isSuccessful){
-                    repositoryImp.serverResponse.value="Sucessfull"
+                  serverResponseMutable.value="Sucessfull"
                     Log.e("MS Error",result.body().toString()+result.message()+result.errorBody())
                 }else{
                     Log.e("MS Error",result.body().toString()+result.message()+result.errorBody())
-                    repositoryImp.serverResponse.value="failed"
+                    serverResponseMutable.value="failed"
                 }
             }catch (e:IOException){
-                repositoryImp.serverResponse.value="Not connection"
+               serverResponseMutable.value="Not connection"
             }catch (e:HttpRetryException){
-                repositoryImp.serverResponse.value="server not response"
+               serverResponseMutable.value="server not response"
             }catch (e:Exception){
                 e.printStackTrace()
             }
@@ -178,4 +158,30 @@ class AccountViewModel @Inject constructor(
 }
 
 
+/*fun login(login: Login) {
 
+      viewModelScope.launch {
+          try {
+              val result = repositoryImp.login(login)
+              if (result.isSuccessful) {
+                  if (result.body()!=null){
+//                        saveInDataStore(result.body()!!)
+                      serverResponseMutable.value = result.message()
+                      Constants.Token = result.body()!!.token!!
+                      Constants.Id=result.body()!!.userId!!
+                  }
+
+              } else if (!result.isSuccessful) {
+                  connectionErrorMutable.value = "Password is irrcorect"
+              }
+          } catch (e: IOException) {
+              connectionErrorMutable.value = "Internet is not connect"
+          } catch (e: HttpRetryException) {
+              connectionErrorMutable.value = "Server Not Response "
+              e.printStackTrace()
+          } catch (e: Exception) {
+              connectionErrorMutable.value = e.message
+
+          }
+      }
+  }*/

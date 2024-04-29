@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.greendefend.ui.homing.homeFragment.HomeFragment"
+        android:name="com.example.greendefend.ui.homing.home.HomeFragment"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_weatherFragment"
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/forumFragment"
-        android:name="com.example.greendefend.ui.homing.ForumFragment"
+        android:name="com.example.greendefend.ui.homing.forum.ForumFragment"
 
         tools:layout="@layout/fragment_forum" >
         <action
@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_forumFragment_to_askingFragment"
             app:destination="@id/askingFragment" />
+        <action
+            android:id="@+id/action_forumFragment_to_postFragment"
+            app:destination="@id/postFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -43,7 +46,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/weatherFragment"
-        android:name="com.example.greendefend.ui.homing.weatherFragment.WeatherFragment"
+        android:name="com.example.greendefend.ui.homing.weather.WeatherFragment"
         android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" >
         <argument
@@ -66,12 +69,20 @@
         android:id="@+id/changeProfileFragment"
         android:name="com.example.greendefend.ui.homing.ChangeProfileFragment"
         android:label="fragment_changeprofile"
-        tools:layout="@layout/fragment_changeprofile" />
+        tools:layout="@layout/fragment_changeprofile" >
+        <action
+            android:id="@+id/action_changeProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/askingFragment"
         android:name="com.example.greendefend.ui.homing.AskingFragment"
         android:label="fragment_asking"
-        tools:layout="@layout/fragment_asking" />
+        tools:layout="@layout/fragment_asking" >
+        <action
+            android:id="@+id/action_askingFragment_to_forumFragment"
+            app:destination="@id/forumFragment" />
+    </fragment>
     <fragment
         android:id="@+id/diagnosticResultsFragment"
         android:name="com.example.greendefend.ui.homing.DiagnosticResultsFragment"
@@ -83,5 +94,14 @@
         <argument
             android:name="index"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.example.greendefend.PostFragment"
+        android:label="fragment_post"
+        tools:layout="@layout/fragment_post" >
+        <argument
+            android:name="post"
+            app:argType="com.example.greendefend.domin.model.forum.Post" />
     </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.greendefend.ui.homing.homeFragment
+package com.example.greendefend.ui.homing.home
 
 import android.Manifest.permission
 import android.annotation.SuppressLint
@@ -14,8 +14,10 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.greendefend.Constants
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentHomeBinding
+import com.example.greendefend.domin.useCase.CurrWeatherViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+
+    private val viewModel: CurrWeatherViewModel by viewModels()
     private  var latitude: Float?= 0F
     private var longitude: Float ?= 0F
     private lateinit var binding: FragmentHomeBinding
@@ -38,7 +42,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
     private fun hasPermission(permissions: Array<String>): Boolean =
         permissions.all {
             ActivityCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
@@ -56,7 +59,7 @@ class HomeFragment : Fragment() {
     private val mFusedLocationProviderClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(requireContext())
     }
-    private val viewModel: ViewModelCurrentWeather by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +79,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.txtAppName.text=Constants.provideProjectName(requireContext())
         chekPermissionOrShowDialog()
        weatherAndObserve(latitude!!, longitude!!)
 
@@ -114,31 +119,28 @@ class HomeFragment : Fragment() {
         }
     }
 
-
+/*
     private fun observeWeather() {
         viewModel.getCurrentWeather(latitude!!.toFloat(),longitude!!.toFloat())
         viewModel.resultLiveData.observe(viewLifecycleOwner) {
                 binding.currentWeather = it
                 binding.progressBar.visibility = View.GONE
-//                Glide.with(requireContext())
-//                    .load("http://api.weatherapi.com${it.current?.condition?.icon}")
-//                    .into(binding.imgWeather)
+                Glide.with(requireContext())
+                    .load("http://api.weatherapi.com${it.current?.condition?.icon}")
+                    .into(binding.imgWeather)
 
         }
-
-    }
+    }*/
     private fun weatherAndObserve(latitude: Float, longitude:Float) {
         viewModel.getCurrentWeather(latitude, longitude)
         viewModel.connectionError.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 binding.progressBar.visibility = View.GONE
-                viewModel.rest()
             }
         }
         viewModel.serverResponse.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 binding.progressBar.visibility = View.GONE
-                viewModel.rest()
             }
         }
 

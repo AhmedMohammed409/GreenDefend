@@ -6,18 +6,16 @@ import com.example.greendefend.utli.ConvertUriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 import javax.inject.Inject
 
-class AddPost @Inject constructor(private val context: Context) {
+class AddPostUseCase @Inject constructor(private val context: Context) {
     operator fun invoke(
         id: String,
         postValue: String,
-        imageUri: Uri?
-
+        imageUri: Uri
     ): MultipartBody {
         val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)
-        val file = ConvertUriToFile.uriToFile(imageUri!!, context.contentResolver)
+        val file = ConvertUriToFile.uriToFile(imageUri, context.contentResolver)
         multipart.apply {
             addFormDataPart("UserId", id)
             addFormDataPart("PostValue", postValue)

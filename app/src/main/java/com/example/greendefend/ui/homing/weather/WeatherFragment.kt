@@ -1,4 +1,4 @@
-package com.example.greendefend.ui.homing.weatherFragment
+package com.example.greendefend.ui.homing.weather
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

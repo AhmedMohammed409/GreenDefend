@@ -12,10 +12,10 @@ class Converters {
 
 
     @TypeConverter
-    fun fromDiseaseJson(json: String): List<Disease> {
+    fun fromDiseaseJson(json: String): ErrorRegister {
         return Gson().fromJson(
             json,
-            object : TypeToken<ArrayList<Disease>>() {}.type
+            object : TypeToken<ErrorRegister>() {}.type
         )
     }
 

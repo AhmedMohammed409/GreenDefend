@@ -10,18 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentSignupBinding
 import com.example.greendefend.domin.model.account.User
-import com.example.greendefend.domin.useCase.AccountViewModel
+import com.example.greendefend.domin.useCase.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignupFragment : Fragment() {
     private lateinit var binding: FragmentSignupBinding
-    private val viewModelAccount: AccountViewModel by viewModels()
+    private val viewModelAccount: AuthViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -84,14 +83,6 @@ class SignupFragment : Fragment() {
 
 
     }
-
-
-//    validationName(binding.etName.text.toString()) &&
-
-//    private fun validationName(name: String): Boolean {
-//        return !(name.contains("[0-9]".toRegex()) || name.isEmpty())
-//    }
-
 
 }
    
