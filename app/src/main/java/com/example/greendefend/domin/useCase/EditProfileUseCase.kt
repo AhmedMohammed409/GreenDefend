@@ -1,22 +1,19 @@
 package com.example.greendefend.domin.useCase
 
-import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import com.example.greendefend.data.repository.RemoteRepositoryImp
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.example.greendefend.utli.ConvertUriToFile.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
-import java.io.File
 import javax.inject.Inject
 
 class AddSkillUseCase @Inject constructor(
-    @ApplicationContext val context: Context
-    ,val  remoteRepositoryImp: RemoteRepositoryImp
-) {
+    private val remoteRepositoryImp: RemoteRepositoryImp,
+    val context: Context) {
 
 
    suspend  operator fun invoke(
@@ -24,12 +21,11 @@ class AddSkillUseCase @Inject constructor(
        fullName: String,
        bio: String,
        country: String,
-       imageUri:Uri
+       imageUri:Uri?
        // skillImages:List<Uri>
-    ): Response<ResponseBody?> {
+    ): MultipartBody {
         val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)
-        val file=uriToFile(imageUri,context.contentResolver)
-
+        val file=uriToFile(imageUri!!,context.contentResolver)
         multipart.apply {
             addFormDataPart("id", id)
             addFormDataPart("FullName",fullName)
@@ -45,16 +41,9 @@ class AddSkillUseCase @Inject constructor(
 //            val newFile= getFilePathFromUri()
 //            }
         }
-return remoteRepositoryImp.editProfile(body = multipart.build())
+       return multipart.build()
     }
 
-    private fun uriToFile(uri: Uri,convertResolver: ContentResolver): File {
-        val inputStream=convertResolver.openInputStream(uri)
-        val file=File.createTempFile("temp",null)
-        file.outputStream().use { outputStream->
-            inputStream?.copyTo(outputStream)
-        }
-     return file
-    }
+
 
 }
