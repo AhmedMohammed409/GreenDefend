@@ -5,7 +5,6 @@ import com.example.greendefend.data.remote.ApiServiceServer
 import com.example.greendefend.data.remote.ApiServiceWeather
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
-import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.forum.Post
@@ -40,12 +39,9 @@ class RemoteRepositoryImp @Inject constructor(
 
 
 
-    override suspend fun register(user: User):Response<String>{
-        return apiServiceServer.signup(user)
-    }
 
-    override suspend fun editProfile(body: RequestBody): Response<ResponseBody?> {
-       return apiServiceServer.editProfile(body) }
+
+    override suspend fun editProfile(body: RequestBody)=handleApi { apiServiceServer.editProfile(body) }
 
     override suspend fun addPost(body: RequestBody): Response<ResponseBody?> {
        return apiServiceServer.addPost(body)
@@ -55,10 +51,10 @@ class RemoteRepositoryImp @Inject constructor(
         return apiServiceServer.getPosts()
     }
 
+    override suspend fun register(user: User)=handleApi { apiServiceServer.signup(user) }
+    override suspend fun login(login: Login) =handleApi { apiServiceServer.login(login)  }
 
-    override suspend fun login(login: Login):Response<ResponseLogin> = apiServiceServer.login(login)
-
-    override suspend fun confirmAccount(confirm: Confirm): Response<String> =apiServiceServer.confirm(confirm)
+    override suspend fun confirmAccount(confirm: Confirm) =handleApi { apiServiceServer.confirm(confirm) }
     override suspend fun addComment(comment: Comment): Response<String> {
        return apiServiceServer.addComment(comment)
     }

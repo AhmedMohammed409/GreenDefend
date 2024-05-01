@@ -13,7 +13,7 @@ import com.example.greendefend.databinding.FragmentProfileBinding
 
 
 class ProfileFragment : Fragment() {
-  private lateinit var binding:FragmentProfileBinding
+    private lateinit var binding: FragmentProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -24,16 +24,18 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
+    ): View {
         // Inflate the layout for this fragment
-        binding=FragmentProfileBinding.inflate(layoutInflater,container,false)
+        binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.txtName.text = Constants.Name
+        binding.txtBio.text = Constants.Bio
 
-binding.txtAppName.text=Constants.provideProjectName(requireContext())
+        binding.txtAppName.text = Constants.provideProjectName(requireContext())
         val actiotogle = ActionBarDrawerToggle(
             requireActivity(),
             binding.drawer,

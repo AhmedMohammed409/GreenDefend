@@ -1,6 +1,7 @@
 package com.example.greendefend.ui.authentication
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentSignupBinding
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,24 +65,33 @@ class SignupFragment : Fragment() {
 
     private fun signUpAndObserve(user: User) {
         viewModelAccount.signup(user)
+        viewModelAccount.response.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
+                    Log.e("result", response.data.toString())
+                    viewModelAccount.rest()
+                    findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToEntercodeFragment(user.email.toString()))
 
-        viewModelAccount.serverResponse.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
-                binding.progressBar.visibility = View.GONE
-                viewModelAccount.rest()
-               findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToEntercodeFragment(user.email.toString()))
+                }
+
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_SHORT).show()
+                }
+
+                is NetworkResult.Exception -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.e("result", response.e.toString())
+                    Toast.makeText(
+                        requireContext(),
+                        response.e.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
-
-        viewModelAccount.connectionError.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                binding.progressBar.visibility = View.GONE
-                viewModelAccount.rest()
-            }
-        }
-
 
     }
 

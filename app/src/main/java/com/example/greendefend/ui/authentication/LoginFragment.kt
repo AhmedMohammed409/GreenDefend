@@ -2,23 +2,31 @@ package com.example.greendefend.ui.authentication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.Constants
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Bio_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Country_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Email_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.IsAuthenticated_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Name_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Token_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.userId_KEY
 import com.example.greendefend.databinding.FragmentLoginBinding
 import com.example.greendefend.domin.model.account.Login
+import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.useCase.AuthViewModel
 import com.example.greendefend.ui.homing.HomeActivity
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
@@ -35,6 +43,7 @@ class LoginFragment : Fragment() {
         arguments?.let {
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,7 +64,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgetFragment())
         }
         binding.btnLogin.setOnClickListener {
-binding.progressBar.visibility=View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
             loginAndObserve(
                 Login(
                     binding.etEmail.text.toString(),
@@ -67,46 +76,72 @@ binding.progressBar.visibility=View.VISIBLE
     }
 
     private fun loginAndObserve(login: Login) {
-       lifecycleScope.launch {
-           when(val response=viewModelAccount.login(login)){
-               is NetworkResult.Success->{
-                   binding.progressBar.visibility=View.GONE
-                   startActivity(Intent(requireActivity(),HomeActivity::class.java))
-                   requireActivity().finish()
-               }
-               is NetworkResult.Error->{
-                   binding.progressBar.visibility=View.GONE
-                   Toast.makeText(requireContext(),response.errorMsg,Toast.LENGTH_LONG).show()
-               }
-               is NetworkResult.Exception->{
-                   binding.progressBar.visibility=View.GONE
-                   Toast.makeText(requireContext(),response.e.message,Toast.LENGTH_LONG).show()
-                   response.e.printStackTrace()
-               }
+        viewModelAccount.login(login)
+        viewModelAccount.response.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(),"Sucessfull",Toast.LENGTH_SHORT).show()
+                    val responseLogin = response.data as ResponseLogin
+                    runBlocking {
+                        saveAtPrefrences(responseLogin)
+                    }
+                    Log.e("result", responseLogin.toString())
+                    startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                    requireActivity().finish()
+                }
 
-           }
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.e("result", response.toString())
+                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_LONG)
+                        .show()
+                }
 
-       }
+                is NetworkResult.Exception -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.e("result", response.e.toString())
+                    Toast.makeText(
+                        requireContext(),
+                        response.e.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
 
-//        viewModelAccount.connectionError.observe(viewLifecycleOwner) {
-//            if (it.isNotEmpty()) {
-//                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-//                binding.progressBar.visibility = View.GONE
-//                viewModelAccount.rest()
-//            }
-//        }
-//        viewModelAccount.serverResponse.observe(viewLifecycleOwner) {
-//            if (it.isNotEmpty()) {
-//                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-//                binding.progressBar.visibility = View.GONE
-//                viewModelAccount.rest()
-//            startActivity(Intent(requireActivity(),HomeActivity::class.java))
-//                requireActivity().finish()
-//
-//
-//            }
-//        }
 
+    }
+
+   private suspend fun saveAtPrefrences(responseLogin: ResponseLogin) {
+        dataStorePrefrenceImpl.putPreference(
+            Token_KEY,
+            responseLogin.token.toString()
+        )
+        dataStorePrefrenceImpl.putPreference(
+            Email_KEY,
+            responseLogin.email.toString()
+        )
+        dataStorePrefrenceImpl.putPreference(
+            Bio_KEY,
+            responseLogin.message.toString()
+        )
+        dataStorePrefrenceImpl.putPreference(
+            userId_KEY,
+            responseLogin.userId.toString()
+        )
+        dataStorePrefrenceImpl.putPreference(
+            Name_KEY,
+            responseLogin.fullName.toString()
+        )
+        dataStorePrefrenceImpl.putPreference(
+            Country_KEY,
+            responseLogin.region.toString()
+        )
+        dataStorePrefrenceImpl.putPreference(
+            IsAuthenticated_KEY,
+            responseLogin.isAuthenticated!!
+        )
 
     }
 

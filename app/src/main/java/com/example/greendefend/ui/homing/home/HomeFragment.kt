@@ -4,6 +4,7 @@ import android.Manifest.permission
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +14,32 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.Constants
 import com.example.greendefend.R
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Bio_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Country_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Email_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Name_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Token_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.userId_KEY
 import com.example.greendefend.databinding.FragmentHomeBinding
 import com.example.greendefend.domin.useCase.CurrWeatherViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
+@Inject
+lateinit var dataStorePrefrenceImpl:DataStorePrefrenceImpl
     private val viewModel: CurrWeatherViewModel by viewModels()
     private  var latitude: Float?= 0F
     private var longitude: Float ?= 0F
@@ -73,12 +87,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        runBlocking {getdata()  }
 
         binding.txtAppName.text=Constants.provideProjectName(requireContext())
         chekPermissionOrShowDialog()
@@ -153,7 +169,43 @@ class HomeFragment : Fragment() {
     }
 
 
+    private  fun getdata(){
+lifecycleScope.launch(Dispatchers.IO) {
+    launch {    dataStorePrefrenceImpl.getPreference(userId_KEY,"").collect{
+        Constants.Id=it
+        Log.e("id",it) } }
+    launch {  dataStorePrefrenceImpl.getPreference(Name_KEY,"").collect{
+        Constants.Name=it
+        Log.e("name",it)
+    }  }
+    launch {  dataStorePrefrenceImpl.getPreference(Email_KEY,"").collect{
+        Constants.Email=it
+        Log.e("email",it)
+    } }
+    launch { dataStorePrefrenceImpl.getPreference(Token_KEY,"").collect{
+        Constants.Token=it
+        Log.e("token",it)
+    } }
+    launch {  dataStorePrefrenceImpl.getPreference(Country_KEY,"").collect{
+        Constants.Country=it
+        Log.e("country",it)
+    }  }
+    launch {   dataStorePrefrenceImpl.getPreference(Bio_KEY,"").collect{
+        Constants.Bio=it
+        Log.e("bio",it)
+    } }
+
+}
+
+
+
+
+
+
+
+        }
     }
+
 
 
 

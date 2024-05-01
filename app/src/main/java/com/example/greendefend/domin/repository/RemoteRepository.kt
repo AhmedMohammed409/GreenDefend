@@ -24,11 +24,11 @@ interface RemoteRepository {
     date: String,
     lang: String
     ):Response<CurrentWeather>
-    suspend fun register(user: User):Response<String>
+    suspend fun register(user: User): NetworkResult<Any>
  
     suspend fun editProfile(
         body: RequestBody
-    ): Response<ResponseBody?>
+    ): NetworkResult<Any>
 
 
     suspend fun addImage(
@@ -37,9 +37,9 @@ interface RemoteRepository {
         fileRealPath: String
     ): Response<ResponseBody>
 
-    suspend fun login(login: Login): Response<ResponseLogin>
+    suspend fun login(login: Login): NetworkResult<Any>
 
-    suspend fun confirmAccount(confirm: Confirm):Response<String>
+    suspend fun confirmAccount(confirm: Confirm): NetworkResult<Any>
     suspend fun addPost(
         body:RequestBody): Response<ResponseBody?>
     suspend fun getPosts():Response<List<Post>>

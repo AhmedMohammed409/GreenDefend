@@ -36,7 +36,7 @@ interface ApiServiceServer {
 
 
      @PUT("Account/EditProfile")
-     suspend fun editProfile(@Body body: RequestBody):Response<ResponseBody?>
+     suspend fun editProfile(@Body body: RequestBody):Response<ResponseBody>
 
 
     @POST("forum/AddPost")

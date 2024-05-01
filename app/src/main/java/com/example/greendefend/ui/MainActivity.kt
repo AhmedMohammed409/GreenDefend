@@ -10,6 +10,7 @@ import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.
 import com.example.greendefend.databinding.ActivityMainBinding
 import com.example.greendefend.ui.authentication.AuthenticationActivity
 import com.example.greendefend.ui.boarding.OnboardingActivity
+import com.example.greendefend.ui.homing.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +18,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     @Inject lateinit var dataStoreRepositoryImpl: DataStorePrefrenceImpl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,14 +26,30 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         lifecycleScope.launch {
+
             dataStoreRepositoryImpl.getPreference(onboardingOpenedState_Key,false).collect{
                 when(it){
-                    true->{ startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
-                        finish()}
                     false->{
                         startActivity(Intent(this@MainActivity, OnboardingActivity::class.java))
                         finish()
                     }
+                    true->{
+                        dataStoreRepositoryImpl.getPreference(DataStorePrefrenceImpl.IsAuthenticated_KEY,false).collect {auth->
+                   when (auth){
+                       false ->{
+                           startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
+                           finish()
+                       }
+                       true ->{
+                           startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+                           finish()
+                       }
+                   }
+
+                        }
+
+                    }
+
 
                 }
             }

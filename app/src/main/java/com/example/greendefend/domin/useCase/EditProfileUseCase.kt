@@ -2,6 +2,7 @@ package com.example.greendefend.domin.useCase
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.example.greendefend.utli.ConvertUriToFile.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -16,11 +17,11 @@ class EditProfileUseCase @Inject constructor(val context: Context) {
        fullName: String,
        bio: String,
        country: String,
-       imageUri:Uri?
+       imageUri:Uri
        // skillImages:List<Uri>
     ): MultipartBody {
         val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)
-        val file=uriToFile(imageUri!!,context.contentResolver)
+        val file=uriToFile(imageUri,context.contentResolver)
         multipart.apply {
             addFormDataPart("id", id)
             addFormDataPart("FullName",fullName)
@@ -30,12 +31,14 @@ class EditProfileUseCase @Inject constructor(val context: Context) {
                 name = "ProfileImage",
                 filename = file.name,
                 body = file.asRequestBody("image/*".toMediaType()))
+            Log.e("type file",file.extension)
 
 //            for ( image in skillImages){
 //                val file=uriToFile(image,context.contentResolver)
 //            val newFile= getFilePathFromUri()
 //            }
         }
+
        return multipart.build()
     }
 
