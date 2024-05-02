@@ -7,7 +7,6 @@ import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -16,10 +15,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
-
 interface ApiServiceServer {
-
-
 
     @POST("Account/Login")
     suspend fun login(@Body login: Login): Response<ResponseLogin>
@@ -27,7 +23,7 @@ interface ApiServiceServer {
 
 
 
-    @POST("Account/Confirm")
+    @POST("Account/ConfirmAccount")
     suspend fun confirm(confirm: Confirm): Response<String>
 
     @POST("Account/Register")
@@ -41,8 +37,8 @@ interface ApiServiceServer {
 
     @POST("forum/AddPost")
     suspend fun addPost(
-        @Body body: RequestBody?
-    ):Response<ResponseBody?>
+        @Body body: RequestBody
+    ):Response<ResponseBody>
 
     @GET("forum/GetPosts")
     suspend fun getPosts():Response<List<Post>>

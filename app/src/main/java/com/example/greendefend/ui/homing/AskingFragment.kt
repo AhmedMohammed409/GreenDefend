@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentAskingBinding
 import com.example.greendefend.domin.useCase.ForumViewModel
+import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
 class AskingFragment : Fragment() {
@@ -46,11 +49,11 @@ class AskingFragment : Fragment() {
 
 
         }
-    private val viewModelFourm: ForumViewModel by viewModels()
+    private val forumViewModel: ForumViewModel by viewModels()
 
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*"
+        intent.type = "image/*"
         resultLauncher.launch(intent)
     }
 
@@ -96,12 +99,40 @@ class AskingFragment : Fragment() {
     }
 
     private fun addpostAndObserve(post:String, uri: Uri?){
-        viewModelFourm.addPost(Constants.Id,post,uri!!)
-        viewModelFourm.serverResponse.observe(viewLifecycleOwner){
-            binding.progressBar.visibility=View.GONE
-            Toast.makeText(requireContext(),it,Toast.LENGTH_SHORT).show()
-            findNavController().navigate(AskingFragmentDirections.actionAskingFragmentToForumFragment())
+        forumViewModel.addPost(Constants.Id,post,uri!!)
+
+        forumViewModel.response.observe(viewLifecycleOwner){response->
+            File(requireContext().cacheDir,Constants.fileName).delete()
+            Constants.fileName=""
+            when(response){
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(),"Sucess add post", Toast.LENGTH_LONG).show()
+                    Log.e("sucess add post ", response.toString())
+                    findNavController().navigate(AskingFragmentDirections.actionAskingFragmentToForumFragment())
+                }
+
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.e("MsgErr Error", response.toString())
+                    Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_LONG).show()
+                    findNavController().navigate(AskingFragmentDirections.actionAskingFragmentToForumFragment())
+                }
+                is NetworkResult.Exception -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.e("MsgErr Exeption", response.e.message.toString())
+                    Toast.makeText(
+                        requireContext(),
+                        response.e.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    findNavController().navigate(AskingFragmentDirections.actionAskingFragmentToForumFragment())
+                }
+
+            }
+
         }
+
     }
 
 

@@ -2,9 +2,11 @@ package com.example.greendefend
 
 import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import javax.inject.Inject
 
 
 object Constants{
@@ -19,7 +21,9 @@ object Constants{
      var Email:String=""
      var Name:String=""
      var Country:String=""
-     var Bio:String=""
+     var Bio:String?=null
+    var imageUrl:Uri?=null
+    var fileName:String="be happy"
 
 
 

@@ -12,6 +12,7 @@ data class Post (
     @SerializedName("userName"      ) var userName      : String? = null,
     @SerializedName("userImageURL"  ) var userImageURL  : String? = null,
     @SerializedName("createdAt"     ) var createdAt     : String? = null,
-    @SerializedName("commentsCount" ) var commentsCount : Int?    = null
+    @SerializedName("commentsCount" ) var commentsCount : Int?    = null,
+    @SerializedName("likeStatus"    ) var likeStatus    : String? = null
 
 ): Serializable

@@ -1,25 +1,23 @@
 package com.example.greendefend.ui.homing.weather
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.databinding.FragmentWeatherBinding
+import com.example.greendefend.domin.useCase.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
 private lateinit var binding:FragmentWeatherBinding
 
-    private val viewModel: ViewModelWeather by lazy{
-        ViewModelProvider(requireActivity())[ViewModelWeather::class.java]
-    }
+    private val viewModel: WeatherViewModel by  viewModels ()
 //    private val adapterRV: AdapterRV by lazy{
 //       AdapterRV()
 //    }

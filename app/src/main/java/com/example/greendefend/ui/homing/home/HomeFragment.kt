@@ -14,65 +14,60 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.greendefend.Constants
 import com.example.greendefend.R
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl
-import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Bio_KEY
-import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Country_KEY
-import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Email_KEY
-import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Name_KEY
-import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Token_KEY
-import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.userId_KEY
 import com.example.greendefend.databinding.FragmentHomeBinding
-import com.example.greendefend.domin.useCase.CurrWeatherViewModel
-import com.google.android.gms.location.FusedLocationProviderClient
+import com.example.greendefend.domin.model.weather.CurrentWeather
+import com.example.greendefend.domin.useCase.WeatherViewModel
+import com.example.greendefend.utli.NetworkResult
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-@Inject
-lateinit var dataStorePrefrenceImpl:DataStorePrefrenceImpl
-    private val viewModel: CurrWeatherViewModel by viewModels()
-    private  var latitude: Float?= 0F
-    private var longitude: Float ?= 0F
+    @Inject
+    lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
+    private val weatherviewModel: WeatherViewModel by viewModels()
+    private var latitude: Float? = 0F
+    private var longitude: Float? = 0F
     private lateinit var binding: FragmentHomeBinding
-    private var permissions = arrayOf(permission.ACCESS_FINE_LOCATION,permission.ACCESS_COARSE_LOCATION)
+    private var permissions =
+        arrayOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
     private val permissionLauncher by lazy {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val granted = permissions.entries.all { it.value }
             if (granted) {
-               getCurrentLocation()
+                getCurrentLocation()
             } else {
                 Toast.makeText(requireContext(), "No Permission Granted", Toast.LENGTH_SHORT).show()
-                binding.progressBar.visibility=View.GONE
+                binding.progressBar.visibility = View.GONE
             }
         }
     }
+
     private fun hasPermission(permissions: Array<String>): Boolean =
         permissions.all {
-            ActivityCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                it
+            ) == PackageManager.PERMISSION_GRANTED
         }
 
     private fun chekPermissionOrShowDialog() {
-        if (hasPermission(permissions)){
+        if (hasPermission(permissions)) {
             getCurrentLocation()
-        }
-        else{ permissionLauncher.launch(permissions)
+        } else {
+            permissionLauncher.launch(permissions)
         }
 
     }
 
-    private val mFusedLocationProviderClient: FusedLocationProviderClient by lazy {
-        LocationServices.getFusedLocationProviderClient(requireContext())
-    }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,14 +89,14 @@ lateinit var dataStorePrefrenceImpl:DataStorePrefrenceImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        runBlocking {getdata()  }
 
-        binding.txtAppName.text=Constants.provideProjectName(requireContext())
+        binding.txtAppName.text = Constants.provideProjectName(requireContext())
         chekPermissionOrShowDialog()
-       weatherAndObserve(latitude!!, longitude!!)
+        weatherAndObserve(latitude!!, longitude!!)
 
         val actiotogle = ActionBarDrawerToggle(
-            requireActivity(), binding.drawer, binding.toolbar, R.string.open, R.string.close)
+            requireActivity(), binding.drawer, binding.toolbar, R.string.open, R.string.close
+        )
         binding.drawer.addDrawerListener(actiotogle)
 
         binding.btnUpload.setOnClickListener {
@@ -109,7 +104,11 @@ lateinit var dataStorePrefrenceImpl:DataStorePrefrenceImpl
         }
         binding.txtMoreWeather.setOnClickListener {
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToWeatherFragment(latitude!!.toFloat(), longitude!!.toFloat()))
+                HomeFragmentDirections.actionHomeFragmentToWeatherFragment(
+                    latitude!!.toFloat(),
+                    longitude!!.toFloat()
+                )
+            )
         }
 
         binding.imgMoreExpand.setOnClickListener {
@@ -118,8 +117,8 @@ lateinit var dataStorePrefrenceImpl:DataStorePrefrenceImpl
             } else {
                 View.GONE
             }
-            binding.noteWeather.visibility=visability
-            binding.txtMoreWeather.visibility=visability
+            binding.noteWeather.visibility = visability
+            binding.txtMoreWeather.visibility = visability
         }
 
 
@@ -128,83 +127,59 @@ lateinit var dataStorePrefrenceImpl:DataStorePrefrenceImpl
 
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
-        val task = mFusedLocationProviderClient.lastLocation
-        task.addOnSuccessListener {
-            latitude=it.latitude.toFloat()
-            longitude=it.longitude.toFloat()
-        }
-    }
-
-/*
-    private fun observeWeather() {
-        viewModel.getCurrentWeather(latitude!!.toFloat(),longitude!!.toFloat())
-        viewModel.resultLiveData.observe(viewLifecycleOwner) {
-                binding.currentWeather = it
-                binding.progressBar.visibility = View.GONE
-                Glide.with(requireContext())
-                    .load("http://api.weatherapi.com${it.current?.condition?.icon}")
-                    .into(binding.imgWeather)
-
-        }
-    }*/
-    private fun weatherAndObserve(latitude: Float, longitude:Float) {
-        viewModel.getCurrentWeather(latitude, longitude)
-        viewModel.connectionError.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                binding.progressBar.visibility = View.GONE
+        try {
+            val mFusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(requireContext())
+            val task = mFusedLocationProviderClient.lastLocation
+            task.addOnSuccessListener {
+                latitude = it.latitude.toFloat()
+                longitude = it.longitude.toFloat()
             }
-        }
-        viewModel.serverResponse.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                binding.progressBar.visibility = View.GONE
-            }
+        }catch (e :Exception){
+            Toast.makeText(requireContext(),e.message,Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.resultLiveData.observe(viewLifecycleOwner){
-            if (it!=null) {
-                binding.progressBar.visibility = View.GONE
-                binding.currentWeather=it
-            }
-        }
     }
 
 
-    private  fun getdata(){
-lifecycleScope.launch(Dispatchers.IO) {
-    launch {    dataStorePrefrenceImpl.getPreference(userId_KEY,"").collect{
-        Constants.Id=it
-        Log.e("id",it) } }
-    launch {  dataStorePrefrenceImpl.getPreference(Name_KEY,"").collect{
-        Constants.Name=it
-        Log.e("name",it)
-    }  }
-    launch {  dataStorePrefrenceImpl.getPreference(Email_KEY,"").collect{
-        Constants.Email=it
-        Log.e("email",it)
-    } }
-    launch { dataStorePrefrenceImpl.getPreference(Token_KEY,"").collect{
-        Constants.Token=it
-        Log.e("token",it)
-    } }
-    launch {  dataStorePrefrenceImpl.getPreference(Country_KEY,"").collect{
-        Constants.Country=it
-        Log.e("country",it)
-    }  }
-    launch {   dataStorePrefrenceImpl.getPreference(Bio_KEY,"").collect{
-        Constants.Bio=it
-        Log.e("bio",it)
-    } }
+    private fun weatherAndObserve(latitude: Float, longitude: Float) {
+        weatherviewModel.getCurrentWeather(latitude, longitude)
+        binding.progressBar.visibility = View.VISIBLE
+        weatherviewModel.response.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+//                    Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
+                    val responseWeather = response.data as CurrentWeather
+                    binding.currentWeather = responseWeather
+
+                    Glide.with(requireContext())
+                        .load("http://api.weatherapi.com${responseWeather.current?.condition?.icon}")
+                        .into(binding.imgWeather)
+                }
+
+                is NetworkResult.Error -> {
+//                    binding.progressBar.visibility = View.GONE
+                    Log.e("MsgErr", response.toString())
+//                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_LONG).show()
+                }
+
+                is NetworkResult.Exception -> {
+//                    binding.progressBar.visibility = View.GONE
+                    Log.e("MsgErr Exeption", response.e.toString())
+//                    Toast.makeText(
+//                        requireContext(),
+//                        response.e.message.toString(),
+//                        Toast.LENGTH_LONG
+//                    ).show()
+                }
+            }
+        }
+
+    }
+
+
 
 }
-
-
-
-
-
-
-
-        }
-    }
 
 
 

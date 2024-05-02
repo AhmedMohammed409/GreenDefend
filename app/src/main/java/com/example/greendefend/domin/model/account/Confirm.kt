@@ -1,6 +1,6 @@
 package com.example.greendefend.domin.model.account
 
 data class Confirm(
-    var code:Int,
-    var userEmail:String?
+    var code:String,
+    var userEmail:String
 )

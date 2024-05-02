@@ -15,6 +15,7 @@ import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Bio_KEY
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Country_KEY
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Email_KEY
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.ImageUrl_KEY
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.IsAuthenticated_KEY
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Name_KEY
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.Token_KEY
@@ -93,14 +94,14 @@ class LoginFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Log.e("result", response.toString())
-                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_LONG)
-                        .show()
+                    Log.e("result error", response.toString())
+//                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_LONG)
+//                        .show()
                 }
 
                 is NetworkResult.Exception -> {
                     binding.progressBar.visibility = View.GONE
-                    Log.e("result", response.e.toString())
+                    Log.e("result exeption", response.e.toString())
                     Toast.makeText(
                         requireContext(),
                         response.e.message.toString(),
@@ -142,7 +143,10 @@ class LoginFragment : Fragment() {
             IsAuthenticated_KEY,
             responseLogin.isAuthenticated!!
         )
-
+       dataStorePrefrenceImpl.putPreference(
+           ImageUrl_KEY,
+           responseLogin.imageUrl.toString()
+       )
     }
 
 

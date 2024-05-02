@@ -65,17 +65,19 @@
                         android:id="@+id/img_person"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/fares"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/user"
                         tools:ignore="ContentDescription" />
                 </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/txt_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:lines="2"
                     android:text="fares oref"
                     android:textSize="20sp"
+                    android:gravity="center"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cardView"

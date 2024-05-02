@@ -11,6 +11,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <androidx.appcompat.widget.Toolbar
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,21 +42,22 @@
                 tools:layout_editor_absoluteX="72dp"
                 tools:layout_editor_absoluteY="10dp" />
         </androidx.appcompat.widget.Toolbar>
+
         <RelativeLayout
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="10dp"
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            >
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="2"
                 tools:listitem="@layout/row_forum" />
 
@@ -54,6 +65,9 @@
                 android:id="@+id/btn_ask"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
                 android:background="@drawable/button_design"
                 android:backgroundTint="#135B3C"
                 android:drawablePadding="10dp"
@@ -62,11 +76,7 @@
                 android:text="@string/ask_the_community"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:drawableStartCompat="@drawable/mdi_ask"
-              android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="10dp"
-           />
+                app:drawableStartCompat="@drawable/mdi_ask" />
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

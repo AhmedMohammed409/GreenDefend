@@ -8,6 +8,7 @@ import com.example.greendefend.Constants
 import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.data.repository.RemoteRepositoryImp
 import com.example.greendefend.utli.Info
+import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okio.IOException
@@ -16,53 +17,25 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class CurrWeatherViewModel @Inject constructor(private var remoteRepositoryImp: RemoteRepositoryImp) :
+class WeatherViewModel @Inject constructor(private var remoteRepositoryImp: RemoteRepositoryImp) :
     ViewModel() {
-    private var connectionErrorMutable=MutableLiveData<String>()
-    private var serverResponseMutable= MutableLiveData<String>()
-
-    val serverResponse: LiveData<String> get() =serverResponseMutable
-    val connectionError: LiveData<String> get() = connectionErrorMutable
 
 
+    private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
+    val response: MutableLiveData<NetworkResult<Any>> get() = responseMutableLiveData
 
-        private val resultMutableLiveData=MutableLiveData<CurrentWeather>()
-    val resultLiveData:LiveData<CurrentWeather> get() = resultMutableLiveData
-    fun getCurrentWeather(latitude: Float, longitude: Float)=viewModelScope.launch {
 
-        try {
-
+    fun getCurrentWeather(latitude: Float, longitude: Float){
+        viewModelScope.launch {
             val info = Info()
-            val result=remoteRepositoryImp.getCurrentWeather(
+            responseMutableLiveData.postValue(remoteRepositoryImp.getCurrentWeather(
                 Constants.KEY,
                 "$latitude,$longitude",
                 1,
                 info.getDate(),
-                info.getLanguage())
-            if (result.isSuccessful){
-                if (result.body()!=null){
-                    resultMutableLiveData.value=result.body()
-                   serverResponseMutable.value="Sucessfull"
-                }
-                else{
-                   connectionErrorMutable.value=result.message()
-                }
-            }
-        }catch (e :IOException){
-           connectionErrorMutable.value="Sucessfull"
-        }catch (e:HttpRetryException){
-            e.printStackTrace()
-           connectionErrorMutable.value="Server Not Response"
+                info.getLanguage()))
         }
-        catch (e:Exception){
-           connectionErrorMutable.value=e.message
-        }
-
-
-
-
     }
-
 
 
 }

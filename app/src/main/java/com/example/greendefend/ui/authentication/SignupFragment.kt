@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentSignupBinding
+import com.example.greendefend.domin.model.account.ErrorRegister
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.useCase.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
@@ -78,7 +79,8 @@ class SignupFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_SHORT).show()
+                    Log.e("result eror", response.toString())
                 }
 
                 is NetworkResult.Exception -> {

@@ -3,14 +3,11 @@ package com.example.greendefend.domin.repository
 import android.net.Uri
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
-import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
-import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.utli.NetworkResult
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -23,7 +20,7 @@ interface RemoteRepository {
     days: Int,
     date: String,
     lang: String
-    ):Response<CurrentWeather>
+    ): NetworkResult<Any>
     suspend fun register(user: User): NetworkResult<Any>
  
     suspend fun editProfile(
@@ -41,16 +38,16 @@ interface RemoteRepository {
 
     suspend fun confirmAccount(confirm: Confirm): NetworkResult<Any>
     suspend fun addPost(
-        body:RequestBody): Response<ResponseBody?>
-    suspend fun getPosts():Response<List<Post>>
+        body:RequestBody): NetworkResult<Any>
+    suspend fun getPosts():NetworkResult<Any>
 
     suspend fun addComment(
        comment: Comment
-    ): Response<String>
+    ): NetworkResult<Any>
 
     suspend fun addReact(
         react: React
-    ): Response<String>
+    ): NetworkResult<Any>
     fun getInfo()
 
 }

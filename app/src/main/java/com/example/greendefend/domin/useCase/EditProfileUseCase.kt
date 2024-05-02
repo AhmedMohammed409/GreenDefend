@@ -7,6 +7,7 @@ import com.example.greendefend.utli.ConvertUriToFile.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import javax.inject.Inject
 
 class EditProfileUseCase @Inject constructor(val context: Context) {
@@ -21,7 +22,9 @@ class EditProfileUseCase @Inject constructor(val context: Context) {
        // skillImages:List<Uri>
     ): MultipartBody {
         val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)
-        val file=uriToFile(imageUri,context.contentResolver)
+
+       val fileRealpath=getFilePathFromUri(context,imageUri)
+       val file= File(fileRealpath)
         multipart.apply {
             addFormDataPart("id", id)
             addFormDataPart("FullName",fullName)
@@ -31,7 +34,6 @@ class EditProfileUseCase @Inject constructor(val context: Context) {
                 name = "ProfileImage",
                 filename = file.name,
                 body = file.asRequestBody("image/*".toMediaType()))
-            Log.e("type file",file.extension)
 
 //            for ( image in skillImages){
 //                val file=uriToFile(image,context.contentResolver)

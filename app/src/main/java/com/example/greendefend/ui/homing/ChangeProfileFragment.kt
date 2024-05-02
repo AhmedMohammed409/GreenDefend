@@ -15,11 +15,14 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.greendefend.Constants
+import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
 import com.example.greendefend.domin.useCase.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 
 @AndroidEntryPoint
@@ -95,6 +98,8 @@ class ChangeProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         binding.imgProfile.setOnClickListener {
             pick()
         }
@@ -115,19 +120,24 @@ class ChangeProfileFragment : Fragment() {
     private fun observe(id: String, name: String, bio: String, country: String, uri: Uri) {
         viewModelAccount.edit(id, name, bio, country, uri)
         viewModelAccount.response.observe(viewLifecycleOwner) { response ->
+            File(requireContext().cacheDir,Constants.fileName).delete()
+            Constants.fileName=""
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
                     Log.e("result", response.data.toString())
                     viewModelAccount.rest()
+                    Constants.imageUrl=uri
+                    Constants.Bio=bio
+                    Constants.Name=name
                     findNavController().
                     navigate(ChangeProfileFragmentDirections.actionChangeProfileFragmentToProfileFragment())
                 }
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_SHORT).show()
                     findNavController().
                     navigate(ChangeProfileFragmentDirections.actionChangeProfileFragmentToProfileFragment())
                 }

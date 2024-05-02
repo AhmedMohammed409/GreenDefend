@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,6 +23,7 @@ import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.io.InputStream
 
 class CheckingFragment : Fragment() {
     private lateinit var bitmap: Bitmap
@@ -43,7 +45,10 @@ class CheckingFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 uri = result.data!!.data!!
-                bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
+
+                val inputStream: InputStream? = requireContext().contentResolver.openInputStream(uri!!)
+                 bitmap = BitmapFactory.decodeStream(inputStream)
+
                 binding.imgCamera.setImageURI(uri)
             } else {
                 Toast.makeText(

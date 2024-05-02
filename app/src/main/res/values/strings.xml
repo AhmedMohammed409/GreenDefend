@@ -93,4 +93,9 @@
     <string name="always_be_happy">Always be happy</string>
     <string name="country">Country</string>
     <string name="diagnostic_results">Diagnostic results</string>
+    <string name="logout">Logout</string>
+    <string name="share">Share</string>
+    <string name="rate_us">Rate us</string>
+    <string name="communication">Communication</string>
+    <string name="setting">Setting</string>
 </resources>

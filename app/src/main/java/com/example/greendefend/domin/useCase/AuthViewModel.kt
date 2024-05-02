@@ -26,9 +26,6 @@ class AuthViewModel @Inject constructor(
     private var connectionErrorMutable = MutableLiveData<Any>()
     private var serverResponseMutable = MutableLiveData<Any>()
 
-    val serverResponse: LiveData<Any> get() = serverResponseMutable
-    val connectionError: LiveData<Any> get() = connectionErrorMutable
-
 
     private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
 

@@ -7,7 +7,6 @@ import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
-import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.domin.repository.RemoteRepository
@@ -26,7 +25,7 @@ class RemoteRepositoryImp @Inject constructor(
 ) : RemoteRepository,ApiHandler {
 
 
-
+//weather
 
     override suspend fun getCurrentWeather(
         key: String,
@@ -34,34 +33,28 @@ class RemoteRepositoryImp @Inject constructor(
         days: Int,
         date: String,
         lang: String
-    ):Response<CurrentWeather> { return apiServiceWeather.getCurrentWeather(key, location, days, date, lang)}
+    )= handleApi{  apiServiceWeather.getCurrentWeather(key, location, days, date, lang)}
 
 
+//Fourm
+    override suspend fun addPost(body: RequestBody)=handleApi { apiServiceServer.addPost(body) }
+    override suspend fun getPosts()=handleApi { apiServiceServer.getPosts() }
 
-
-
-
-    override suspend fun editProfile(body: RequestBody)=handleApi { apiServiceServer.editProfile(body) }
-
-    override suspend fun addPost(body: RequestBody): Response<ResponseBody?> {
-       return apiServiceServer.addPost(body)
-    }
-
-    override suspend fun getPosts(): Response<List<Post>> {
-        return apiServiceServer.getPosts()
-    }
-
+//Account
     override suspend fun register(user: User)=handleApi { apiServiceServer.signup(user) }
     override suspend fun login(login: Login) =handleApi { apiServiceServer.login(login)  }
 
     override suspend fun confirmAccount(confirm: Confirm) =handleApi { apiServiceServer.confirm(confirm) }
-    override suspend fun addComment(comment: Comment): Response<String> {
-       return apiServiceServer.addComment(comment)
-    }
 
-    override suspend fun addReact(react: React): Response<String> {
-      return apiServiceServer.addReact(react)
-    }
+    override suspend fun editProfile(body: RequestBody)=handleApi { apiServiceServer.editProfile(body) }
+
+
+
+    override suspend fun addComment(comment: Comment)=handleApi { apiServiceServer.addComment(comment) }
+
+
+    override suspend fun addReact(react: React)=handleApi { apiServiceServer.addReact(react) }
+
 
     override fun getInfo() {
         TODO("Not yet implemented")
