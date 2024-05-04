@@ -94,9 +94,8 @@ class LoginFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(),response.toString(),Toast.LENGTH_SHORT).show()
                     Log.e("result error", response.toString())
-//                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_LONG)
-//                        .show()
                 }
 
                 is NetworkResult.Exception -> {
