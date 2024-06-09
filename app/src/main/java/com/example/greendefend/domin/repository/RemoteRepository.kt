@@ -36,7 +36,8 @@ interface RemoteRepository {
     ): Response<ResponseBody>
 
     suspend fun login(login: Login): NetworkResult<Any>
-
+    suspend fun logout(userID: String): NetworkResult<Any>
+    suspend fun getUserData(userID: String): NetworkResult<Any>
     suspend fun confirmAccount(confirm: Confirm): NetworkResult<Any>
     suspend fun sendForgetPasswordOTP(email: String):NetworkResult<Any>
     suspend fun checkForgetPasswordOTP(email: String,code:String):NetworkResult<Any>

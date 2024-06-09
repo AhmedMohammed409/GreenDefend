@@ -6,6 +6,7 @@ import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
+import com.example.greendefend.domin.model.account.UserData
 import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
@@ -30,8 +31,10 @@ interface ApiServiceServer {
 
     @POST("Account/Login")
     suspend fun login(@Body login: Login): Response<ResponseLogin>
-
-
+    @POST("Account/LogOut")
+    suspend fun logout(@Body userID: String): Response<ResponseLogin>
+    @GET("Account/GetUserData")
+    suspend fun getUserData(@Body userID: String): Response<UserData>
     @POST("Account/SendForgetPasswordOTP")
     suspend fun sendForgetPasswordOTP(@Query("Email") email: String): Response<ResponseBody>
 

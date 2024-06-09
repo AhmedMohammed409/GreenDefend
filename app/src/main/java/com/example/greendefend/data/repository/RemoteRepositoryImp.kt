@@ -12,6 +12,7 @@ import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.repository.RemoteRepository
 import com.example.greendefend.utli.ApiHandler
+import com.example.greendefend.utli.NetworkResult
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -44,6 +45,8 @@ class RemoteRepositoryImp @Inject constructor(
     //Account
     override suspend fun register(user: User) = handleApi { apiServiceServer.signup(user) }
     override suspend fun login(login: Login) = handleApi { apiServiceServer.login(login) }
+    override suspend fun logout(userID: String) = handleApi { apiServiceServer.logout(userID) }
+    override suspend fun getUserData(userID: String)= handleApi { apiServiceServer.getUserData(userID) }
 
     override suspend fun confirmAccount(confirm: Confirm) =
         handleApi { apiServiceServer.confirm(confirm) }
