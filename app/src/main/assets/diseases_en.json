@@ -187,6 +187,13 @@
             "cause": "The disease is caused by the fungus Diplocarpon earlianum. It spreads rapidly in dry and hot conditions.",
             "prevention": "To avoid leaf scorch, practice crop rotation, remove and destroy infected plant debris, and plant strawberries in"
         },
+   {
+     "name": "Strawberry___healthy",
+     "description": "This category represents healthy soybeans without any detectable diseases.",
+     "cause": "None",
+     "prevention": "Maintain overall plant health by providing adequate water, nutrients, and sunlight. Practice good sanitation by removing and disposing of fallen leaves and fruits.",
+     "treatment": "None"
+   },
         {
             "name": "Tomato___Bacterial_spot",
             "description": "Bacterial spot is a bacterial disease affecting tomato plants, causing dark spots on leaves and fruits. It thrives in moist and warm conditions and can lead to reduced fruit quality and yield loss.",
@@ -256,59 +263,7 @@
             "cause": "None",
             "prevention": "Maintain overall plant health by providing adequate water, nutrients, and sunlight. Practice good sanitation by removing and disposing of fallen leaves and fruits.",
             "treatment": "None"
-        },
-        {
-            "name": "Apple___Apple_scab",
-            "description": "A fungal disease causing brown or grayish spots on leaves and fruits.",
-            "cause": "Caused by the fungus Venturia inaequalis, spread through rain, irrigation, and infected plant debris.",
-            "prevention": "Use resistant varieties, maintain good ventilation around trees, remove and destroy infected plant debris.",
-            "treatment": "Fungicides like sulfur and lime sulfur can be used. Apply according to label instructions and cultural practices."
-        },
-        {
-            "name": "Apple___Black_rot",
-            "description": "A fungal disease causing dark spots on leaves and fruits.",
-            "cause": "Caused by the fungus Botryosphaeria obtusa, spread through rain, irrigation, and infected plant debris.",
-            "prevention": "Use resistant varieties, maintain good ventilation around trees, remove and destroy infected plant debris.",
-            "treatment": "Fungicides like thiophanates and metalaxyl can be used. Apply according to label instructions and cultural practices."
-        },
-        {
-            "name": "Apple___Cedar_apple_rust",
-            "description": "A fungal disease causing orange growths on leaves and stems.",
-            "cause": "Caused by the fungus Gymnosporangium juniperi-virginianae, spread by wind and rain.",
-            "prevention": "Remove cedar trees near apple trees, use resistant varieties.",
-            "treatment": "Fungicides like thiophanates and metalaxyl can be used. Apply according to label instructions and cultural practices."
-        },
-        {
-            "name": "Apple___healthy",
-            "description": "Represents healthy apple trees without any detectable diseases.",
-            "cause": "No specific cause.",
-            "prevention": "Maintain overall plant health, provide adequate water, nutrients, and sunlight, practice good hygiene by removing fallen leaves and fruits.",
-            "treatment": "No treatment necessary."
-        },
-        {
-            "name": "Blueberry___healthy",
-            "description": "Represents healthy blueberry plants without any detectable diseases.",
-            "cause": "No specific cause.",
-            "prevention": "Maintain overall plant health, provide adequate water, nutrients, and sunlight, practice good hygiene by removing fallen leaves and fruits.",
-            "treatment": "No treatment necessary."
-        },
-        {
-            "name": "Cherry_(including_sour)___Powdery_mildew",
-            "description": "A fungal disease causing white layer on leaves and stems.",
-            "cause": "Caused by the fungus Podosphaera clandestina, spread through air and irrigation.",
-            "prevention": "Use resistant varieties, maintain good ventilation around trees, remove and destroy infected plant debris.",
-            "treatment": "Fungicides like sulfur can be used. Apply according to label instructions and cultural practices."
-        },
-        {
-            "name": "Cherry_(including_sour)___healthy",
-            "description": "Represents healthy cherry trees without any detectable diseases.",
-            "cause": "No specific cause.",
-            "prevention": "Maintain overall plant health, provide adequate water, nutrients, and sunlight, practice good hygiene by removing fallen leaves and fruits.",
-            "treatment": "No treatment necessary."
         }
-
-
-
 
 
     ]

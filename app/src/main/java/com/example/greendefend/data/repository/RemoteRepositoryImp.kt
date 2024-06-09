@@ -10,9 +10,10 @@ import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.forum.React
+import com.example.greendefend.domin.repository.AuthRepo
+import com.example.greendefend.domin.repository.FourmRepo
 import com.example.greendefend.domin.repository.RemoteRepository
 import com.example.greendefend.utli.ApiHandler
-import com.example.greendefend.utli.NetworkResult
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -24,7 +25,7 @@ class RemoteRepositoryImp @Inject constructor(
     private var apiServiceWeather: ApiServiceWeather
 
 
-) : RemoteRepository, ApiHandler {
+) : RemoteRepository, ApiHandler,AuthRepo,FourmRepo{
 
 
 //weather
@@ -38,9 +39,7 @@ class RemoteRepositoryImp @Inject constructor(
     ) = handleApi { apiServiceWeather.getCurrentWeather(key, location, days, date, lang) }
 
 
-    //Fourm
-    override suspend fun addPost(body: RequestBody) = handleApi { apiServiceServer.addPost(body) }
-    override suspend fun getPosts() = handleApi { apiServiceServer.getPosts() }
+
 
     //Account
     override suspend fun register(user: User) = handleApi { apiServiceServer.signup(user) }
@@ -66,14 +65,19 @@ class RemoteRepositoryImp @Inject constructor(
     override suspend fun editProfile(body: RequestBody) =
         handleApi { apiServiceServer.editProfile(body) }
 
+    //Fourm
+    override suspend fun addPost(body: RequestBody) = handleApi { apiServiceServer.addPost(body) }
+    override suspend fun getPosts() = handleApi { apiServiceServer.getPosts() }
 
     override suspend fun addComment(comment: Comment) =
         handleApi { apiServiceServer.addComment(comment) }
 
 
     override suspend fun addReact(react: React) = handleApi { apiServiceServer.addReact(react) }
+    override suspend fun getPostDetail(id: Int)= handleApi { apiServiceServer.getPostDetail(id) }
 
 
+    /////////////////////////////////////
     override fun getInfo() {
         TODO("Not yet implemented")
     }

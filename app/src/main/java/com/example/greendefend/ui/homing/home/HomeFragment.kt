@@ -30,6 +30,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+    
     @Inject
     lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
     private val weatherviewModel: WeatherViewModel by viewModels()
@@ -58,7 +59,7 @@ class HomeFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
         }
 
-    private fun chekPermissionOrShowDialog() {
+    private fun checkPermissionOrShowDialog() {
         if (hasPermission(permissions)) {
             getCurrentLocation()
         } else {
@@ -89,15 +90,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.txtAppName.text = Constants.provideProjectName(requireContext())
-        chekPermissionOrShowDialog()
+        checkPermissionOrShowDialog()
         weatherAndObserve(latitude!!, longitude!!)
 
         val actiotogle = ActionBarDrawerToggle(
             requireActivity(), binding.drawer, binding.toolbar, R.string.open, R.string.close
         )
         binding.drawer.addDrawerListener(actiotogle)
+
+
 
         binding.btnUpload.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCheckingFragment())

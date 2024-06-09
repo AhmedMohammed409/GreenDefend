@@ -28,8 +28,21 @@ class ForumFragment : Fragment() {
                 ForumFragmentDirections.actionForumFragmentToPostFragment(
                     it
                 )
-            )
-        })
+            ) }, onLikeClicked = {
+
+
+        },
+            onDisLikeClicked = {
+
+            }
+            ,onCommentClicked = {
+                findNavController().navigate(
+                    ForumFragmentDirections.actionForumFragmentToPostFragment(
+                        it
+                    )
+                )
+            }
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

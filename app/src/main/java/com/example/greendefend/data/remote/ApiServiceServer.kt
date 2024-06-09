@@ -8,6 +8,7 @@ import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.account.UserData
 import com.example.greendefend.domin.model.forum.Comment
+import com.example.greendefend.domin.model.forum.DetailPost
 import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
 import okhttp3.RequestBody
@@ -25,10 +26,8 @@ interface ApiServiceServer {
     //Authentication
     @POST("Account/Register")
     suspend fun signup(@Body user: User): Response<String>
-
     @POST("Account/ConfirmAccount")
     suspend fun confirm(@Body confirm: Confirm): Response<String>
-
     @POST("Account/Login")
     suspend fun login(@Body login: Login): Response<ResponseLogin>
     @POST("Account/LogOut")
@@ -37,7 +36,6 @@ interface ApiServiceServer {
     suspend fun getUserData(@Body userID: String): Response<UserData>
     @POST("Account/SendForgetPasswordOTP")
     suspend fun sendForgetPasswordOTP(@Query("Email") email: String): Response<ResponseBody>
-
     @POST("Account/CheckForgetPasswordOTP")
     suspend fun checkForgetPasswordOTP(
         @Query("Email") email: String,
@@ -74,5 +72,8 @@ interface ApiServiceServer {
         @Body react: React
     ): Response<String>
 
-
+    @POST("forum/AddReact")
+    suspend fun getPostDetail(
+        @Query("PostId") id:Int
+    ): Response<DetailPost>
 }
