@@ -93,4 +93,5 @@
     <string name="always_be_happy">كن سعيد</string>
     <string name="country">الدولة</string>
     <string name="diagnostic_results">نتائج التشخيص</string>
+    <string name="please_enter_code">Please Enter Code</string>
 </resources>

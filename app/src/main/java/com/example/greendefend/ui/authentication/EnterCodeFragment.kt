@@ -1,8 +1,6 @@
 package com.example.greendefend.ui.authentication
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +17,9 @@ import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-
-class EntercodeFragment: Fragment() {
+class EnterCodeFragment: Fragment() {
    private lateinit var binding: FragmentEntercodeBinding
-   private val args:EntercodeFragmentArgs by navArgs()
+   private val args:EnterCodeFragmentArgs by navArgs()
     private val  viewModelAccount: AuthViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +55,8 @@ class EntercodeFragment: Fragment() {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
                     Log.e("result", response.data.toString())
-                    viewModelAccount.rest()
-                    findNavController().navigate(EntercodeFragmentDirections.actionEntercodeFragmentToDoneFragment())
+
+                    findNavController().navigate(EnterCodeFragmentDirections.actionEntercodeFragmentToDoneFragment())
                 }
 
                 is NetworkResult.Error -> {

@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/entercodeFragment"
-        android:name="com.example.greendefend.ui.authentication.EntercodeFragment"
+        android:name="com.example.greendefend.ui.authentication.EnterCodeFragment"
         android:label="fragment_entercode"
         tools:layout="@layout/fragment_entercode">
         <action
@@ -64,10 +64,20 @@
         <action
             android:id="@+id/action_verificationFragment_to_updatePasswordFragment"
             app:destination="@id/updatePasswordFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/updatePasswordFragment"
         android:name="com.example.greendefend.ui.authentication.UpdatePasswordFragment"
         android:label="fragment_update_password"
-        tools:layout="@layout/fragment_update_password" />
+        tools:layout="@layout/fragment_update_password" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_updatePasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

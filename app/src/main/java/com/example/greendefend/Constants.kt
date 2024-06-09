@@ -17,6 +17,8 @@ object Constants{
        const val APP_DATA_STORE_NAME="GreenDefend"
 
      var  Token:String=""
+
+
      var Id:String=""
      var Email:String=""
      var Name:String=""
@@ -36,7 +38,6 @@ object Constants{
             val size = context.getString(R.string.green_defend).length
             span.setSpan(fcBlack, 0, size / 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             span.setSpan(fcGreen, size / 2, size, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
             return span
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.data.repository.RemoteRepositoryImp
+import com.example.greendefend.domin.model.account.AddNewPassword
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.User
@@ -23,18 +24,14 @@ class AuthViewModel @Inject constructor(
     private var repositoryImp: RemoteRepositoryImp
 ) :
     ViewModel(), ApiHandler {
-    private var connectionErrorMutable = MutableLiveData<Any>()
-    private var serverResponseMutable = MutableLiveData<Any>()
+
 
 
     private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
 
-    val response: MutableLiveData<NetworkResult<Any>> get() = responseMutableLiveData
+    val response: LiveData<NetworkResult<Any>> get() = responseMutableLiveData
 
-    fun rest() {
-        connectionErrorMutable.value = ""
-        serverResponseMutable.value = ""
-    }
+
 
 
     fun signup(user: User) {
@@ -47,7 +44,22 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             responseMutableLiveData.postValue(repositoryImp.confirmAccount(confirm))
         }
+    }
+    fun sendForgetPasswordOtp(email:String) {
+        viewModelScope.launch {
+            responseMutableLiveData.postValue(repositoryImp.sendForgetPasswordOTP(email))
+        }
+    }
 
+    fun checkForgetPasswordOtp(email:String,code:String) {
+        viewModelScope.launch {
+            responseMutableLiveData.postValue(repositoryImp.checkForgetPasswordOTP(email,code))
+        }
+    }
+    fun addingNewPassword(addNewPassword: AddNewPassword) {
+        viewModelScope.launch {
+            responseMutableLiveData.postValue(repositoryImp.addingNewPassword(addNewPassword))
+        }
     }
 
     fun login(login: Login) {

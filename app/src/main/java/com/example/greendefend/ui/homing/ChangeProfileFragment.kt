@@ -127,7 +127,6 @@ class ChangeProfileFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
                     Log.e("result", response.data.toString())
-                    viewModelAccount.rest()
                     Constants.imageUrl=uri
                     Constants.Bio=bio
                     Constants.Name=name

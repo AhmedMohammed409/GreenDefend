@@ -4,13 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentUpdatePasswordBinding
+import com.example.greendefend.domin.model.account.AddNewPassword
+import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.utli.NetworkResult
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class UpdatePasswordFragment : Fragment() {
    private lateinit var binding: FragmentUpdatePasswordBinding
+   private val args:UpdatePasswordFragmentArgs by navArgs()
+    private val authViewModel:AuthViewModel by viewModels ()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
@@ -27,15 +38,47 @@ class UpdatePasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.txtAppName.text=Constants.provideProjectName(requireContext())
+        binding.btnSend.setOnClickListener {
+
+            val password=binding.etPassword.text.toString()
+            val confirm=binding.etConfirm.text.toString()
+            if (password == confirm && password.isNotEmpty()){
+               binding.progressBar.visibility=View.VISIBLE
+                updatePassword(AddNewPassword(args.email,password,confirm))
+            }else{
+                Toast.makeText(requireContext(),"Failed to Change Password",Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
-/*
-    fun isValidPassword(password: String): Boolean {
-        if (password.length < 8) return false
-        if (password.filter { it.isDigit() }.firstOrNull() == null) return false
-        if (password.filter { it.isLetter() }.filter { it.isUpperCase() }.firstOrNull() == null) return false
-        if (password.filter { it.isLetter() }.filter { it.isLowerCase() }.firstOrNull() == null) return false
-        if (password.filter { !it.isLetterOrDigit() }.firstOrNull() == null) return false
-        return true
-    }*/
+
+    private fun updatePassword(addNewPassword: AddNewPassword){
+        authViewModel.addingNewPassword(addNewPassword)
+        authViewModel.response.observe(viewLifecycleOwner) { response ->
+            binding.progressBar.visibility=View.GONE
+            when (response) {
+                is NetworkResult.Success -> {
+                    findNavController().navigate(UpdatePasswordFragmentDirections.actionUpdatePasswordFragmentToLoginFragment())
+                                   }
+                is NetworkResult.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        response.errMsg.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                is NetworkResult.Exception -> {
+                    Toast.makeText(
+                        requireContext(),"exeption"+
+                        response.e.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+    }
+
 
 }

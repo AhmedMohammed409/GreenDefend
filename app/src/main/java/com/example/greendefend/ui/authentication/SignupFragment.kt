@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentSignupBinding
-import com.example.greendefend.domin.model.account.ErrorRegister
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.useCase.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
@@ -50,19 +49,19 @@ class SignupFragment : Fragment() {
 
     }
 
-    private fun validationPassword(password: String, confirm: String): Boolean {
-        if (password.length < 8) {
-            binding.TextInputLayoutPassword.error =
-                "please enter Correct password contain number and symbols and minimum 8 max 24 "
-            return false
-        } else if (password != confirm) {
-            binding.TextInputLayoutConfirm.error = "please enter Confirm same Password"
-            return false
-        }
-        binding.TextInputLayoutPassword.isErrorEnabled = false
-        binding.TextInputLayoutConfirm.isErrorEnabled = false
-        return true
-    }
+//    private fun validationPassword(password: String, confirm: String): Boolean {
+//        if (password.length < 8) {
+//            binding.TextInputLayoutPassword.error =
+//                "please enter Correct password contain number and symbols and minimum 8 max 24 "
+//            return false
+//        } else if (password != confirm) {
+//            binding.TextInputLayoutConfirm.error = "please enter Confirm same Password"
+//            return false
+//        }
+//        binding.TextInputLayoutPassword.isErrorEnabled = false
+//        binding.TextInputLayoutConfirm.isErrorEnabled = false
+//        return true
+//    }
 
     private fun signUpAndObserve(user: User) {
         viewModelAccount.signup(user)
@@ -72,7 +71,6 @@ class SignupFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
                     Log.e("result", response.data.toString())
-                    viewModelAccount.rest()
                     findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToEntercodeFragment(user.email.toString()))
 
                 }
