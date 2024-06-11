@@ -85,6 +85,10 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        //desha
+        binding.btn1.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_informationPlantsFragment)
+        }
         return binding.root
     }
 

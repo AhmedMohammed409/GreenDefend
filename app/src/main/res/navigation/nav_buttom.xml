@@ -15,6 +15,12 @@
         <action
             android:id="@+id/action_homeFragment_to_checkingFragment"
             app:destination="@id/checkingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_informationPlantsFragment"
+            app:destination="@id/informationPlantsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_diseasesPlantsFragment"
+            app:destination="@id/diseasesPlantsFragment" />
     </fragment>
     <fragment
         android:id="@+id/forumFragment"
@@ -104,4 +110,14 @@
             android:name="post"
             app:argType="com.example.greendefend.domin.model.forum.Post" />
     </fragment>
+    <fragment
+        android:id="@+id/diseasesPlantsFragment"
+        android:name="com.example.greendefend.ui.desha.DiseasesPlantsFragment"
+        android:label="fragment_dieases_plants"
+        tools:layout="@layout/fragment_dieases_plants" />
+    <fragment
+        android:id="@+id/informationPlantsFragment"
+        android:name="com.example.greendefend.ui.desha.InformationPlantsFragment"
+        android:label="fragment_information_plants"
+        tools:layout="@layout/fragment_information_plants" />
 </navigation>
