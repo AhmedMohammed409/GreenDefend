@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.databinding.FragmentSignupBinding
 import com.example.greendefend.domin.model.account.User
-import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -3,10 +3,7 @@ package com.example.greendefend.domin.useCase
 import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
-import android.content.res.AssetFileDescriptor
 import android.net.Uri
-import android.os.Environment
-import android.os.StatFs
 import android.webkit.MimeTypeMap
 import com.example.greendefend.Constants
 import java.io.*

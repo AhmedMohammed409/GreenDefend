@@ -17,7 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentAskingBinding
-import com.example.greendefend.domin.useCase.ForumViewModel
+import com.example.greendefend.domin.useCase.viewModels.ForumViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File

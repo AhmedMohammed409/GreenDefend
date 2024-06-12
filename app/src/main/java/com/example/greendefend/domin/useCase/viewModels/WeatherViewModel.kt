@@ -1,4 +1,4 @@
-package com.example.greendefend.domin.useCase
+package com.example.greendefend.domin.useCase.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,12 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(private var remoteRepositoryImp: RemoteRepositoryImp) :
     ViewModel() {
-
-
     private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
     val response: MutableLiveData<NetworkResult<Any>> get() = responseMutableLiveData
-
-
     fun getCurrentWeather(latitude: Float, longitude: Float){
         viewModelScope.launch {
             val info = Info()

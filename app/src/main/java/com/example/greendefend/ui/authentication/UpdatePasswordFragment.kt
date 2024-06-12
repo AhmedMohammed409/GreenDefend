@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentUpdatePasswordBinding
 import com.example.greendefend.domin.model.account.AddNewPassword
-import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class UpdatePasswordFragment : Fragment() {
    private lateinit var binding: FragmentUpdatePasswordBinding
    private val args:UpdatePasswordFragmentArgs by navArgs()
-    private val authViewModel:AuthViewModel by viewModels ()
+    private val authViewModel: AuthViewModel by viewModels ()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}

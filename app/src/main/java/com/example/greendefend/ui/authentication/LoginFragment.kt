@@ -23,7 +23,7 @@ import com.example.greendefend.data.repository.DataStorePrefrenceImpl.Companion.
 import com.example.greendefend.databinding.FragmentLoginBinding
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.ResponseLogin
-import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.ui.homing.HomeActivity
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint

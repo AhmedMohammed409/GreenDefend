@@ -59,7 +59,7 @@
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="2"
-                tools:listitem="@layout/row_forum" />
+                tools:listitem="@layout/row_post" />
 
             <TextView
                 android:id="@+id/btn_ask"

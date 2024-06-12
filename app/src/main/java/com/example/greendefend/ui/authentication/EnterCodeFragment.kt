@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.databinding.FragmentEntercodeBinding
 import com.example.greendefend.domin.model.account.Confirm
-import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 

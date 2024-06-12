@@ -1,4 +1,4 @@
-package com.example.greendefend.domin.useCase
+package com.example.greendefend.domin.useCase.viewModels
 
 import android.annotation.SuppressLint
 import android.net.Uri
@@ -8,9 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.data.repository.RemoteRepositoryImp
 import com.example.greendefend.domin.model.account.AddNewPassword
+import com.example.greendefend.domin.model.account.ChangePassword
 import com.example.greendefend.domin.model.account.Confirm
 import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.User
+import com.example.greendefend.domin.useCase.EditProfileUseCase
 import com.example.greendefend.utli.ApiHandler
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,9 +32,6 @@ class AuthViewModel @Inject constructor(
     private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
 
     val response: LiveData<NetworkResult<Any>> get() = responseMutableLiveData
-
-
-
 
     fun signup(user: User) {
         viewModelScope.launch {
@@ -61,13 +60,27 @@ class AuthViewModel @Inject constructor(
             responseMutableLiveData.postValue(repositoryImp.addingNewPassword(addNewPassword))
         }
     }
-
+    fun changePassword(changePassword: ChangePassword) {
+        viewModelScope.launch {
+            responseMutableLiveData.postValue(repositoryImp.changePassword(changePassword))
+        }
+    }
     fun login(login: Login) {
         viewModelScope.launch {
             responseMutableLiveData.postValue(repositoryImp.login(login))
         }
     }
 
+    fun logout(userId:String) {
+        viewModelScope.launch {
+            responseMutableLiveData.postValue(repositoryImp.logout(userId))
+        }
+    }
+    fun getUserData(userId:String) {
+        viewModelScope.launch {
+            responseMutableLiveData.postValue(repositoryImp.getUserData(userId))
+        }
+    }
 
     @SuppressLint("SuspiciousIndentation")
     fun edit(

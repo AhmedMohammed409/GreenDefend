@@ -15,13 +15,12 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.example.greendefend.Constants
 import com.example.greendefend.R
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.databinding.FragmentHomeBinding
 import com.example.greendefend.domin.model.weather.CurrentWeather
-import com.example.greendefend.domin.useCase.WeatherViewModel
+import com.example.greendefend.domin.useCase.viewModels.WeatherViewModel
 import com.example.greendefend.utli.NetworkResult
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +33,8 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
     private val weatherviewModel: WeatherViewModel by viewModels()
-    private var latitude: Float? = 0F
-    private var longitude: Float? = 0F
+    private var latitude: Float? = 30.033333F
+    private var longitude: Float? = 31.233334F
     private lateinit var binding: FragmentHomeBinding
     private var permissions =
         arrayOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
@@ -150,29 +149,23 @@ class HomeFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-//                    Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
                     val responseWeather = response.data as CurrentWeather
                     binding.currentWeather = responseWeather
-
-                    Glide.with(requireContext())
-                        .load("http://api.weatherapi.com${responseWeather.current?.condition?.icon}")
-                        .into(binding.imgWeather)
+//                    Glide.with(requireContext())
+//                        .load("http://api.weatherapi.com${responseWeather.current?.condition?.icon}")
+//                        .into(binding.imgWeather)
                 }
 
                 is NetworkResult.Error -> {
 //                    binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr", response.toString())
-//                    Toast.makeText(requireContext(), response.errMsg, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), response.errMsg+"Not found weather", Toast.LENGTH_LONG).show()
                 }
 
                 is NetworkResult.Exception -> {
 //                    binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr Exeption", response.e.toString())
-//                    Toast.makeText(
-//                        requireContext(),
-//                        response.e.message.toString(),
-//                        Toast.LENGTH_LONG
-//                    ).show()
+
                 }
             }
         }

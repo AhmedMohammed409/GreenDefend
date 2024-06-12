@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +27,7 @@ import java.io.InputStream
 class CheckingFragment : Fragment() {
     private lateinit var bitmap: Bitmap
     private  var uri: Uri?=null
-//    private val listDisease by lazy {
+    //    private val listDisease by lazy {
 //        requireActivity().assets.open("label2.txt").bufferedReader().readLines()
 //    }
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)

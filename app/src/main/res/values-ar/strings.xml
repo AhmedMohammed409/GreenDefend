@@ -93,5 +93,11 @@
     <string name="always_be_happy">كن سعيد</string>
     <string name="country">الدولة</string>
     <string name="diagnostic_results">نتائج التشخيص</string>
-    <string name="please_enter_code">Please Enter Code</string>
+    <string name="please_enter_code">ادخل الكود</string>
+    <string name="add_comment">اضف تعليق</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="share">مشاركة</string>
+    <string name="rate_us">تواصل معنا</string>
+    <string name="communication">تواصل</string>
+    <string name="setting">الاعدادات</string>
 </resources>
