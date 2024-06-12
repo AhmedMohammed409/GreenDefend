@@ -45,7 +45,7 @@ class PostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter=PostAdapter(requireContext(), onLikeClicked = {}, onDisLikeClicked = {})
+        adapter=PostAdapter(requireContext())
         binding.rvComment.adapter = adapter
         getCommentsAndObserve()
 

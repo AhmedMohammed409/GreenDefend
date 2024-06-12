@@ -29,8 +29,6 @@ class HomeActivity : AppCompatActivity() {
 
         runBlocking {getdata()  }
 
-
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
