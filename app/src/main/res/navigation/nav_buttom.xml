@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_changeProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <argument
+            android:name="userData"
+            app:argType="com.example.greendefend.domin.model.account.UserData" />
     </fragment>
     <fragment
         android:id="@+id/askingFragment"
@@ -103,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/postFragment"
-        android:name="com.example.greendefend.PostFragment"
+        android:name="com.example.greendefend.ui.homing.forum.post.PostFragment"
         android:label="fragment_post"
         tools:layout="@layout/fragment_post" >
         <argument

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.greendefend.databinding.RowForumBinding
+import com.example.greendefend.databinding.RowPostBinding
 import com.example.greendefend.domin.model.forum.Post
 
 class PostAdapter(
@@ -18,7 +18,7 @@ class PostAdapter(
     private var onCommentClicked: (post: Post) -> Unit,
 ) : ListAdapter<Post, PostAdapter.ViewHolder>(PostsDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostAdapter.ViewHolder {
-        return ViewHolder(RowForumBinding.inflate(LayoutInflater.from(parent.context)))
+        return ViewHolder(RowPostBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: PostAdapter.ViewHolder, position: Int) {
@@ -31,7 +31,7 @@ class PostAdapter(
         )
     }
 
-    inner class ViewHolder(private val binding: RowForumBinding) :
+    inner class ViewHolder(private val binding: RowPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             item: Post, onItemClicked: (item: Post) -> Unit,

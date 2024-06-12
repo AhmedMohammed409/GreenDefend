@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentForumBinding
 import com.example.greendefend.domin.model.forum.Post
-import com.example.greendefend.domin.useCase.ForumViewModel
+import com.example.greendefend.domin.useCase.viewModels.ForumViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,9 +37,7 @@ class ForumFragment : Fragment() {
             }
             ,onCommentClicked = {
                 findNavController().navigate(
-                    ForumFragmentDirections.actionForumFragmentToPostFragment(
-                        it
-                    )
+                    ForumFragmentDirections.actionForumFragmentToPostFragment(it)
                 )
             }
         )

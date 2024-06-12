@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.databinding.FragmentWeatherBinding
-import com.example.greendefend.domin.useCase.WeatherViewModel
+import com.example.greendefend.domin.useCase.viewModels.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 

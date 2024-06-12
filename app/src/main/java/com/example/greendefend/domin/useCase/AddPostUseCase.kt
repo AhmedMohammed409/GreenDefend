@@ -2,9 +2,6 @@ package com.example.greendefend.domin.useCase
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
-import com.example.greendefend.Constants
-import com.example.greendefend.utli.ConvertUriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody

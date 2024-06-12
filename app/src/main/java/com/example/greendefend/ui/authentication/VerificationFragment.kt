@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.greendefend.Constants
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentVerificationBinding
-import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 

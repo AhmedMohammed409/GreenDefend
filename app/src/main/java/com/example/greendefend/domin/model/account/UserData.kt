@@ -1,5 +1,7 @@
 package com.example.greendefend.domin.model.account
 
+import java.io.Serializable
+
 data class UserData(
     val bio: String,
     val country: String,
@@ -7,4 +9,4 @@ data class UserData(
     val fullName: String,
     val imageUrl: String,
     val userId: String
-)
+):Serializable

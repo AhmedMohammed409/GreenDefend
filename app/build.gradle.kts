@@ -44,13 +44,13 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.13.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
 
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.window:window:1.2.0")
-    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("androidx.window:window:1.3.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.4.4")
     implementation("androidx.room:room-common:2.6.1")
@@ -68,7 +68,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.5.0")
 
     //lifecycle viewmodel
-    val lifecycleVersion = "2.7.0"
+    val lifecycleVersion = "2.8.1"
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation ("androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion")
@@ -84,11 +84,12 @@ dependencies {
     implementation ("io.github.chaosleung:pinview:1.4.4")
     //countrycode
     implementation ("com.hbb20:ccp:2.6.0")
+    implementation ("com.hbb20:android-country-picker:0.0.7")
 
     //ask permission
     implementation ("com.karumi:dexter:6.2.3")
 
-    implementation("com.google.android.material:material:1.11.0")
+//    implementation("com.google.android.material:material:1.11.0")
 
     //spalsh api
     implementation("androidx.core:core-splashscreen:1.0.1")

@@ -1,13 +1,13 @@
-package com.example.greendefend.domin.useCase
+package com.example.greendefend.domin.useCase.viewModels
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.data.repository.RemoteRepositoryImp
 import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.forum.React
+import com.example.greendefend.domin.useCase.AddPostUseCase
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,6 +23,7 @@ class ForumViewModel @Inject constructor(
     private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
     val response: MutableLiveData<NetworkResult<Any>> get() = responseMutableLiveData
 
+   
 
     fun addPost(
         id: String,
@@ -60,5 +61,11 @@ class ForumViewModel @Inject constructor(
         }
     }
 
-
+     fun getPostDetail(id: Int){
+        viewModelScope.launch {
+            responseMutableLiveData.postValue(
+                remoteRepositoryImp.getPostDetail(id)
+            )
+        }
+    }
 }

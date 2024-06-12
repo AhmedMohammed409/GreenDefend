@@ -2,17 +2,12 @@ package com.example.greendefend.domin.useCase
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
-import com.example.greendefend.utli.ConvertUriToFile.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
-
 class EditProfileUseCase @Inject constructor(val context: Context) {
-
-
    operator fun invoke(
        id: String,
        fullName: String,
@@ -21,8 +16,7 @@ class EditProfileUseCase @Inject constructor(val context: Context) {
        imageUri:Uri
        // skillImages:List<Uri>
     ): MultipartBody {
-        val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)
-
+       val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)
        val fileRealpath=getFilePathFromUri(context,imageUri)
        val file= File(fileRealpath)
         multipart.apply {
@@ -40,10 +34,6 @@ class EditProfileUseCase @Inject constructor(val context: Context) {
 //            val newFile= getFilePathFromUri()
 //            }
         }
-
        return multipart.build()
     }
-
-
-
 }

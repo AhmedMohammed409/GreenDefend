@@ -119,6 +119,21 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:ignore="TextContrastCheck" />
 
+                            <ImageButton
+                                android:id="@+id/btn_camera"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_margin="15dp"
+                                android:background="@android:color/transparent"
+                                android:contentDescription="icon camera"
+
+                                android:scaleType="fitXY"
+                                android:src="@drawable/baseline_camera_alt_24"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                tools:ignore="HardcodedText" />
+
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>

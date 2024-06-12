@@ -33,7 +33,7 @@ interface ApiServiceServer {
     @POST("Account/LogOut")
     suspend fun logout(@Body userID: String): Response<ResponseLogin>
     @GET("Account/GetUserData")
-    suspend fun getUserData(@Body userID: String): Response<UserData>
+    suspend fun getUserData(@Query("userId") userId: String): Response<UserData>
     @POST("Account/SendForgetPasswordOTP")
     suspend fun sendForgetPasswordOTP(@Query("Email") email: String): Response<ResponseBody>
     @POST("Account/CheckForgetPasswordOTP")
@@ -72,7 +72,7 @@ interface ApiServiceServer {
         @Body react: React
     ): Response<String>
 
-    @POST("forum/AddReact")
+    @POST("forum/GetPostDetail")
     suspend fun getPostDetail(
         @Query("PostId") id:Int
     ): Response<DetailPost>

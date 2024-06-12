@@ -15,11 +15,10 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import androidx.navigation.fragment.navArgs
 import com.example.greendefend.Constants
-import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
-import com.example.greendefend.domin.useCase.AuthViewModel
+import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -27,6 +26,7 @@ import java.io.File
 
 @AndroidEntryPoint
 class ChangeProfileFragment : Fragment() {
+    private val args:ChangeProfileFragmentArgs by navArgs()
     private lateinit var binding: FragmentChangeprofileBinding
     private val viewModelAccount: AuthViewModel by viewModels()
     private var selectedfile: Uri? = null
