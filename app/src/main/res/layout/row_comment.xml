@@ -73,41 +73,43 @@
             android:layout_margin="1dp"
             android:background="#80000000" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="2">
 
-            <Button
-                android:id="@+id/btn_like"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/mdi_like"
-                android:gravity="center"
-                android:text="Like"
-                android:textColor="@color/black70"
-                tools:ignore="HardcodedText" />
-
-            <Button
-                android:id="@+id/btn_dislike"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/mdi_dislike"
-                android:gravity="center"
-                android:text="unlike"
-                android:textColor="@color/black70"
-                tools:ignore="HardcodedText" />
-
-
-
-        </LinearLayout>
     </LinearLayout>
 
 
 </layout>
+
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:orientation="horizontal"-->
+<!--android:padding="5dp"-->
+<!--android:weightSum="2">-->
+
+<!--<Button-->
+<!--    android:id="@+id/btn_like"-->
+<!--    style="?android:attr/buttonBarButtonStyle"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_weight="1"-->
+<!--    android:drawableStart="@drawable/mdi_like"-->
+<!--    android:gravity="center"-->
+<!--    android:text="Like"-->
+<!--    android:textColor="@color/black70"-->
+<!--    tools:ignore="HardcodedText" />-->
+
+<!--<Button-->
+<!--    android:id="@+id/btn_dislike"-->
+<!--    style="?android:attr/buttonBarButtonStyle"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_weight="1"-->
+<!--    android:drawableStart="@drawable/mdi_dislike"-->
+<!--    android:gravity="center"-->
+<!--    android:text="unlike"-->
+<!--    android:textColor="@color/black70"-->
+<!--    tools:ignore="HardcodedText" />-->
+
+
+
+<!--</LinearLayout>-->

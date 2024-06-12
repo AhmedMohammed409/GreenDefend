@@ -12,8 +12,8 @@ import com.example.greendefend.domin.model.forum.CommentX
 
 class PostAdapter(
     private val context: Context,
-    private var onLikeClicked: (likeState: CommentX) -> Unit,
-    private var onDisLikeClicked: (disLikeState: CommentX) -> Unit,
+//    private var onLikeClicked: (likeState: CommentX) -> Unit,
+//    private var onDisLikeClicked: (disLikeState: CommentX) -> Unit,
 
 ) : ListAdapter<CommentX, PostAdapter.ViewHolder>(CommentsDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostAdapter.ViewHolder {
@@ -22,9 +22,9 @@ class PostAdapter(
 
     override fun onBindViewHolder(holder: PostAdapter.ViewHolder, position: Int) {
         holder.bind(
-            currentList[position],
-            onLikeClicked,
-            onDisLikeClicked
+            currentList[position]
+//            onLikeClicked,
+//            onDisLikeClicked
         )
     }
 
@@ -32,8 +32,8 @@ class PostAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             item: CommentX,
-            onLikeClicked: (likeState: CommentX) -> Unit,
-            onDisLikeClicked: (disLikeState: CommentX) -> Unit,
+//            onLikeClicked: (likeState: CommentX) -> Unit,
+//            onDisLikeClicked: (disLikeState: CommentX) -> Unit,
 
             ) {
 
@@ -44,13 +44,13 @@ class PostAdapter(
                 .load(item.userImageUrl)
                 .into(binding.imgUser)
 
-            binding.btnLike.setOnClickListener {
-                onLikeClicked(item)
-            }
-
-            binding.btnDislike.setOnClickListener {
-                onDisLikeClicked(item)
-            }
+//            binding.btnLike.setOnClickListener {
+//                onLikeClicked(item)
+//            }
+//
+//            binding.btnDislike.setOnClickListener {
+//                onDisLikeClicked(item)
+//            }
 
 
         }
