@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentForumBinding
 import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.useCase.viewModels.ForumViewModel
@@ -62,18 +60,9 @@ class ForumFragment : Fragment() {
         getPostAndObseve()
         binding.recyclerView.adapter = adapter
 
-        val actiotogle = ActionBarDrawerToggle(
-            requireActivity(),
-            binding.drawer,
-            binding.toolbar,
-            R.string.open,
-            R.string.close
-        )
-        binding.drawer.addDrawerListener(actiotogle)
 
-        binding.searchBar.setOnClickListener {
-            findNavController().navigate(ForumFragmentDirections.actionForumFragmentToSearchFragment())
-        }
+
+
         binding.btnAsk.setOnClickListener {
             findNavController().navigate(ForumFragmentDirections.actionForumFragmentToAskingFragment())
         }

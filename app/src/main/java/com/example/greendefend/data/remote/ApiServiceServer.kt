@@ -31,7 +31,7 @@ interface ApiServiceServer {
     @POST("Account/Login")
     suspend fun login(@Body login: Login): Response<ResponseLogin>
     @POST("Account/LogOut")
-    suspend fun logout(@Body userID: String): Response<ResponseLogin>
+    suspend fun logout(@Query("userID") id: String): Response<String>
     @GET("Account/GetUserData")
     suspend fun getUserData(@Query("userId") userId: String): Response<UserData>
     @POST("Account/SendForgetPasswordOTP")

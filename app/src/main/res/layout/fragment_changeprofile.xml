@@ -78,6 +78,7 @@
                     android:minHeight="48dp"
                     android:text="@{userdata.fullName}"
                     app:layout_constraintTop_toBottomOf="@id/txt_name"
+                    tools:ignore="SpeakableTextPresentCheck"
                     tools:layout_editor_absoluteX="15dp" />
 
                 <TextView
@@ -111,7 +112,8 @@
                     android:minHeight="48dp"
                     android:text="@{userdata.bio}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_Introduce" />
+                    app:layout_constraintTop_toBottomOf="@id/txt_Introduce"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/txt_country"
@@ -124,11 +126,7 @@
                     />
 
 
-
-
                 <Button
-                    app:layout_constraintTop_toBottomOf="@id/countrypicker"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:id="@+id/btn_change"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -137,19 +135,11 @@
                     android:text="@string/chage"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_country" />
 
 
-
-                <com.hbb20.CountryCodePicker
-                android:id="@+id/countrypicker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:transitionName="Egypt"
-                app:ccp_defaultNameCode="+20"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_country" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
@@ -158,3 +148,12 @@
 
 </layout>
 
+<!--<com.hbb20.CountryPickerView-->
+<!--android:id="@+id/countrypicker"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_margin="15dp"-->
+<!--android:minHeight="48dp"-->
+<!--android:transitionName="Egypt"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@id/txt_country" />-->

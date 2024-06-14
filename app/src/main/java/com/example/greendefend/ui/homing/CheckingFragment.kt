@@ -148,7 +148,7 @@ class CheckingFragment : Fragment() {
         }
         model.close()
         Log.e("Max id ",maxId.toString())
-        return maxId
+        return maxId-1
 
 
     }

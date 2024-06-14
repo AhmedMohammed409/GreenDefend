@@ -10,13 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.greendefend.Constants
-import com.example.greendefend.R
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.databinding.FragmentHomeBinding
 import com.example.greendefend.domin.model.weather.CurrentWeather
@@ -89,14 +86,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.txtAppName.text = Constants.provideProjectName(requireContext())
+
         checkPermissionOrShowDialog()
         weatherAndObserve(latitude!!, longitude!!)
 
-        val actiotogle = ActionBarDrawerToggle(
-            requireActivity(), binding.drawer, binding.toolbar, R.string.open, R.string.close
-        )
-        binding.drawer.addDrawerListener(actiotogle)
+
 
 
 
@@ -132,8 +126,11 @@ class HomeFragment : Fragment() {
             val mFusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(requireContext())
             val task = mFusedLocationProviderClient.lastLocation
             task.addOnSuccessListener {
-                latitude = it.latitude.toFloat()
-                longitude = it.longitude.toFloat()
+                if (it!=null){
+                    latitude = it.latitude.toFloat()
+                    longitude = it.longitude.toFloat()
+                }
+
             }
         }catch (e :Exception){
             Toast.makeText(requireContext(),e.message,Toast.LENGTH_SHORT).show()

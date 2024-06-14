@@ -83,7 +83,7 @@ dependencies {
     //pinview
     implementation ("io.github.chaosleung:pinview:1.4.4")
     //countrycode
-    implementation ("com.hbb20:ccp:2.6.0")
+//    implementation ("com.hbb20:ccp:2.6.0")
     implementation ("com.hbb20:android-country-picker:0.0.7")
 
     //ask permission

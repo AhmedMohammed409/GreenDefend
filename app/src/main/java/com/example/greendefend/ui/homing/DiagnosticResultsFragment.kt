@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.databinding.FragmentDiagnosticResultsBinding
@@ -36,8 +37,9 @@ class DiagnosticResultsFragment : Fragment() {
 
 
         val listDisease=getListfromJson(json)
-        Log.e("list arry",listDisease.toString())
-
+//        Log.e("list arry",listDisease.toString())
+        Log.e("list arry size ",listDisease.size.toString()+listDisease[0])
+//Toast.makeText(requireContext(),listDisease.size,Toast.LENGTH_LONG).show()
         binding.img.setImageURI(args.uri)
         binding.disease=listDisease[args.index]
         binding.txtDisease.text=listDisease[args.index].name

@@ -1,17 +1,29 @@
 package com.example.greendefend.ui.homing
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.greendefend.Constants
 import com.example.greendefend.R
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.databinding.ActivityHomeBinding
+import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
+import com.example.greendefend.ui.authentication.AuthenticationActivity
+import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,78 +32,135 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityHomeBinding
-    @Inject lateinit var dataStorePrefrenceImpl:DataStorePrefrenceImpl
+    private lateinit var binding: ActivityHomeBinding
+    private val  authViewModel:AuthViewModel by viewModels()
+    @Inject
+    lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
+    private val actiotogle by lazy {
+        ActionBarDrawerToggle(
+            this,
+            binding.drawer,
+            binding.toolbar,
+            R.string.open,
+            R.string.close
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        runBlocking {getdata()  }
+        runBlocking { getdata() }
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        //connection button navigation
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            visableButtomNavigation(destination.id) }
+//        val appBarConfiguration= AppBarConfiguration(navController.graph,binding.drawer)
+//        setupActionBarWithNavController(na)
+
+        //connection drawwer
+        binding.txtAppName.text = Constants.provideProjectName(this)
+        binding.drawer.addDrawerListener(actiotogle)
+        actiotogle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.nav.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_home -> {Toast.makeText(this,"home",Toast.LENGTH_SHORT).show()
+                binding.bottomNavigationView.findNavController().navigate(R.id.homeFragment)}
+                R.id.nav_forum -> {Navigation.findNavController(this,R.id.nav_forum)}
+                R.id.nav_profile -> {Toast.makeText(this,"profile",Toast.LENGTH_SHORT).show()}
+                R.id.nav_forum -> {Navigation.findNavController(this,R.id.nav_forum)}
+                R.id.nav_logout->{ logoutAndObserve() }
+
+            }
+            true
         }
 
-    private fun visableButtomNavigation(destinationId:Int){
+
+        //action at any fragment and change
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            hidenFragment(destination.id)
+        }
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (actiotogle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun hidenFragment(destinationId: Int) {
         when (destinationId) {
             R.id.searchFragment -> {
-                binding.bottomNavigationView.isVisible=false }
+                binding.bottomNavigationView.isVisible = false
+            }
+
             R.id.weatherFragment -> {
-                binding.bottomNavigationView.isVisible=false }
+                binding.bottomNavigationView.isVisible = false
+            }
+
             R.id.checkingFragment -> {
-                binding.bottomNavigationView.isVisible=false }
+                binding.bottomNavigationView.isVisible = false
+            }
+
             R.id.changeProfileFragment -> {
-                binding.bottomNavigationView.isVisible=false }
-            else -> {  binding.bottomNavigationView.isVisible=true}
+                binding.bottomNavigationView.isVisible = false
+            }
+
+            else -> {
+                binding.bottomNavigationView.isVisible = true
+            }
         }
     }
+
     private fun getdata() {
         lifecycleScope.launch(Dispatchers.IO) {
             launch {
-                dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.userId_KEY, "").collect {
-                    Constants.Id = it
-                    Log.e("id", it)
-                }
+                dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.userId_KEY, "")
+                    .collect {
+                        Constants.Id = it
+                    }
             }
             launch {
                 dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.Name_KEY, "").collect {
                     Constants.Name = it
-                    Log.e("name", it)
                 }
             }
             launch {
                 dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.Email_KEY, "").collect {
                     Constants.Email = it
-                    Log.e("email", it)
+
                 }
             }
             launch {
                 dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.Token_KEY, "").collect {
                     Constants.Token = it
-                    Log.e("token", it)
+
                 }
             }
             launch {
-                dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.Country_KEY, "").collect {
-                    Constants.Country = it
-                    Log.e("country", it)
-                }
+                dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.Country_KEY, "")
+                    .collect {
+                        Constants.Country = it
+
+                    }
             }
             launch {
                 dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.Bio_KEY, "").collect {
                     Constants.Bio = it
-                    Log.e("bio", it)
                 }
             }
             launch {
-                dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.ImageUrl_KEY, "").collect {
-                    Constants.imageUrl = it.toUri()
-                    Log.e("bio", it)
-                }
+                dataStorePrefrenceImpl.getPreference(DataStorePrefrenceImpl.ImageUrl_KEY, "")
+                    .collect {
+                        Constants.imageUrl = it.toUri()
+
+                    }
             }
 
         }
@@ -99,6 +168,28 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    private fun logoutAndObserve(){
+        authViewModel.logout(Constants.Id)
+        authViewModel.response.observe(this){response->
+            when(response){
+                is NetworkResult.Success->{
+                    lifecycleScope.launch {
+                        dataStorePrefrenceImpl.clearAllPreference()
+                        dataStorePrefrenceImpl.putPreference(DataStorePrefrenceImpl.onboardingOpenedState_Key,true)
+                    }
+                    startActivity(Intent(this,AuthenticationActivity::class.java))
+                    finish()
+
+                }
+                is NetworkResult.Error->{
+                    Log.e("error msg logout",response.errMsg+response.code)
+                    Toast.makeText(this,"Failed Logout",Toast.LENGTH_SHORT).show()
+                }
+                is NetworkResult.Exception->{}
+            }
+        }
     }
+
+}
 
 
