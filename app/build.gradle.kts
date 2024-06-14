@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.example.greendefend"
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -68,7 +68,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.5.0")
 
     //lifecycle viewmodel
-    val lifecycleVersion = "2.8.1"
+    val lifecycleVersion = "2.8.2"
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation ("androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion")
