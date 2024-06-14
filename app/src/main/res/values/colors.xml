@@ -9,4 +9,9 @@
     <color name="green_name">#388B68</color>
     <color name="e4f0e9">#E4F0E9</color>
     <color name="_39c58a">#39C58A</color>
+
+    <!--    Desha Colors-->
+    <color name="green_toolBar">#97C3AF</color>
+    <color name="green_opacity_qa">#B9E3D0</color>
+    <color name="gray">#F5F9F5</color>
 </resources>

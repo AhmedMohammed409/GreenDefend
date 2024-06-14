@@ -81,6 +81,10 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        //desha
+        binding.btn1.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_informationPlantsFragment)
+        }
         return binding.root
     }
 
@@ -137,6 +141,29 @@ class HomeFragment : Fragment() {
         }
 
     }
+//@SuppressLint("MissingPermission")
+//private fun getCurrentLocation() {
+//    try {
+//        val mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+//        val task = mFusedLocationProviderClient.lastLocation
+//        task.addOnSuccessListener { location ->
+//            if (location != null) {
+//                latitude = location.latitude.toFloat()
+//                longitude = location.longitude.toFloat()
+//                weatherAndObserve(latitude!!, longitude!!)
+//            } else {
+//                Toast.makeText(requireContext(), "Location is null", Toast.LENGTH_SHORT).show()
+//                weatherAndObserve(latitude!!, longitude!!)
+//            }
+//        }.addOnFailureListener { e ->
+//            Toast.makeText(requireContext(), "Failed to get location: ${e.message}", Toast.LENGTH_SHORT).show()
+//            weatherAndObserve(latitude!!, longitude!!)
+//        }
+//    } catch (e: Exception) {
+//        Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+//        weatherAndObserve(latitude!!, longitude!!)
+//    }
+//}
 
 
     private fun weatherAndObserve(latitude: Float, longitude: Float) {
