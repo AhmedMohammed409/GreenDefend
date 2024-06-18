@@ -3,6 +3,8 @@ package com.example.greendefend.ui.homing
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,8 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.example.greendefend.Constants
 import com.example.greendefend.R
 import com.example.greendefend.data.repository.DataStorePrefrenceImpl
@@ -27,9 +35,14 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(){
- //   ,NavigationView.OnNavigationItemSelectedListener
+
      lateinit var binding: ActivityHomeBinding
     private val authViewModel: AuthViewModel by viewModels()
+
+    private lateinit var navHostFragment:NavHostFragment
+   private lateinit var navController:NavController
+    private lateinit var appBarConfiguration:AppBarConfiguration
+
 //    private val obBackPressedCallback=object :OnBackPressedCallback(true){
 //        override fun handleOnBackPressed() {
 //            onBackpressedMethod()
@@ -60,9 +73,9 @@ class HomeActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        onBackPressedDispatcher.addCallback(this, obBackPressedCallback )
-
         runBlocking { getdata() }
+
+
 
         //connection button navigation
         val navHostFragment =
@@ -70,30 +83,28 @@ class HomeActivity : AppCompatActivity(){
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
 
+//        appBarConfiguration= AppBarConfiguration(navController.graph,binding.drawerLayout)
+//        setupActionBarWithNavController(navController,appBarConfiguration)
 
-
-
-//        val appBarConfiguration= AppBarConfiguration(navController.graph,binding.drawer)
-//        setupActionBarWithNavController(na)
 
         //connection drawwer
         binding.txtAppName.text = Constants.provideProjectName(this)
         binding.drawerLayout.addDrawerListener(toggle)
-        binding.drawerLayout.addDrawerListener(toggle)
+
+       // setSupportActionBar(binding.toolbar)
+
+        val header=binding.navigationView.getHeaderView(0)
+        val userNameText=header.findViewById<TextView>(R.id.txt_username)
+        val gmailText=header.findViewById<TextView>(R.id.txt_Email)
+        val imageUser=header.findViewById<ImageView>(R.id.img_user)
+        userNameText.text=Constants.Name
+        gmailText.text=Constants.Email
+        if (Constants.imageUrl!=null){
+        Glide.with(this).load(Constants.imageUrl).into(imageUser)}
 
 
-//        setSupportActionBar(binding.toolbar)
-//        val header=binding.navigationView.getHeaderView(0)
-//        var userNameText=header.findViewById<TextView>(R.id.txt_username)
-//        var gmailText=header.findViewById<TextView>(R.id.txt_Email)
-//        val imageUser=header.findViewById<ImageView>(R.id.img_user)
-//        binding.navigationView.setNavigationItemSelectedListener (this)
-//
-//binding.drawerLayout.addDrawerListener(toggle)
-//        toggle.syncState()
-//        //defulat
-//        replaceFragment(HomeFragment())
-//        binding.navigationView.setCheckedItem(R.id.nav_home)
+
+
 
         //action at any fragment and change
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -105,9 +116,7 @@ class HomeActivity : AppCompatActivity(){
 
     }
 
-//    private fun replaceFragment(fragment:Fragment) {
-//       supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment).commit()
-//    }
+
 
 
     private fun hidenFragment(destinationId: Int) {
@@ -127,11 +136,26 @@ class HomeActivity : AppCompatActivity(){
             R.id.changeProfileFragment -> {
                 binding.bottomNavigationView.isVisible = false
             }
+            R.id.askingFragment -> {
+                binding.bottomNavigationView.isVisible = false
+            }
+            R.id.postFragment -> {
+                binding.bottomNavigationView.isVisible = false
+            }
+            R.id.diagnosticResultsFragment -> {
+                binding.bottomNavigationView.isVisible = false
+            }
 
             else -> {
                 binding.bottomNavigationView.isVisible = true
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController=findNavController(R.id.fragment)
+
+        return navController.navigateUp(appBarConfiguration)||super.onSupportNavigateUp()
     }
 
     private fun getdata() {
@@ -211,28 +235,7 @@ class HomeActivity : AppCompatActivity(){
         }
     }
 
-//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//       when(item.itemId){
-//           R.id.nav_profile->{
-//               replaceFragment(ProfileFragment())
-//               setTitle("Profile")
-//           }
-//           R.id.nav_home->{
-//               replaceFragment(HomeFragment())
-//               setTitle("Home")
-//           }
-//           R.id.nav_forum->{
-//               replaceFragment(ForumFragment())
-//               setTitle("Forum")
-//           }
-//           R.id.nav_setting->{}
-//           R.id.nav_logout->{}
-//           R.id.nav_share->{}
-//           R.id.nav_rate_us->{}
-//       }
-//        binding.drawerLayout.closeDrawer(GravityCompat.START)
-//        return true
-//    }
+
 
 
 }

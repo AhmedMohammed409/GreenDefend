@@ -3,6 +3,7 @@ package com.example.greendefend.ui.homing
 import android.Manifest.permission
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -208,6 +209,16 @@ class CheckingFragment : Fragment() {
         }
         model.close()
         return maxId - 1
+    }
+
+    override fun onAttach(context: Context) {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
+        super.onAttach(context)
+    }
+
+    override fun onPause() {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
+        super.onPause()
     }
 }
 

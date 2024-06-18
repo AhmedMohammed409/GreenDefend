@@ -13,12 +13,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.greendefend.Constants
+import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
 import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
@@ -99,14 +101,14 @@ class ChangeProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         Glide.with(requireContext()).load(args.userData.imageUrl).into(
             binding.imgProfile
         )
         binding.userdata=args.userData
-Log.e("user",args.toString())
 
-
-        binding.imgProfile.setOnClickListener {
+        binding.imageButtonCamera.setOnClickListener {
             pick()
         }
         binding.btnChange.setOnClickListener {
@@ -163,7 +165,13 @@ Log.e("user",args.toString())
 
     override fun onAttach(context: Context) {
         (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
+        Log.e("user",args.userData.toString())
         super.onAttach(context)
+    }
+
+    override fun onDestroy() {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
+        super.onDestroy()
     }
 
 }

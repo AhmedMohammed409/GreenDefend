@@ -39,22 +39,35 @@
                             android:src="@drawable/background_change_profile" />
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            app:cardCornerRadius="50dp">
+                            app:cardCornerRadius="60dp">
 
                             <ImageView
                                 android:id="@+id/img_profile"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
                                 android:contentDescription="@string/profile"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
 
                                 android:src="@drawable/user" />
+
+
                         </androidx.cardview.widget.CardView>
 
+                        <ImageButton
+                            android:id="@+id/imageButton_camera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:layout_alignParentBottom="true"
+
+                            android:layout_toEndOf="@+id/cardView2"
+                            android:src="@drawable/baseline_camera_alt_24"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     </RelativeLayout>
 

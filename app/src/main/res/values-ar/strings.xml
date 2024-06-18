@@ -211,4 +211,7 @@
     <string name="q20_3">ما هي الخطوات الأساسية التي يجب اتخاذها للتعامل مع أي ظروف طارئة تؤثر على صحة النباتات، مثل الفيضانات أو الحرائق؟</string>
     <string name="a20_3">•	يجب إجلاء النباتات المعرضة للخطر في حالات الطوارئ مثل الفيضانات، واتخاذ إجراءات الوقاية من الحرائق مثل إزالة النباتات الجافة المتراكمة.</string>
     <string name="add_comment">add_comment deshadesha</string>
+    <string name="no_permission_granted">لم يتم السماح</string>
+    <string name="not_select_image">لم يتم اختيار صورة</string>
+    <string name="change_language">تغيير اللغه</string>
 </resources>

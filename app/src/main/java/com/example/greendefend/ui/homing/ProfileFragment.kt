@@ -1,6 +1,7 @@
 package com.example.greendefend.ui.homing
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,13 +64,15 @@ class ProfileFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     result = response.data as UserData
                     binding.txtName.text = result.fullName
-                    binding.txtBio.text = result.bio
+
+                    if (result.bio!=null){
+                    binding.txtBio.text = result.bio}
 
                     Glide.with(requireContext())
                         .load(result.imageUrl)
                         .into(binding.imgPerson)
 
-
+Log.e("response",response.toString())
                 }
 
                 is NetworkResult.Error -> {

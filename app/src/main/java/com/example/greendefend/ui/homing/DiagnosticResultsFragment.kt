@@ -1,12 +1,13 @@
 package com.example.greendefend.ui.homing
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.databinding.FragmentDiagnosticResultsBinding
 import com.example.greendefend.domin.model.Disease
@@ -33,6 +34,10 @@ class DiagnosticResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigate(DiagnosticResultsFragmentDirections.actionDiagnosticResultsFragmentToHomeFragment())
+        }
 
        val json=readJSONfromAssets()
 
@@ -77,6 +82,11 @@ return json!!
     override fun onPause() {
         (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
         super.onPause()
+    }
+
+    override fun onAttach(context: Context) {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
+        super.onAttach(context)
     }
 
 

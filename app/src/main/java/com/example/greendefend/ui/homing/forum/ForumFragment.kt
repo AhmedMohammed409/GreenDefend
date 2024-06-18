@@ -22,25 +22,8 @@ class ForumFragment : Fragment() {
     private lateinit var binding: FragmentForumBinding
     private val forumViewModel: ForumViewModel by viewModels()
 
-    private lateinit var adapter: PostAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {}
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        binding = FragmentForumBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        adapter = PostAdapter(requireContext(), onItemClicked = {
+    private val adapter: PostAdapter by lazy {
+        PostAdapter(requireContext(), onItemClicked = {
             findNavController().navigate(
                 ForumFragmentDirections.actionForumFragmentToPostFragment(
                     it.postId!!,
@@ -61,6 +44,25 @@ class ForumFragment : Fragment() {
                 )
             }
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {}
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding = FragmentForumBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.recyclerView.adapter = adapter
         getPostAndObseve()
 
@@ -78,12 +80,7 @@ class ForumFragment : Fragment() {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
                     val posts: List<Post>? = (response.data as? List<*>)?.filterIsInstance<Post>()
-//                    val posts=response.data.also {
-//                        it as List<*>
-//                    }
                     adapter.submitList(posts)
-//                    binding.recyclerView.adapter = adapter
-
                 }
 
                 is NetworkResult.Error -> {

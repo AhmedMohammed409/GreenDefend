@@ -3,29 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/nav_profile"
+        android:id="@+id/profileFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_person_24"
         android:title="@string/profile"
         />
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/homeFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_home_24"
         android:title="@string/home"
        />
     <item
-        android:id="@+id/nav_forum"
+        android:id="@+id/forumFragment"
         android:icon="@drawable/fourm_icon_black"
         android:title="@string/forum" />
     <item
-        android:id="@+id/nav_setting"
+        android:id="@+id/nav_translate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_settings_24"
+        android:icon="@drawable/icon_translate"
+
         android:title="@string/change_language"
+
+
        />
     <item
         android:layout_width="wrap_content"

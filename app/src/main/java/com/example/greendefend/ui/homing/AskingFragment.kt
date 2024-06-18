@@ -1,6 +1,7 @@
 package com.example.greendefend.ui.homing
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -136,6 +137,14 @@ class AskingFragment : Fragment() {
 
     }
 
+    override fun onAttach(context: Context) {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
+        super.onAttach(context)
+    }
 
+    override fun onDestroy() {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
+        super.onDestroy()
+    }
 
 }
