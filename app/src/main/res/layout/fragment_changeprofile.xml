@@ -124,6 +124,23 @@
                     android:text="@string/country"
                     app:layout_constraintStart_toStartOf="parent"
                     />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/txt_country"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_margin="15dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/et_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/country"
+                        android:text="@{userdata.country}"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
 
                 <Button
@@ -137,7 +154,7 @@
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_country" />
+                    app:layout_constraintTop_toBottomOf="@id/text_input_country" />
 
 
 

@@ -7,7 +7,7 @@
 <data >
     <variable
         name="post"
-        type="com.example.greendefend.domin.model.forum.Post" />
+        type="com.example.greendefend.domin.model.forum.DetailPost" />
 </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                             android:layout_height="match_parent"
                             android:contentDescription="person"
                             android:scaleType="centerCrop"
-                            tools:ignore="HardcodedText"
+                            tools:ignore="HardcodedText,ImageContrastCheck"
                             tools:src="@drawable/fares" />
                     </androidx.cardview.widget.CardView>
 
@@ -69,7 +69,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{post.createdAt}"
+                            android:text="@{post.postDate}"
                             android:textStyle="bold"
                             tools:ignore="HardcodedText"
                             tools:text="time" />
@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="@{post.postValue}"
+                    android:text="@{post.postBody}"
                     android:textColor="@color/black"
                     tools:text="@string/what_does_it_take_for_a_potato_to_grow_well_knowing_that_it_has_about_50_days_in_yellowing_of_leaves" />
 
@@ -92,7 +92,7 @@
                     android:layout_height="180dp"
                     android:contentDescription="text post"
                     android:scaleType="fitXY"
-                    tools:ignore="HardcodedText"
+                    tools:ignore="HardcodedText,ImageContrastCheck"
                     tools:src="@drawable/post" />
 
 
@@ -110,6 +110,7 @@
                     android:weightSum="2">
 
                     <Button
+                        android:id="@+id/btn_like"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -121,6 +122,7 @@
                         tools:ignore="HardcodedText,DuplicateSpeakableTextCheck" />
 
                     <Button
+                        android:id="@+id/btn_dislike"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

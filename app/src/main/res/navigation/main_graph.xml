@@ -15,12 +15,8 @@
         <action
             android:id="@+id/action_homeFragment_to_checkingFragment"
             app:destination="@id/checkingFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_informationPlantsFragment"
-            app:destination="@id/informationPlantsFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_diseasesPlantsFragment"
-            app:destination="@id/diseasesPlantsFragment" />
+
+
     </fragment>
     <fragment
         android:id="@+id/forumFragment"
@@ -70,6 +66,9 @@
         <action
             android:id="@+id/action_checkingFragment_to_diagnosticResultsFragment"
             app:destination="@id/diagnosticResultsFragment" />
+        <argument
+            android:name="temp"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/changeProfileFragment"
@@ -110,17 +109,11 @@
         android:label="fragment_post"
         tools:layout="@layout/fragment_post" >
         <argument
-            android:name="post"
-            app:argType="com.example.greendefend.domin.model.forum.Post" />
+            android:name="postId"
+            app:argType="integer" />
+        <argument
+            android:name="likeStatus"
+            app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/diseasesPlantsFragment"
-        android:name="com.example.greendefend.ui.desha.DiseasesPlantsFragment"
-        android:label="fragment_dieases_plants"
-        tools:layout="@layout/fragment_dieases_plants" />
-    <fragment
-        android:id="@+id/informationPlantsFragment"
-        android:name="com.example.greendefend.ui.desha.InformationPlantsFragment"
-        android:label="fragment_information_plants"
-        tools:layout="@layout/fragment_information_plants" />
+
 </navigation>

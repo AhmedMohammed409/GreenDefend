@@ -2,7 +2,10 @@ package com.example.greendefend.ui.homing.home
 
 import android.Manifest.permission
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,14 +23,17 @@ import com.example.greendefend.databinding.FragmentHomeBinding
 import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.domin.useCase.viewModels.WeatherViewModel
 import com.example.greendefend.utli.NetworkResult
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.http2.Settings
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    
+    private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
+
     @Inject
     lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
     private val weatherviewModel: WeatherViewModel by viewModels()
@@ -42,7 +49,6 @@ class HomeFragment : Fragment() {
                 getCurrentLocation()
             } else {
                 Toast.makeText(requireContext(), "No Permission Granted", Toast.LENGTH_SHORT).show()
-                binding.progressBar.visibility = View.GONE
             }
         }
     }
@@ -57,14 +63,16 @@ class HomeFragment : Fragment() {
 
     private fun checkPermissionOrShowDialog() {
         if (hasPermission(permissions)) {
-            getCurrentLocation()
+            if (isLocationEnable()){
+            getCurrentLocation()}
+            else{
+                startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            }
         } else {
             permissionLauncher.launch(permissions)
         }
 
     }
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,10 +89,6 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        //desha
-        binding.btn1.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_informationPlantsFragment)
-        }
         return binding.root
     }
 
@@ -92,14 +96,20 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         checkPermissionOrShowDialog()
-        weatherAndObserve(latitude!!, longitude!!)
-
-
-
-
 
         binding.btnUpload.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCheckingFragment())
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToCheckingFragment(
+                    true
+                )
+            )
+        }
+        binding.btnCamera.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToCheckingFragment(
+                    false
+                )
+            )
         }
         binding.txtMoreWeather.setOnClickListener {
             findNavController().navigate(
@@ -126,44 +136,22 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
-        try {
-            val mFusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(requireContext())
-            val task = mFusedLocationProviderClient.lastLocation
-            task.addOnSuccessListener {
-                if (it!=null){
-                    latitude = it.latitude.toFloat()
-                    longitude = it.longitude.toFloat()
-                }
-
+            mFusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(requireActivity())
+           mFusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
+               val location=task.result
+               if (location != null) {
+                   latitude = location.latitude.toFloat()
+                   longitude = location.longitude.toFloat()
+                   weatherAndObserve(latitude!!, longitude!!)
+               }
+               else{
+                   Toast.makeText(requireContext(),"Null Recieved",Toast.LENGTH_SHORT).show()
+               }
             }
-        }catch (e :Exception){
-            Toast.makeText(requireContext(),e.message,Toast.LENGTH_SHORT).show()
-        }
+
 
     }
-//@SuppressLint("MissingPermission")
-//private fun getCurrentLocation() {
-//    try {
-//        val mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-//        val task = mFusedLocationProviderClient.lastLocation
-//        task.addOnSuccessListener { location ->
-//            if (location != null) {
-//                latitude = location.latitude.toFloat()
-//                longitude = location.longitude.toFloat()
-//                weatherAndObserve(latitude!!, longitude!!)
-//            } else {
-//                Toast.makeText(requireContext(), "Location is null", Toast.LENGTH_SHORT).show()
-//                weatherAndObserve(latitude!!, longitude!!)
-//            }
-//        }.addOnFailureListener { e ->
-//            Toast.makeText(requireContext(), "Failed to get location: ${e.message}", Toast.LENGTH_SHORT).show()
-//            weatherAndObserve(latitude!!, longitude!!)
-//        }
-//    } catch (e: Exception) {
-//        Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
-//        weatherAndObserve(latitude!!, longitude!!)
-//    }
-//}
 
 
     private fun weatherAndObserve(latitude: Float, longitude: Float) {
@@ -183,7 +171,11 @@ class HomeFragment : Fragment() {
                 is NetworkResult.Error -> {
 //                    binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr", response.toString())
-                    Toast.makeText(requireContext(), response.errMsg+"Not found weather", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        response.errMsg + "Not found weather",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
                 is NetworkResult.Exception -> {
@@ -196,6 +188,13 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun isLocationEnable(): Boolean {
+        val locationManager: LocationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
 
 
 }

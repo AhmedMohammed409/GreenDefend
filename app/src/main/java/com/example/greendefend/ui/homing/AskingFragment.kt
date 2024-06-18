@@ -25,7 +25,7 @@ import java.io.File
 @AndroidEntryPoint
 class AskingFragment : Fragment() {
    private lateinit var binding: FragmentAskingBinding
-    private lateinit var selectedfile:Uri
+    private  var selectedfile: Uri? =null
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -91,15 +91,16 @@ class AskingFragment : Fragment() {
         binding.btnAddImage.setOnClickListener { pick() }
         binding.btnSend.setOnClickListener {
             binding.progressBar.visibility=View.VISIBLE
-           addpostAndObserve(binding.etPost.text.toString(),selectedfile)
+           addPostAndObserve(binding.etPost.text.toString(),selectedfile)
 
         }
 
 
     }
 
-    private fun addpostAndObserve(post:String, uri: Uri?){
-        forumViewModel.addPost(Constants.Id,post,uri!!)
+    private fun addPostAndObserve(post:String, uri: Uri?){
+
+        forumViewModel.addPost(Constants.Id,post,uri)
 
         forumViewModel.response.observe(viewLifecycleOwner){response->
             File(requireContext().cacheDir,Constants.fileName).delete()

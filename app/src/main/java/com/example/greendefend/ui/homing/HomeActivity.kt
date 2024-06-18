@@ -1,24 +1,15 @@
 package com.example.greendefend.ui.homing
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.MenuItem
 import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import androidx.core.os.BuildCompat
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.greendefend.Constants
@@ -27,9 +18,7 @@ import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.databinding.ActivityHomeBinding
 import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.ui.authentication.AuthenticationActivity
-import com.example.greendefend.ui.homing.home.HomeFragment
 import com.example.greendefend.utli.NetworkResult
-import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,13 +26,27 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeBinding
+class HomeActivity : AppCompatActivity(){
+ //   ,NavigationView.OnNavigationItemSelectedListener
+     lateinit var binding: ActivityHomeBinding
     private val authViewModel: AuthViewModel by viewModels()
+//    private val obBackPressedCallback=object :OnBackPressedCallback(true){
+//        override fun handleOnBackPressed() {
+//            onBackpressedMethod()
+//        }
+//    }
+
+//    private fun onBackpressedMethod() {
+//       if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
+//          binding.drawerLayout.closeDrawer(GravityCompat.START)
+//       }else{
+//finish()
+//       }
+//    }
 
     @Inject
     lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
-    private val actiotogle by lazy {
+    private val toggle by lazy {
         ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
@@ -57,6 +60,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//        onBackPressedDispatcher.addCallback(this, obBackPressedCallback )
 
         runBlocking { getdata() }
 
@@ -65,41 +69,31 @@ class HomeActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
+
+
+
+
 //        val appBarConfiguration= AppBarConfiguration(navController.graph,binding.drawer)
 //        setupActionBarWithNavController(na)
 
         //connection drawwer
         binding.txtAppName.text = Constants.provideProjectName(this)
-        binding.drawerLayout.addDrawerListener(actiotogle)
-        actiotogle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.nav.setNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_home -> {
-                    Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
-                    binding.bottomNavigationView.findNavController().navigate(R.id.homeFragment)
-                }
+        binding.drawerLayout.addDrawerListener(toggle)
+        binding.drawerLayout.addDrawerListener(toggle)
 
-                R.id.nav_forum -> {
-                    Navigation.findNavController(this, R.id.nav_forum)
-                }
 
-                R.id.nav_profile -> {
-                    Toast.makeText(this, "profile", Toast.LENGTH_SHORT).show()
-                }
-
-                R.id.nav_forum -> {
-                    Navigation.findNavController(this, R.id.nav_forum)
-                }
-
-                R.id.nav_logout -> {
-                    logoutAndObserve()
-                }
-
-            }
-            true
-        }
-
+//        setSupportActionBar(binding.toolbar)
+//        val header=binding.navigationView.getHeaderView(0)
+//        var userNameText=header.findViewById<TextView>(R.id.txt_username)
+//        var gmailText=header.findViewById<TextView>(R.id.txt_Email)
+//        val imageUser=header.findViewById<ImageView>(R.id.img_user)
+//        binding.navigationView.setNavigationItemSelectedListener (this)
+//
+//binding.drawerLayout.addDrawerListener(toggle)
+//        toggle.syncState()
+//        //defulat
+//        replaceFragment(HomeFragment())
+//        binding.navigationView.setCheckedItem(R.id.nav_home)
 
         //action at any fragment and change
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -107,38 +101,14 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
-        if (Build.VERSION.SDK_INT >= 33) {
-            onBackInvokedDispatcher.registerOnBackInvokedCallback(
-                OnBackInvokedDispatcher.PRIORITY_DEFAULT
-            ) {
-                // Back is pressed... Finishing the activity
-                if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
-                    binding.drawerLayout.closeDrawer(GravityCompat.START)
 
-                }
-
-                finish()
-            }
-        } else {
-            onBackPressedDispatcher.addCallback(this /* lifecycle owner */, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    // Back is pressed... Finishing the activity
-                    binding.drawerLayout.closeDrawer(GravityCompat.START)
-                    finish()
-                }
-            })
-        }
 
     }
 
-
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (actiotogle.onOptionsItemSelected(item)) {
-//            return true
-//        }
-//        return super.onOptionsItemSelected(item)
+//    private fun replaceFragment(fragment:Fragment) {
+//       supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment).commit()
 //    }
+
 
     private fun hidenFragment(destinationId: Int) {
         when (destinationId) {
@@ -242,10 +212,26 @@ class HomeActivity : AppCompatActivity() {
     }
 
 //    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//      val itemId=item.itemId
-//        if (itemId==R.id.nav_home){
-//            fragmentManager.beginTransaction().replace(binding.fragment.id,object home:HomeFragment)
-//        }
+//       when(item.itemId){
+//           R.id.nav_profile->{
+//               replaceFragment(ProfileFragment())
+//               setTitle("Profile")
+//           }
+//           R.id.nav_home->{
+//               replaceFragment(HomeFragment())
+//               setTitle("Home")
+//           }
+//           R.id.nav_forum->{
+//               replaceFragment(ForumFragment())
+//               setTitle("Forum")
+//           }
+//           R.id.nav_setting->{}
+//           R.id.nav_logout->{}
+//           R.id.nav_share->{}
+//           R.id.nav_rate_us->{}
+//       }
+//        binding.drawerLayout.closeDrawer(GravityCompat.START)
+//        return true
 //    }
 
 

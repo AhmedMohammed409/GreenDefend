@@ -28,11 +28,11 @@ class ForumViewModel @Inject constructor(
     fun addPost(
         id: String,
         postValue: String,
-        fileUri: Uri,
+        fileUri: Uri?,
 
         ) {
         viewModelScope.launch {
-            val multipart = addPost.invoke(id, postValue, fileUri)
+            val multipart = addPost.invoke(id, postValue, fileUri!!)
             responseMutableLiveData.postValue(remoteRepositoryImp.addPost(multipart))
         }
     }
@@ -53,7 +53,7 @@ class ForumViewModel @Inject constructor(
     }
 
 
-    suspend fun addReact(react: React) {
+     fun addReact(react: React) {
         viewModelScope.launch {
             responseMutableLiveData.postValue(
                 remoteRepositoryImp.addReact(react)

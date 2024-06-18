@@ -1,21 +1,24 @@
 package com.example.greendefend.ui.homing.forum
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.greendefend.R
 import com.example.greendefend.databinding.RowPostBinding
 import com.example.greendefend.domin.model.forum.Post
 
 class PostAdapter(
     private val context: Context,
     private var onItemClicked: (post: Post) -> Unit,
-    private var onLikeClicked: (likeState: String) -> Unit,
-    private var onDisLikeClicked: (disLikeState: String) -> Unit,
-    private var onCommentClicked: (post: Post) -> Unit,
+    private var onLikeClicked: (postId: Int) -> Unit,
+    private var onDisLikeClicked: (postId: Int) -> Unit,
+    private var onCommentClicked: (postId: Post) -> Unit,
 ) : ListAdapter<Post, PostAdapter.ViewHolder>(PostsDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostAdapter.ViewHolder {
         return ViewHolder(RowPostBinding.inflate(LayoutInflater.from(parent.context)))
@@ -33,15 +36,33 @@ class PostAdapter(
 
     inner class ViewHolder(private val binding: RowPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(
-            item: Post, onItemClicked: (item: Post) -> Unit,
-            onLikeClicked: (likeState: String) -> Unit,
-            onDisLikeClicked: (disLikeState: String) -> Unit,
-            onCommentClicked: (item: Post) -> Unit
+            item: Post, onItemClicked: (post: Post) -> Unit,
+            onLikeClicked: (postId: Int) -> Unit,
+            onDisLikeClicked: (postId: Int) -> Unit,
+            onCommentClicked: (post: Post) -> Unit
         ) {
 
 
             binding.post = item
+            if (item.postImageURL==null){
+                binding.imgPost.visibility=View.GONE
+            }
+            when (item.likeStatus) {
+                "Yes" -> {
+                    binding.btnLike.background= context.getDrawable(R.color.state)
+                    binding.btnDislike.background= null
+                }
+                "No" -> {
+                    binding.btnDislike.background= context.getDrawable(R.color.state)
+                    binding.btnLike.background= null
+                }
+                else -> {
+                    binding.btnLike.background= null
+                    binding.btnDislike.background= null
+                }
+            }
 
             Glide.with(context)
                 .load(item.userImageURL)
@@ -52,11 +73,11 @@ class PostAdapter(
                 .into(binding.imgPost)
 
             binding.btnLike.setOnClickListener {
-                onLikeClicked(item.likeStatus!!)
+                onLikeClicked(item.postId!!)
             }
 
             binding.btnDislike.setOnClickListener {
-                onDisLikeClicked(item.likeStatus!!)
+                onDisLikeClicked(item.postId!!)
             }
             binding.btnComment.setOnClickListener {
                 onCommentClicked(item)
@@ -74,10 +95,10 @@ class PostAdapter(
 
 object PostsDiffUtil : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return oldItem == newItem
+        return oldItem.likeStatus == newItem.likeStatus
     }
 
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return oldItem.postId == newItem.postId
+        return areItemsTheSame(oldItem,newItem)
     }
 }

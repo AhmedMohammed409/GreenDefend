@@ -32,6 +32,7 @@ class DiagnosticResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
 
        val json=readJSONfromAssets()
 
@@ -71,6 +72,11 @@ return json!!
             e.printStackTrace()
         }
         return result!!
+    }
+
+    override fun onPause() {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
+        super.onPause()
     }
 
 

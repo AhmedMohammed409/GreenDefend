@@ -40,6 +40,7 @@ class PostAdapter(
             binding.comment = item
 
 
+
             Glide.with(context)
                 .load(item.userImageUrl)
                 .into(binding.imgUser)

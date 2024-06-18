@@ -7,5 +7,5 @@ data class React(
     @SerializedName("userID")
     val userId: String,
     @SerializedName("postID")
-    val postId: Long,
+    val postId: Int,
 )

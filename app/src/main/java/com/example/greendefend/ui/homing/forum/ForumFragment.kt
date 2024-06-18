@@ -5,12 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentForumBinding
 import com.example.greendefend.domin.model.forum.Post
+import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.useCase.viewModels.ForumViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,26 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class ForumFragment : Fragment() {
     private lateinit var binding: FragmentForumBinding
     private val forumViewModel: ForumViewModel by viewModels()
-    private val adapter: PostAdapter by lazy {
-        PostAdapter(requireContext(),onItemClicked = {
-            findNavController().navigate(
-                ForumFragmentDirections.actionForumFragmentToPostFragment(
-                    it
-                )
-            ) }, onLikeClicked = {
 
-
-        },
-            onDisLikeClicked = {
-
-            }
-            ,onCommentClicked = {
-                findNavController().navigate(
-                    ForumFragmentDirections.actionForumFragmentToPostFragment(it)
-                )
-            }
-        )
-    }
+    private lateinit var adapter: PostAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,10 +40,29 @@ class ForumFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getPostAndObseve()
+        adapter = PostAdapter(requireContext(), onItemClicked = {
+            findNavController().navigate(
+                ForumFragmentDirections.actionForumFragmentToPostFragment(
+                    it.postId!!,
+                    it.likeStatus!!
+                )
+            )
+        }, onLikeClicked = {
+            reactAndObserve(React(true, Constants.Id, it))
+        },
+            onDisLikeClicked = {
+                reactAndObserve(React(false, Constants.Id, it))
+            }, onCommentClicked = {
+                findNavController().navigate(
+                    ForumFragmentDirections.actionForumFragmentToPostFragment(
+                        it.postId!!,
+                        it.likeStatus!!
+                    )
+                )
+            }
+        )
         binding.recyclerView.adapter = adapter
-
-
+        getPostAndObseve()
 
 
         binding.btnAsk.setOnClickListener {
@@ -71,32 +73,28 @@ class ForumFragment : Fragment() {
 
     private fun getPostAndObseve() {
         forumViewModel.getPosts()
-        forumViewModel.response.observe(viewLifecycleOwner){response->
-            when(response){
+        forumViewModel.response.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    val result=response.data
-                    if (result is List<*>){
-                        val posts = result.filterIsInstance<Post>()
-                        Log.e("Posts",posts.toString())
-                        adapter.submitList(posts)
-                    }
+                    val posts: List<Post>? = (response.data as? List<*>)?.filterIsInstance<Post>()
+//                    val posts=response.data.also {
+//                        it as List<*>
+//                    }
+                    adapter.submitList(posts)
+//                    binding.recyclerView.adapter = adapter
 
                 }
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr", response.toString())
-                    Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_LONG).show()
+
                 }
+
                 is NetworkResult.Exception -> {
                     binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr Exeption", response.e.toString())
-                    Toast.makeText(
-                        requireContext(),
-                        response.e.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
             }
         }
@@ -104,5 +102,12 @@ class ForumFragment : Fragment() {
 
     }
 
+    private fun reactAndObserve(react: React) {
+        forumViewModel.addReact(react)
+        getPostAndObseve()
+    }
+
 
 }
+
+

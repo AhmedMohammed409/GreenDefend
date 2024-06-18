@@ -1,6 +1,7 @@
 package com.example.greendefend.ui.homing
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.greendefend.Constants
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
 import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
@@ -26,7 +28,7 @@ import java.io.File
 
 @AndroidEntryPoint
 class ChangeProfileFragment : Fragment() {
-    private val args:ChangeProfileFragmentArgs by navArgs()
+    private val args: ChangeProfileFragmentArgs by navArgs()
     private lateinit var binding: FragmentChangeprofileBinding
     private val viewModelAccount: AuthViewModel by viewModels()
     private var selectedfile: Uri? = null
@@ -37,7 +39,7 @@ class ChangeProfileFragment : Fragment() {
             if (granted) {
                 selectImage()
             } else {
-                Toast.makeText(requireContext(), "No Permission Granted", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "No Permission Granted", Toast.LENGTH_SHORT).show()
             }
         }
     private val resultLauncher =
@@ -59,7 +61,7 @@ class ChangeProfileFragment : Fragment() {
 
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*"
+        intent.type = "image/*"
         resultLauncher.launch(intent)
     }
 
@@ -97,7 +99,11 @@ class ChangeProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Glide.with(requireContext()).load(args.userData.imageUrl).into(
+            binding.imgProfile
+        )
+        binding.userdata=args.userData
+Log.e("user",args.toString())
 
 
         binding.imgProfile.setOnClickListener {
@@ -109,7 +115,7 @@ class ChangeProfileFragment : Fragment() {
             observe(
                 Constants.Id, binding.etName.text.toString(),
                 binding.etBio.text.toString(),
-                "Italin",
+                binding.etCountry.text.toString(),
                 selectedfile!!
             )
 
@@ -120,25 +126,24 @@ class ChangeProfileFragment : Fragment() {
     private fun observe(id: String, name: String, bio: String, country: String, uri: Uri) {
         viewModelAccount.edit(id, name, bio, country, uri)
         viewModelAccount.response.observe(viewLifecycleOwner) { response ->
-            File(requireContext().cacheDir,Constants.fileName).delete()
-            Constants.fileName=""
+            File(requireContext().cacheDir, Constants.fileName).delete()
+            Constants.fileName = ""
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Sucessfull", Toast.LENGTH_SHORT).show()
                     Log.e("result", response.data.toString())
-                    Constants.imageUrl=uri
-                    Constants.Bio=bio
-                    Constants.Name=name
-                    findNavController().
-                    navigate(ChangeProfileFragmentDirections.actionChangeProfileFragmentToProfileFragment())
+                    Constants.imageUrl = uri
+                    Constants.Bio = bio
+                    Constants.Name = name
+                    findNavController().navigate(ChangeProfileFragmentDirections.actionChangeProfileFragmentToProfileFragment())
                 }
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_SHORT).show()
-                    findNavController().
-                    navigate(ChangeProfileFragmentDirections.actionChangeProfileFragmentToProfileFragment())
+                    Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                    findNavController().navigate(ChangeProfileFragmentDirections.actionChangeProfileFragmentToProfileFragment())
                 }
 
                 is NetworkResult.Exception -> {
@@ -154,6 +159,11 @@ class ChangeProfileFragment : Fragment() {
         }
 
 
+    }
+
+    override fun onAttach(context: Context) {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
+        super.onAttach(context)
     }
 
 }

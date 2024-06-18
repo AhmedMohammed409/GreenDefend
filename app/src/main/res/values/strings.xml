@@ -217,4 +217,7 @@
     <string name="a20_3">•	يجب إجلاء النباتات المعرضة للخطر في حالات الطوارئ مثل الفيضانات، واتخاذ إجراءات الوقاية من الحرائق مثل إزالة النباتات الجافة المتراكمة.</string>
     <string name="hamam_haramy" translatable="false">haramy</string>
     <string name="add_comment">add_comment desha</string>
+    <string name="no_permission_granted">No Permission Granted</string>
+    <string name="not_select_image">Not Select Image</string>
+    <string name="change_language">Change Language</string>
 </resources>

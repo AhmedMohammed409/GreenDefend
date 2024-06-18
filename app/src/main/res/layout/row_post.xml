@@ -16,6 +16,7 @@
         android:orientation="vertical"
         app:cardCornerRadius="15dp"
         app:cardElevation="3dp"
+        app:cardUseCompatPadding="true"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,7 +114,8 @@
                     android:gravity="center"
                     android:text="Like"
                     android:textColor="@color/black70"
-                    tools:ignore="HardcodedText" />
+                    tools:ignore="HardcodedText"
+                   />
 
                 <Button
                     android:id="@+id/btn_dislike"
