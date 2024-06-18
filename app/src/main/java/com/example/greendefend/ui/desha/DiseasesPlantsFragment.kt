@@ -18,6 +18,8 @@
 //        savedInstanceState: Bundle?
 //    ): View? {
 //        binding=FragmentDieasesPlantsBinding.inflate(inflater,container,false)
+
+
 //
 //        var listQuestion1:MutableList<QuestionAnswer> = mutableListOf()
 //        listQuestion1.add(QuestionAnswer(getString(R.string.q1_2),getString(R.string.a1_2)))

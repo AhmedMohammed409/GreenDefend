@@ -13,14 +13,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.greendefend.Constants
-import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentChangeprofileBinding
 import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
@@ -81,6 +79,7 @@ class ChangeProfileFragment : Fragment() {
         } else {
             permissionLauncher.launch(permissions)
         }
+
 
     }
 
