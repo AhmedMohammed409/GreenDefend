@@ -46,21 +46,23 @@ class PostAdapter(
 
 
             binding.post = item
-            if (item.postImageURL==null){
-                binding.imgPost.visibility=View.GONE
+            if (item.postImageURL == null) {
+                binding.imgPost.visibility = View.GONE
             }
             when (item.likeStatus) {
                 "Yes" -> {
-                    binding.btnLike.background= context.getDrawable(R.color.state)
-                    binding.btnDislike.background= null
+                    binding.btnLike.background = context.getDrawable(R.color.state)
+                    binding.btnDislike.background = null
                 }
+
                 "No" -> {
-                    binding.btnDislike.background= context.getDrawable(R.color.state)
-                    binding.btnLike.background= null
+                    binding.btnDislike.background = context.getDrawable(R.color.state)
+                    binding.btnLike.background = null
                 }
+
                 else -> {
-                    binding.btnLike.background= null
-                    binding.btnDislike.background= null
+                    binding.btnLike.background = null
+                    binding.btnDislike.background = null
                 }
             }
 
@@ -87,18 +89,18 @@ class PostAdapter(
             }
 
 
-
-
         }
     }
 }
 
 object PostsDiffUtil : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return oldItem.likeStatus == newItem.likeStatus
+        return (oldItem.postId == newItem.postId
+                && oldItem.likeStatus == newItem.likeStatus
+                && oldItem.commentsCount == newItem.commentsCount)
     }
 
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return areItemsTheSame(oldItem,newItem)
+        return areItemsTheSame(oldItem, newItem)
     }
 }

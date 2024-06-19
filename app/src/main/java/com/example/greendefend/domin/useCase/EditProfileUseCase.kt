@@ -17,8 +17,8 @@ class EditProfileUseCase @Inject constructor(val context: Context) {
        // skillImages:List<Uri>
     ): MultipartBody {
        val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)
-       if(imageUri!=null){
-           val fileRealPath=getFilePathFromUri(context,imageUri)
+
+           val fileRealPath=getFilePathFromUri(context,imageUri!!)
            val file= File(fileRealPath)
            multipart.apply {
                addFormDataPart("id", id)
@@ -30,15 +30,8 @@ class EditProfileUseCase @Inject constructor(val context: Context) {
                    filename = file.name,
                    body = file.asRequestBody("image/*".toMediaType()))
            }
-       }
-       else{
-           multipart.apply {
-               addFormDataPart("id", id)
-               addFormDataPart("FullName",fullName)
-               addFormDataPart("Bio",bio)
-               addFormDataPart("Country",country)
-           }
-       }
+
+
 
 
 

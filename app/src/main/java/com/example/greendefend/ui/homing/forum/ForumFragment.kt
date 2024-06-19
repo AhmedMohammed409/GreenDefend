@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -66,45 +67,57 @@ class ForumFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         getPostAndObseve()
 
-
         binding.btnAsk.setOnClickListener {
             findNavController().navigate(ForumFragmentDirections.actionForumFragmentToAskingFragment())
         }
-
     }
 
-    private fun getPostAndObseve() {
+
+private fun getPostAndObseve(){
         forumViewModel.getPosts()
-        forumViewModel.response.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    val posts: List<Post>? = (response.data as? List<*>)?.filterIsInstance<Post>()
-                    adapter.submitList(posts)
-                }
-
-                is NetworkResult.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.e("MsgErr", response.toString())
-
-                }
-
-                is NetworkResult.Exception -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.e("MsgErr Exeption", response.e.toString())
-                }
-            }
+    forumViewModel.liveDataPosts.observe(viewLifecycleOwner){
+        if (it!=null){
+            binding.progressBar.visibility=View.GONE
+            adapter.submitList(it)
+        }else{
+            binding.progressBar.visibility=View.GONE
+            Toast.makeText(requireContext(),"failed to get Post",Toast.LENGTH_SHORT).show()
         }
-
-
+    }
     }
 
     private fun reactAndObserve(react: React) {
         forumViewModel.addReact(react)
-        getPostAndObseve()
+        forumViewModel.updatePosts()
+       // getPostAndObseve()
     }
 
 
 }
 
 
+//    private fun getPostAndObseve() {
+//        forumViewModel.getPosts()
+//        forumViewModel.response.observe(viewLifecycleOwner) { response ->
+//            when (response) {
+//                is NetworkResult.Success -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    val posts: List<Post>? = (response.data as? List<*>)?.filterIsInstance<Post>()
+//                    adapter.submitList(posts)
+//                }
+//
+//                is NetworkResult.Error -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    Log.e("MsgErr", response.toString())
+//
+//                }
+//
+//                is NetworkResult.Exception -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    Log.e("MsgErr Exeption", response.e.toString())
+//                }
+//            }
+//        }
+//
+//
+//    }

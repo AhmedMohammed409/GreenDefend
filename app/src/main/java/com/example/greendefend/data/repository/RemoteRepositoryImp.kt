@@ -14,6 +14,8 @@ import com.example.greendefend.domin.repository.AuthRepo
 import com.example.greendefend.domin.repository.FourmRepo
 import com.example.greendefend.domin.repository.RemoteRepository
 import com.example.greendefend.utli.ApiHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -44,7 +46,9 @@ class RemoteRepositoryImp @Inject constructor(
     //Account
     override suspend fun register(user: User) = handleApi { apiServiceServer.signup(user) }
     override suspend fun login(login: Login) = handleApi { apiServiceServer.login(login) }
-    override suspend fun logout(userID: String) = handleApi { apiServiceServer.logout(userID) }
+    override suspend fun logout(userID: String)= handleApi{
+        apiServiceServer.logout(userID)
+    }
     override suspend fun getUserData(userID: String)= handleApi { apiServiceServer.getUserData(userID) }
 
     override suspend fun confirmAccount(confirm: Confirm) =
@@ -67,7 +71,9 @@ class RemoteRepositoryImp @Inject constructor(
 
     //Fourm
     override suspend fun addPost(body: RequestBody) = handleApi { apiServiceServer.addPost(body) }
-    override suspend fun getPosts() = handleApi { apiServiceServer.getPosts() }
+    //override suspend fun getPosts() = handleApi { apiServiceServer.getPosts() }
+    override suspend fun getPosts() =withContext(Dispatchers.IO){ apiServiceServer.getPosts() }
+
 
     override suspend fun addComment(comment: Comment) =
         handleApi { apiServiceServer.addComment(comment) }

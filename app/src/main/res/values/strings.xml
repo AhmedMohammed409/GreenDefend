@@ -220,4 +220,5 @@
     <string name="no_permission_granted">No Permission Granted</string>
     <string name="not_select_image">Not Select Image</string>
     <string name="change_language">Change Language</string>
+    <string name="enter_comment">Enter Comment</string>
 </resources>

@@ -32,6 +32,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
 
+
     @Inject
     lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
     private val weatherviewModel: WeatherViewModel by viewModels()
@@ -92,7 +93,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         checkPermissionOrShowDialog()
 
         binding.btnUpload.setOnClickListener {

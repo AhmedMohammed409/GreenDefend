@@ -71,8 +71,6 @@ class ProfileFragment : Fragment() {
                     Glide.with(requireContext())
                         .load(result.imageUrl)
                         .into(binding.imgPerson)
-
-Log.e("response",response.toString())
                 }
 
                 is NetworkResult.Error -> {

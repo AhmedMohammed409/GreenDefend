@@ -1,5 +1,6 @@
 package com.example.greendefend.ui.homing
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -42,6 +43,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @Inject
     lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
 
+
     private val toggle by lazy {
         ActionBarDrawerToggle(
             this,
@@ -50,16 +52,23 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.string.open,
             R.string.close) }
 
+
+    private fun translateLangauahge(): Boolean {
+return true
+    }
+
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        runBlocking { getdata()}
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        runBlocking { getdata() }
+Log.e("data activity",Constants.Id+Constants.Name+Constants.imageUrl)
 
 
         val navController = findNavController(R.id.fragment_container)
         binding.bottomNavigationView.setupWithNavController(navController)
-        binding.navigationView.setNavigationItemSelectedListener(this)
+       binding.navigationView.setNavigationItemSelectedListener(this)
         binding.navigationView.setupWithNavController(navController)
 
         //action at any fragment and change
@@ -72,19 +81,26 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.txtAppName.text = Constants.provideProjectName(this)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        binding.navigationView.setNavigationItemSelectedListener {
+
+            if(it.itemId==R.id.logout){
+                Toast.makeText(this,"logout",Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility=View.VISIBLE
+                    logoutAndObserve()
+                }
+            true
+        }
 
 
         // add info header
         val header = binding.navigationView.getHeaderView(0)
         val userNameText = header.findViewById<TextView>(R.id.txt_username)
         val gmailText = header.findViewById<TextView>(R.id.txt_Email)
-        val imageUser = header.findViewById<ImageView>(R.id.img_user)
-
+        val imageUser=header.findViewById<ImageView>(R.id.img_user)
         userNameText.text = Constants.Name
         gmailText.text = Constants.Email
-        if (Constants.imageUrl != null) {
-            Glide.with(this).load(Constants.imageUrl).into(imageUser)
-        }
+        Glide.with(this).load(Constants.imageUrl).into(imageUser)
+
 
 
 
@@ -92,10 +108,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController=findNavController(R.id.fragment_container)
-//        return  navController.navigateUp(appBarConfiguration)|| super.onSupportNavigateUp()
-//    }
+
 
 
     private fun hidenFragment(destinationId: Int) {
@@ -136,8 +149,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     private fun logoutAndObserve() {
+        Log.e("id",Constants.Id)
+        Log.e("id",Constants.Token)
+
         authViewModel.logout(Constants.Id)
         authViewModel.response.observe(this) { response ->
+            binding.progressBar.visibility=View.GONE
             when (response) {
                 is NetworkResult.Success -> {
                     lifecycleScope.launch {
@@ -208,7 +225,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     }
             }
-
         }
 
 
@@ -217,14 +233,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-      when(item.itemId){
-          R.id.logout->{
-              Toast.makeText(applicationContext,"click logout",Toast.LENGTH_SHORT).show()
-              binding.drawerLayout.closeDrawer(GravityCompat.START)
-              binding.progressBar.visibility=View.VISIBLE
-              logoutAndObserve()
-          }
-      }
         return true
 
     }
@@ -236,6 +244,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     }
+
 
 
 }

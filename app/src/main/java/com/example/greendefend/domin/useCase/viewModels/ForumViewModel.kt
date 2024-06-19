@@ -1,11 +1,13 @@
 package com.example.greendefend.domin.useCase.viewModels
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.data.repository.RemoteRepositoryImp
 import com.example.greendefend.domin.model.forum.Comment
+import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.useCase.AddPostUseCase
 import com.example.greendefend.utli.NetworkResult
@@ -21,9 +23,11 @@ class ForumViewModel @Inject constructor(
 
 
     private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
-    val response: MutableLiveData<NetworkResult<Any>> get() = responseMutableLiveData
+    val response: LiveData<NetworkResult<Any>> get() = responseMutableLiveData
 
-   
+     val liveDataPosts:LiveData<List<Post>> get() = mutableLiveDataPosts
+         private  var mutableLiveDataPosts=MutableLiveData<List<Post>>()
+
 
     fun addPost(
         id: String,
@@ -37,9 +41,26 @@ class ForumViewModel @Inject constructor(
         }
     }
 
-    fun getPosts() {
-        viewModelScope.launch { responseMutableLiveData.postValue(remoteRepositoryImp.getPosts()) }
-    }
+//    fun getPosts() {
+//        viewModelScope.launch { responseMutableLiveData.postValue(remoteRepositoryImp.getPosts()) }
+//    }
+
+        fun getPosts() =
+        viewModelScope.launch {
+            val result=remoteRepositoryImp.getPosts()
+            if (result.isSuccessful){
+                mutableLiveDataPosts.postValue(result.body())
+            }
+        }
+
+    fun updatePosts() =
+        viewModelScope.launch {
+            val result=remoteRepositoryImp.getPosts()
+            if (result.isSuccessful){
+                mutableLiveDataPosts.postValue(result.body())
+            }
+        }
+
 
 
     fun addComment(comment: Comment) {
@@ -55,9 +76,7 @@ class ForumViewModel @Inject constructor(
 
      fun addReact(react: React) {
         viewModelScope.launch {
-            responseMutableLiveData.postValue(
-                remoteRepositoryImp.addReact(react)
-            )
+            remoteRepositoryImp.addReact(react)
         }
     }
 

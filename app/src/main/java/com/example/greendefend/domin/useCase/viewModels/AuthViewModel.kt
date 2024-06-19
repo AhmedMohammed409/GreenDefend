@@ -72,6 +72,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun logout(userId:String) {
+
         viewModelScope.launch {
             responseMutableLiveData.postValue(repositoryImp.logout(userId))
         }

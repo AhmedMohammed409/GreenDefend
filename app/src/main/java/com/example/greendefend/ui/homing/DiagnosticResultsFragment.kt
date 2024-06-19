@@ -79,15 +79,16 @@ return json!!
         return result!!
     }
 
-    override fun onPause() {
+    override fun onDestroy() {
         (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
-        super.onPause()
+        super.onDestroy()
     }
 
     override fun onAttach(context: Context) {
         (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
         super.onAttach(context)
     }
+
 
 
 }

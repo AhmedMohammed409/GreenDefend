@@ -56,14 +56,6 @@ class PostFragment : Fragment() {
 
 
 
-
-        binding.btnLike.setOnClickListener {
-            reactAndObseve(React(true, Constants.Id, args.postId))
-
-        }
-        binding.btnDislike.setOnClickListener {
-
-        }
         binding.btnSend.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
             addCommentAndObserve(
@@ -149,32 +141,32 @@ class PostFragment : Fragment() {
             }
     }}
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun reactAndObseve(react: React) {
-        forumViewModel.addReact(react)
-        forumViewModel.response.observe(viewLifecycleOwner){response->
-            when(response){
-                is NetworkResult.Success->{
-                    when (args.likeStatus) {
-                        "Yes" -> {
-                            binding.btnLike.background = requireContext().getDrawable(R.color.state)
-                            binding.btnDislike.background = null
-                        }
-
-                        "No" -> {
-                            binding.btnDislike.background = requireContext().getDrawable(R.color.state)
-                            binding.btnLike.background = null
-                        }
-
-                        else -> {
-                            binding.btnLike.background = null
-                            binding.btnDislike.background = null
-                        }
-                    }
-                }
-                is  NetworkResult.Error->{}
-                is NetworkResult.Exception->{}
-            }
-        }
-    }
+//    @SuppressLint("UseCompatLoadingForDrawables")
+//    private fun reactAndObseve(react: React) {
+//        forumViewModel.addReact(react)
+//        forumViewModel.response.observe(viewLifecycleOwner){response->
+//            when(response){
+//                is NetworkResult.Success->{
+//                    when (args.likeStatus) {
+//                        "Yes" -> {
+//                            binding.btnLike.background = requireContext().getDrawable(R.color.state)
+//                            binding.btnDislike.background = null
+//                        }
+//
+//                        "No" -> {
+//                            binding.btnDislike.background = requireContext().getDrawable(R.color.state)
+//                            binding.btnLike.background = null
+//                        }
+//
+//                        else -> {
+//                            binding.btnLike.background = null
+//                            binding.btnDislike.background = null
+//                        }
+//                    }
+//                }
+//                is  NetworkResult.Error->{}
+//                is NetworkResult.Exception->{}
+//            }
+//        }
+//    }
 }
