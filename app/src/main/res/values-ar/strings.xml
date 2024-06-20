@@ -47,7 +47,7 @@
     <string name="_3_make_sure_that_the_plant_is_visible_and_that_it_is_not_too_dark_or_too_bright">3 - تأكد من أن النبات مرئي وأنه ليس مظلما أو مضيئا بشكل زائد</string>
     <string name="got_it">فهمت</string>
     <string name="it_s_cloudy_today">الجو غائم اليوم</string>
-    <string name="today_is_a_bad_day_to_use_pesticides">اليوم يوم سئ لاستخدام المبيدات الجشرية</string>
+    <string name="today_is_a_bad_day_to_use_pesticides">اليوم يوم سئ لاستخدام المبيدات الحشرية</string>
     <string name="weather_for_the_coming_days">طقس الأيام القادمة</string>
     <string name="ask_the_community">"اسال المجتمع "</string>
     <string name="add_image">إضافة صورة</string>

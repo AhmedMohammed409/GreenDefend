@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.greendefend.R
 import com.example.greendefend.databinding.RowWeatherBinding
 import com.example.greendefend.domin.model.weather.List
+import kotlin.math.roundToInt
 
 
 class AdapterRV(var context: Context) : ListAdapter<List, AdapterRV.ViewHolder>(WeatherDiffUtil) {
@@ -31,9 +32,9 @@ class AdapterRV(var context: Context) : ListAdapter<List, AdapterRV.ViewHolder>(
         @SuppressLint("SetTextI18n")
         fun bind(item: List) {
             binding.weather = item
-            val dec = DecimalFormat("#.##")
-            val temp = dec.format((item.main!!.temp!! -272.25))
-            binding.txtTemperature.text= temp.toString()+ context.getString(R.string.c)
+            var temp=(item.main!!.temp!!).toFloat()-272.25F
+            temp= temp.roundToInt().toFloat()
+            binding.txtTemperature.text= "$temp C"
 
             Glide.with(context)
                 .load("https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png")

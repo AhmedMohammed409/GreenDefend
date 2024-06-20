@@ -27,7 +27,7 @@ import com.example.greendefend.utli.NetworkResult
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
-import okio.IOException
+import kotlin.math.roundToInt
 
 
 @AndroidEntryPoint
@@ -167,34 +167,7 @@ class HomeFragment : Fragment() {
 
 
     }
-
-//    @SuppressLint("SetTextI18n", "SuspiciousIndentation")
-//    private fun weatherAndObserve(latitude: Float, longitude: Float) {
-//        weatherviewModel.getWeather(latitude, longitude)
-//        binding.progressBar.visibility = View.VISIBLE
-//     weatherviewModel.liveData.observe(viewLifecycleOwner){
-//         if (it!=null){
-//             binding.progressBar.visibility = View.GONE
-//
-//                    binding.currentWeather = it
-//                   binding.windSpeed.text= getString(R.string.wind_speed)+"\t"+it.list[0].wind!!.speed
-//
-//             val dec = DecimalFormat("#.##")
-//             val temp_c = dec.format((it.list[0].main!!.temp!! -272.25))
-//             binding.txtTemperature.text= temp_c.toString()+ getString(R.string.c)
-//
-//                    Glide.with(requireContext())
-//                        .load("https://openweathermap.org/img/wn/${it.list[0].weather[0].icon}@2x.png")
-//                        .into(binding.imgWeather)
-//
-//
-//         }else{
-//             Toast.makeText(requireContext(),"failed",Toast.LENGTH_SHORT).show()
-//         }
-//
-//        }
-//
-//    }
+    @SuppressLint("SetTextI18n")
     private fun weatherAndObserve(latitude: Float, longitude: Float) {
         weatherviewModel.getWeather(latitude, longitude)
         binding.progressBar.visibility = View.VISIBLE
@@ -206,9 +179,11 @@ class HomeFragment : Fragment() {
                     binding.currentWeather = result
                     binding.windSpeed.text= getString(R.string.wind_speed)+"\t"+result.list[0].wind!!.speed
 
-                    val dec = DecimalFormat("#.##")
-                    val temp = dec.format((result.list[0].main!!.temp!! -272.25))
-                    binding.txtTemperature.text= temp.toString()+ getString(R.string.c)
+                    var temp=(result.list[0].main!!.temp!!).toFloat()-272.25F
+                    temp= temp.roundToInt().toFloat()
+
+                    Log.e("temp",  temp.toString())
+                    binding.txtTemperature.text= "$temp C"
 
                     Glide.with(requireContext())
                         .load("https://openweathermap.org/img/wn/${result.list[0].weather[0].icon}@2x.png")

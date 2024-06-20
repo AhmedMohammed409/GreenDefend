@@ -44,6 +44,30 @@ class PostAdapter(
             onCommentClicked: (post: Post) -> Unit
         ) {
 
+            binding.btnLike.setOnClickListener {
+                item.likeStatus = if (item.likeStatus == "Yes") {
+                    ""
+                } else {
+                    "Yes"
+                }
+
+                onLikeClicked(item.postId!!, item.likeStatus!!)
+            }
+            binding.btnDislike.setOnClickListener {
+                item.likeStatus = if (item.likeStatus == "No") {
+                    ""
+                } else {
+                    "No"
+                }
+
+                onDisLikeClicked(item.postId!!, item.likeStatus!!)
+            }
+            binding.btnComment.setOnClickListener {
+                onCommentClicked(item)
+            }
+            binding.root.setOnClickListener {
+                onItemClicked(item)
+            }
 
             binding.post = item
             when (item.likeStatus) {
@@ -75,30 +99,7 @@ class PostAdapter(
                 .load(item.postImageURL)
                 .into(binding.imgPost)
 
-            binding.btnLike.setOnClickListener {
-                item.likeStatus = if (item.likeStatus == "Yes") {
-                    ""
-                } else {
-                    "Yes"
-                }
 
-                onLikeClicked(item.postId!!, item.likeStatus!!)
-            }
-            binding.btnDislike.setOnClickListener {
-                item.likeStatus = if (item.likeStatus == "No") {
-                    ""
-                } else {
-                    "No"
-                }
-
-                onDisLikeClicked(item.postId!!, item.likeStatus!!)
-            }
-            binding.btnComment.setOnClickListener {
-                onCommentClicked(item)
-            }
-            binding.root.setOnClickListener {
-                onItemClicked(item)
-            }
 
 
         }

@@ -23,11 +23,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PostFragment : Fragment() {
+
     private lateinit var binding: FragmentPostBinding
     private lateinit var postDetail: DetailPost
     private val forumViewModel: ForumViewModel by viewModels()
     private val args: PostFragmentArgs by navArgs()
-
+    private lateinit var likeState: String
     private lateinit var adapter: PostAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +46,17 @@ class PostFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getPostDetailed(args.postId)
+        likeState = args.likeStatus
 
+        if (likeState=="Yes"){
+            binding.btnLike.background = requireContext().getDrawable(R.color.state)
+        }else if (likeState=="No"){
+            binding.btnDislike.background = requireContext().getDrawable(R.color.state)
+        }
 
         adapter = PostAdapter(requireContext())
         binding.rvComment.adapter = adapter
@@ -67,6 +75,15 @@ class PostFragment : Fragment() {
             )
             binding.etComment.text.clear()
         }
+        binding.btnLike.setOnClickListener {
+
+            changeColorReact("Yes")
+            reactAndObseve(React(true, Constants.Id, args.postId))
+        }
+        binding.btnDislike.setOnClickListener {
+            changeColorReact("No")
+            reactAndObseve(React(false, Constants.Id, args.postId))
+        }
     }
 
     private fun addCommentAndObserve(comment: Comment) {
@@ -77,8 +94,7 @@ class PostFragment : Fragment() {
                     binding.progressBar.visibility = View.VISIBLE
 //                    Toast.makeText(requireContext(), "Add Comment is Sucessful", Toast.LENGTH_SHORT)
 //                        .show()
-
-                    getCommentsAndObserve()
+                    //getCommentsAndObserve()
                 }
 
                 is NetworkResult.Error -> {
@@ -116,14 +132,15 @@ class PostFragment : Fragment() {
         }
 
     }
-    private fun getPostDetailed(postId:Int){
+
+    private fun getPostDetailed(postId: Int) {
         forumViewModel.getPostDetail(postId)
         forumViewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                   postDetail = response.data as DetailPost
-                    binding.post=postDetail
+                    postDetail = response.data as DetailPost
+                    binding.post = postDetail
                     Glide.with(requireContext()).load(postDetail.postImageURL).into(binding.imgPost)
                     Glide.with(requireContext()).load(postDetail.userImageURL).into(binding.imgUser)
                     Glide.with(requireContext()).load(Constants.imageUrl).into(binding.imageMe)
@@ -139,34 +156,40 @@ class PostFragment : Fragment() {
 
                 is NetworkResult.Exception -> {}
             }
-    }}
+        }
+    }
 
-//    @SuppressLint("UseCompatLoadingForDrawables")
-//    private fun reactAndObseve(react: React) {
-//        forumViewModel.addReact(react)
-//        forumViewModel.response.observe(viewLifecycleOwner){response->
-//            when(response){
-//                is NetworkResult.Success->{
-//                    when (args.likeStatus) {
-//                        "Yes" -> {
-//                            binding.btnLike.background = requireContext().getDrawable(R.color.state)
-//                            binding.btnDislike.background = null
-//                        }
-//
-//                        "No" -> {
-//                            binding.btnDislike.background = requireContext().getDrawable(R.color.state)
-//                            binding.btnLike.background = null
-//                        }
-//
-//                        else -> {
-//                            binding.btnLike.background = null
-//                            binding.btnDislike.background = null
-//                        }
-//                    }
-//                }
-//                is  NetworkResult.Error->{}
-//                is NetworkResult.Exception->{}
-//            }
-//        }
-//    }
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun reactAndObseve(react: React) {
+        forumViewModel.addReact(react)
+        forumViewModel.response.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+
+                }
+
+                is NetworkResult.Error -> {}
+                is NetworkResult.Exception -> {}
+            }
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun changeColorReact(click: String) {
+        if (likeState==click){
+            binding.btnLike.background = null
+            binding.btnDislike.background = null
+            likeState = ""
+        }else if (click=="Yes"){
+            binding.btnLike.background = requireContext().getDrawable(R.color.state)
+            binding.btnDislike.background = null
+            likeState = "Yes"
+        }else if (click=="No"){
+            binding.btnDislike.background = requireContext().getDrawable(R.color.state)
+            binding.btnLike.background = null
+            likeState = "No"
+        }
+
+
+    }
 }

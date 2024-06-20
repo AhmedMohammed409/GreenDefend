@@ -34,7 +34,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#E4F0E9"
+                    android:background="@color/Post"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -101,6 +101,36 @@
                         android:scaleType="fitXY"
                         tools:ignore="HardcodedText,ImageContrastCheck"
                         tools:src="@drawable/post" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:weightSum="2">
+
+                        <Button
+                            android:id="@+id/btn_like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/Post"
+                            android:gravity="center"
+                            android:text="@string/like"
+                            android:textColor="@color/black70"
+                      />
+
+                        <Button
+                            android:id="@+id/btn_dislike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/Post"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/mdi_dislike"
+                            android:gravity="center"
+                            android:text="@string/unlike"
+                            android:textColor="@color/black70"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
 
 
                     <View
@@ -211,37 +241,3 @@
 
 </layout>
 
-<!--<LinearLayout-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:orientation="horizontal"-->
-<!--android:padding="5dp"-->
-<!--android:weightSum="2">-->
-
-<!--<Button-->
-<!--    android:id="@+id/btn_like"-->
-<!--    style="?android:attr/buttonBarButtonStyle"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_weight="1"-->
-<!--    android:drawableStart="@drawable/mdi_like"-->
-<!--    android:gravity="center"-->
-<!--    android:text="Like"-->
-<!--    android:textColor="@color/black70"-->
-<!--    tools:ignore="HardcodedText,DuplicateSpeakableTextCheck" />-->
-
-<!--<Button-->
-<!--    android:id="@+id/btn_dislike"-->
-<!--    style="?android:attr/buttonBarButtonStyle"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_weight="1"-->
-<!--    android:drawableStart="@drawable/mdi_dislike"-->
-<!--    android:gravity="center"-->
-<!--    android:text="unlike"-->
-<!--    android:textColor="@color/black70"-->
-<!--    tools:ignore="HardcodedText" />-->
-
-
-
-<!--</LinearLayout>-->

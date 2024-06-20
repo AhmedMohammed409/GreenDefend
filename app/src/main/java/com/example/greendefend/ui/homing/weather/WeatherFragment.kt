@@ -20,6 +20,7 @@ import com.example.greendefend.domin.useCase.viewModels.WeatherViewModel
 import com.example.greendefend.ui.homing.HomeActivity
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.roundToInt
 
 
 @AndroidEntryPoint
@@ -73,9 +74,13 @@ private val weatherViewModel:WeatherViewModel by viewModels ()
             binding.windSpeed.text= getString(R.string.wind_speed)+"\t"+result.list[0].wind!!.speed
             binding.txtLocation.text=  result.city!!.name
             binding.txtDate.text=  result.list[0].dtTxt
-            val dec = DecimalFormat("#.##")
-            val temp = dec.format((result.list[0].main!!.temp!! -272.25))
-            binding.txtTemperature.text= temp.toString()+ getString(R.string.c)
+           // val dec = DecimalFormat("#")
+
+            var temp = result.list[0].main!!.temp!! -272.25F
+                temp= temp.roundToInt().toFloat()
+
+
+            binding.txtTemperature.text= "$temp C"
 
             Glide.with(requireContext())
                 .load("https://openweathermap.org/img/wn/${result.list[0].weather[0].icon}@2x.png")

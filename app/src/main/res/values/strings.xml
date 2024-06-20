@@ -223,4 +223,6 @@
     <string name="enter_comment">Enter Comment</string>
     <string name="wind_speed">Wind Speed</string>
     <string name="c">C</string>
+    <string name="like">Like</string>
+    <string name="unlike">unlike</string>
 </resources>
