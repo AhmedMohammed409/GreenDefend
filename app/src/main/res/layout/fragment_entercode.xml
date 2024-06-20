@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,24 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.authentication.EnterCodeFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".2" />
-
     <TextView
         android:id="@+id/txt_created"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="130dp"
         android:text="@string/create_new_account"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_entercode"
@@ -33,7 +26,7 @@
         android:padding="5dp"
         android:text="@string/enter_the_code_sent_to_the_email"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/txt_created"
+        app:layout_constraintStart_toStartOf="@+id/txt_created"
         app:layout_constraintTop_toBottomOf="@id/txt_created" />
 
     <com.chaos.view.PinView
@@ -45,63 +38,153 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:cursorVisible="true"
-        app:hideLineWhenFilled="true"
         android:hint="@string/code_validation"
+        android:inputType="number"
         android:text=""
         android:textStyle="bold"
-        android:inputType="number"
+        app:hideLineWhenFilled="true"
         app:itemCount="4"
+        app:itemHeight="50dp"
         app:itemRadius="15dp"
         app:itemSpacing="55dp"
-        app:itemHeight="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_entercode"
-
-
-        />
+        app:layout_constraintTop_toBottomOf="@id/txt_entercode" />
 
     <Button
         android:id="@+id/btn_Send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/button_green"
         android:text="@string/send"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/view_seperateOne"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/view_seperateOne"
-        android:layout_width="0dp"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_weight="1"
-        android:background="@drawable/round_view"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent=".5" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:indeterminate="true"
-        android:visibility="gone"
-        />
-
-
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    tools:context=".ui.authentication.EnterCodeFragment">-->
+
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/guideline"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        app:layout_constraintGuide_percent=".2" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/txt_created"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="15dp"-->
+    <!--        android:text="@string/create_new_account"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textSize="30sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/guideline" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/txt_entercode"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:padding="5dp"-->
+    <!--        android:text="@string/enter_the_code_sent_to_the_email"-->
+    <!--        android:textSize="16sp"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/txt_created"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/txt_created" />-->
+
+    <!--    <com.chaos.view.PinView-->
+    <!--        android:id="@+id/pinview"-->
+    <!--        style="@style/PinWidget.PinView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:cursorVisible="true"-->
+    <!--        app:hideLineWhenFilled="true"-->
+    <!--        android:hint="@string/code_validation"-->
+    <!--        android:text=""-->
+    <!--        android:textStyle="bold"-->
+    <!--        android:inputType="number"-->
+    <!--        app:itemCount="4"-->
+    <!--        app:itemRadius="15dp"-->
+    <!--        app:itemSpacing="55dp"-->
+    <!--        app:itemHeight="50dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/txt_entercode"-->
+
+
+    <!--        />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btn_Send"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="15dp"-->
+    <!--        android:layout_marginEnd="15dp"-->
+    <!--        android:layout_marginBottom="30dp"-->
+    <!--        android:background="@drawable/button_green"-->
+    <!--        android:text="@string/send"-->
+    <!--        android:textAllCaps="false"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="25sp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/view_seperateOne"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+    <!--    <View-->
+    <!--        android:id="@+id/view_seperateOne"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="7dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginBottom="30dp"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:background="@drawable/round_view"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintWidth_percent=".5" />-->
+
+    <!--    <ProgressBar-->
+    <!--        android:id="@+id/progressBar"-->
+    <!--        style="?android:attr/progressBarStyle"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        android:indeterminate="true"-->
+    <!--        android:visibility="gone"-->
+    <!--        />-->
+
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

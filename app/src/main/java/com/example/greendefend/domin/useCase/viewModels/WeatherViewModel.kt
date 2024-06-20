@@ -1,18 +1,17 @@
 package com.example.greendefend.domin.useCase.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greendefend.Constants
-import com.example.greendefend.domin.model.weather.CurrentWeather
 import com.example.greendefend.data.repository.RemoteRepositoryImp
+import com.example.greendefend.domin.model.weather.AllWeather
 import com.example.greendefend.utli.Info
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okio.IOException
-import java.net.HttpRetryException
 import javax.inject.Inject
 
 
@@ -21,17 +20,16 @@ class WeatherViewModel @Inject constructor(private var remoteRepositoryImp: Remo
     ViewModel() {
     private var responseMutableLiveData = MutableLiveData<NetworkResult<Any>>()
     val response: MutableLiveData<NetworkResult<Any>> get() = responseMutableLiveData
-    fun getCurrentWeather(latitude: Float, longitude: Float){
+    fun getWeather(latitude: Float, longitude: Float){
         viewModelScope.launch {
             val info = Info()
-            responseMutableLiveData.postValue(remoteRepositoryImp.getCurrentWeather(
+            responseMutableLiveData.postValue(remoteRepositoryImp.getWeather(
+                latitude,
+                longitude,
                 Constants.KEY,
-                "$latitude,$longitude",
-                1,
-                info.getDate(),
-                info.getLanguage()))
+               info.getLanguage()
+            )
+            )
         }
     }
-
-
 }

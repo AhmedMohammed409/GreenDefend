@@ -11,14 +11,14 @@ import javax.inject.Inject
 
 object Constants{
 
-        const val BASE_URL_WEATHER="http://api.weatherapi.com/v1/"
+        const val BASE_URL_WEATHER="https://api.openweathermap.org/"
+      //  const val BASE_URL_WE="7ad1bde29f203a0b3facac40840f405c"
         const val BASE_URL_SERVICE="http://farisnho.runasp.net/api/"
-        const val KEY="2b910f5a4be44d3c903212503241403"
+      //  const val KEY="2b910f5a4be44d3c903212503241403"
+      const val KEY="8efb4ef21a3aaf5d2e1e4c45c0cf45eb"
        const val APP_DATA_STORE_NAME="GreenDefend"
 
      var  Token:String=""
-
-
      var Id:String=""
      var Email:String=""
      var Name:String=""

@@ -12,8 +12,7 @@ interface FourmRepo {
     suspend fun addPost(
         body: RequestBody
     ): NetworkResult<Any>
-   //suspend fun getPosts(): NetworkResult<Any>
-    suspend fun getPosts():retrofit2.Response<List<Post>>
+   suspend fun getPosts(): NetworkResult<Any>
 
     suspend fun addComment(
         comment: Comment

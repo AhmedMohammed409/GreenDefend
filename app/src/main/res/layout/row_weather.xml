@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
    >
 
-<!--    <data>-->
-<!--<variable-->
-<!--    name="weather"-->
-<!--    type="com.example.greendefend.model.weather.Weather" />-->
-<!--    </data>-->
+    <data>
+<variable
+    name="weather"
+    type="com.example.greendefend.domin.model.weather.List" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,6 +27,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@id/txt_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -34,8 +35,9 @@
                     android:layout_marginTop="10dp"
 
                     android:textColor="@color/black"
-                    android:textSize="30sp"
-                    tools:text="Sunny"
+                    android:textSize="25sp"
+                    android:text="@{weather.dtTxt.toString()}"
+                    tools:text="224-24-2020"
                     tools:ignore="HardcodedText" />
 
 
@@ -57,7 +59,7 @@
                     android:layout_gravity="center"
                     tools:text="@string/_18_c"
                     android:textColor="@color/black"
-                    android:textSize="50sp"
+                    android:textSize="25sp"
                     android:layout_margin="5dp"/>
 
             </LinearLayout>

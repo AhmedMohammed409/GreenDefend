@@ -53,9 +53,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.string.close) }
 
 
-    private fun translateLangauahge(): Boolean {
-return true
-    }
+
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +61,6 @@ return true
         runBlocking { getdata()}
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-Log.e("data activity",Constants.Id+Constants.Name+Constants.imageUrl)
 
 
         val navController = findNavController(R.id.fragment_container)
@@ -81,15 +78,7 @@ Log.e("data activity",Constants.Id+Constants.Name+Constants.imageUrl)
         binding.txtAppName.text = Constants.provideProjectName(this)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        binding.navigationView.setNavigationItemSelectedListener {
 
-            if(it.itemId==R.id.logout){
-                Toast.makeText(this,"logout",Toast.LENGTH_SHORT).show()
-                binding.progressBar.visibility=View.VISIBLE
-                    logoutAndObserve()
-                }
-            true
-        }
 
 
         // add info header
@@ -234,7 +223,6 @@ Log.e("data activity",Constants.Id+Constants.Name+Constants.imageUrl)
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return true
-
     }
     override fun onBackPressed() {
         if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)){

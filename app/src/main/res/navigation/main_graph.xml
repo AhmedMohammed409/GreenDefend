@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_homeFragment_to_checkingFragment"
             app:destination="@id/checkingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_diseasePlantsFragment"
+            app:destination="@id/diseasePlantsFragment" />
 
 
     </fragment>
@@ -118,5 +121,19 @@
             android:name="likeStatus"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/diseasePlantsFragment"
+        android:name="com.example.greendefend.ui.homing.home.disease_plants.DiseasePlantsFragment"
+        android:label="fragment_disease_plants"
+        tools:layout="@layout/fragment_disease_plants" >
+        <argument
+            android:name="buttonNumber"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.greendefend.ui.homing.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 
 </navigation>

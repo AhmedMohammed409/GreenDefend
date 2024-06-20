@@ -100,7 +100,7 @@
     <string name="setting">Setting</string>
     <string name="please_enter_code">Please Enter Code</string>
 
-<!--    desha-->
+    <!--    desha-->
     <string name="q1_1">ما هي المحاصيل الرئيسية التي تُزرع في العالم؟ </string>
     <string name="a1_1">تشمل المحاصيل الرئيسية التي تُزرع في العالم القمح، والأرز، والذرة، والشعير، والبطاطا، والفول السوداني، والفول، والقطن، والسكريات.</string>
     <string name="q2_1">ما هي أنواع البيئات المناسبة لنمو المحاصيل؟ </string>
@@ -221,4 +221,6 @@
     <string name="not_select_image">Not Select Image</string>
     <string name="change_language">Change Language</string>
     <string name="enter_comment">Enter Comment</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="c">C</string>
 </resources>

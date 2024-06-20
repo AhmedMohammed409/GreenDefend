@@ -214,4 +214,6 @@
     <string name="no_permission_granted">لم يتم السماح</string>
     <string name="not_select_image">لم يتم اختيار صورة</string>
     <string name="change_language">تغيير اللغه</string>
+    <string name="wind_speed">سرعه الرياح</string>
+    <string name="c">د</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.greendefend.data.remote
 
+import android.media.session.MediaSession
 import com.example.greendefend.domin.model.account.AddNewPassword
 import com.example.greendefend.domin.model.account.ChangePassword
 import com.example.greendefend.domin.model.account.Confirm
@@ -7,6 +8,7 @@ import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.ResponseLogin
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.domin.model.account.UserData
+import com.example.greendefend.domin.model.classification.GetImageDeatailed
 import com.example.greendefend.domin.model.forum.Comment
 import com.example.greendefend.domin.model.forum.DetailPost
 import com.example.greendefend.domin.model.forum.Post
@@ -77,4 +79,15 @@ interface ApiServiceServer {
     suspend fun getPostDetail(
         @Query("PostId") id:Int
     ): Response<DetailPost>
+
+
+    //Classification
+    @POST("Classfication/AddImage")
+    suspend fun addImage(
+        @Body body: RequestBody
+    ): Response<ResponseBody>
+    @GET("Classfication/GetImageDetaild")
+    suspend fun getImageDetaild(@Query("ImageID") imageId: Int, @Query("Key") userId:String): Response<GetImageDeatailed>
+
+
 }

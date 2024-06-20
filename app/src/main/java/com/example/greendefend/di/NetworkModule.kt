@@ -1,6 +1,5 @@
 package com.example.greendefend.di
 
-import android.util.Log
 import com.example.greendefend.Constants
 import com.example.greendefend.data.remote.ApiServiceServer
 import com.example.greendefend.data.remote.ApiServiceWeather

@@ -31,11 +31,14 @@ class ForumFragment : Fragment() {
                     it.likeStatus!!
                 )
             )
-        }, onLikeClicked = {
-            reactAndObserve(React(true, Constants.Id, it))
+        }, onLikeClicked = { id, like ->
+
+            addReactAndObserve(React(true, Constants.Id, id))
+            Toast.makeText(requireContext(), "local$like",Toast.LENGTH_SHORT).show()
         },
-            onDisLikeClicked = {
-                reactAndObserve(React(false, Constants.Id, it))
+            onDisLikeClicked = { id, like ->
+                addReactAndObserve(React(false, Constants.Id, id))
+                Toast.makeText(requireContext(), "local$like",Toast.LENGTH_SHORT).show()
             }, onCommentClicked = {
                 findNavController().navigate(
                     ForumFragmentDirections.actionForumFragmentToPostFragment(
@@ -73,51 +76,51 @@ class ForumFragment : Fragment() {
     }
 
 
-private fun getPostAndObseve(){
-        forumViewModel.getPosts()
-    forumViewModel.liveDataPosts.observe(viewLifecycleOwner){
-        if (it!=null){
-            binding.progressBar.visibility=View.GONE
-            adapter.submitList(it)
-        }else{
-            binding.progressBar.visibility=View.GONE
-            Toast.makeText(requireContext(),"failed to get Post",Toast.LENGTH_SHORT).show()
+
+
+    private fun addReactAndObserve(react: React) {
+        forumViewModel.addReact(react)
+        forumViewModel.liveDataReact.observe(viewLifecycleOwner){result->
+            when(result){
+                is NetworkResult.Success -> {
+                    Log.e("response react server ",result.toString())
+                }
+                is NetworkResult.Error -> {
+                    Toast.makeText(requireContext(),"Failed",Toast.LENGTH_SHORT).show()
+                    Log.e("react",result.toString()) }
+                is NetworkResult.Exception -> {
+
+                }
+
+            }
         }
-    }
+
     }
 
-    private fun reactAndObserve(react: React) {
-        forumViewModel.addReact(react)
-        forumViewModel.updatePosts()
-       // getPostAndObseve()
+    private fun getPostAndObseve() {
+        forumViewModel.getPosts()
+        forumViewModel.response.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    val posts: List<Post>? = (response.data as? List<*>)?.filterIsInstance<Post>()
+                    adapter.submitList(posts)
+                }
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.e("MsgErr", response.toString())
+                }
+                is NetworkResult.Exception -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.e("MsgErr Exeption", response.e.toString())
+                }
+            }
+        }
+
+
     }
 
 
 }
 
 
-//    private fun getPostAndObseve() {
-//        forumViewModel.getPosts()
-//        forumViewModel.response.observe(viewLifecycleOwner) { response ->
-//            when (response) {
-//                is NetworkResult.Success -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    val posts: List<Post>? = (response.data as? List<*>)?.filterIsInstance<Post>()
-//                    adapter.submitList(posts)
-//                }
-//
-//                is NetworkResult.Error -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    Log.e("MsgErr", response.toString())
-//
-//                }
-//
-//                is NetworkResult.Exception -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    Log.e("MsgErr Exeption", response.e.toString())
-//                }
-//            }
-//        }
-//
-//
-//    }

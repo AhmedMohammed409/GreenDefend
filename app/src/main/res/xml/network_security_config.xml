@@ -2,6 +2,8 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">api.weatherapi.com</domain>
+        <domain includeSubdomains="true">api.openweathermap.org</domain>
+
         <domain includeSubdomains="true">farisnho.runasp.net</domain>
     </domain-config>
 

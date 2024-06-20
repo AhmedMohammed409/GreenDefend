@@ -16,8 +16,8 @@ import com.example.greendefend.domin.model.forum.Post
 class PostAdapter(
     private val context: Context,
     private var onItemClicked: (post: Post) -> Unit,
-    private var onLikeClicked: (postId: Int) -> Unit,
-    private var onDisLikeClicked: (postId: Int) -> Unit,
+    private var onLikeClicked: (postId: Int, likeState: String) -> Unit,
+    private var onDisLikeClicked: (postId: Int, likeState: String) -> Unit,
     private var onCommentClicked: (postId: Post) -> Unit,
 ) : ListAdapter<Post, PostAdapter.ViewHolder>(PostsDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostAdapter.ViewHolder {
@@ -39,16 +39,13 @@ class PostAdapter(
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(
             item: Post, onItemClicked: (post: Post) -> Unit,
-            onLikeClicked: (postId: Int) -> Unit,
-            onDisLikeClicked: (postId: Int) -> Unit,
+            onLikeClicked: (postId: Int, likeState: String) -> Unit,
+            onDisLikeClicked: (postId: Int, likeState: String) -> Unit,
             onCommentClicked: (post: Post) -> Unit
         ) {
 
 
             binding.post = item
-            if (item.postImageURL == null) {
-                binding.imgPost.visibility = View.GONE
-            }
             when (item.likeStatus) {
                 "Yes" -> {
                     binding.btnLike.background = context.getDrawable(R.color.state)
@@ -64,8 +61,12 @@ class PostAdapter(
                     binding.btnLike.background = null
                     binding.btnDislike.background = null
                 }
+
             }
 
+            if (item.postImageURL == null) {
+                binding.imgPost.visibility = View.GONE
+            }
             Glide.with(context)
                 .load(item.userImageURL)
                 .into(binding.imgUser)
@@ -75,11 +76,22 @@ class PostAdapter(
                 .into(binding.imgPost)
 
             binding.btnLike.setOnClickListener {
-                onLikeClicked(item.postId!!)
-            }
+                item.likeStatus = if (item.likeStatus == "Yes") {
+                    ""
+                } else {
+                    "Yes"
+                }
 
+                onLikeClicked(item.postId!!, item.likeStatus!!)
+            }
             binding.btnDislike.setOnClickListener {
-                onDisLikeClicked(item.postId!!)
+                item.likeStatus = if (item.likeStatus == "No") {
+                    ""
+                } else {
+                    "No"
+                }
+
+                onDisLikeClicked(item.postId!!, item.likeStatus!!)
             }
             binding.btnComment.setOnClickListener {
                 onCommentClicked(item)
@@ -95,12 +107,10 @@ class PostAdapter(
 
 object PostsDiffUtil : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return (oldItem.postId == newItem.postId
-                && oldItem.likeStatus == newItem.likeStatus
-                && oldItem.commentsCount == newItem.commentsCount)
+        return oldItem.postId == newItem.postId
     }
 
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return areItemsTheSame(oldItem, newItem)
+        return oldItem == newItem
     }
 }

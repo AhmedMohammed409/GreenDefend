@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.text.DecimalFormat
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
@@ -17,15 +18,16 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.greendefend.data.repository.DataStorePrefrenceImpl
+import com.bumptech.glide.Glide
+import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentHomeBinding
-import com.example.greendefend.domin.model.weather.CurrentWeather
+import com.example.greendefend.domin.model.weather.AllWeather
 import com.example.greendefend.domin.useCase.viewModels.WeatherViewModel
 import com.example.greendefend.utli.NetworkResult
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import okio.IOException
 
 
 @AndroidEntryPoint
@@ -33,8 +35,6 @@ class HomeFragment : Fragment() {
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
 
 
-    @Inject
-    lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
     private val weatherviewModel: WeatherViewModel by viewModels()
     private var latitude: Float? = 30.033333F
     private var longitude: Float? = 31.233334F
@@ -94,6 +94,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermissionOrShowDialog()
+        binding.btn1.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(1))
+        }
+        binding.btn2.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(2))
+        }
+        binding.btn3.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(3))
+        }
 
         binding.btnUpload.setOnClickListener {
             findNavController().navigate(
@@ -129,45 +138,84 @@ class HomeFragment : Fragment() {
         }
 
 
+
+
     }
 
 
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
+        try {
             mFusedLocationProviderClient =
                 LocationServices.getFusedLocationProviderClient(requireActivity())
-           mFusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
-               val location=task.result
-               if (location != null) {
-                   latitude = location.latitude.toFloat()
-                   longitude = location.longitude.toFloat()
-                   weatherAndObserve(latitude!!, longitude!!)
-               }
-               else{
-                   Toast.makeText(requireContext(),"Null Recieved",Toast.LENGTH_SHORT).show()
-               }
+
+            mFusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
+                val location=task.result
+                if (location != null) {
+                    latitude = location.latitude.toFloat()
+                    longitude = location.longitude.toFloat()
+                    weatherAndObserve(latitude!!, longitude!!)
+                }
+                else{
+                    Toast.makeText(requireContext(),"Null Recieved",Toast.LENGTH_SHORT).show()
+                }
             }
+        }catch (e:Exception){
+            Toast.makeText(requireContext(),"Please connect by internt",Toast.LENGTH_SHORT).show()
+        }
+
 
 
     }
 
-
+//    @SuppressLint("SetTextI18n", "SuspiciousIndentation")
+//    private fun weatherAndObserve(latitude: Float, longitude: Float) {
+//        weatherviewModel.getWeather(latitude, longitude)
+//        binding.progressBar.visibility = View.VISIBLE
+//     weatherviewModel.liveData.observe(viewLifecycleOwner){
+//         if (it!=null){
+//             binding.progressBar.visibility = View.GONE
+//
+//                    binding.currentWeather = it
+//                   binding.windSpeed.text= getString(R.string.wind_speed)+"\t"+it.list[0].wind!!.speed
+//
+//             val dec = DecimalFormat("#.##")
+//             val temp_c = dec.format((it.list[0].main!!.temp!! -272.25))
+//             binding.txtTemperature.text= temp_c.toString()+ getString(R.string.c)
+//
+//                    Glide.with(requireContext())
+//                        .load("https://openweathermap.org/img/wn/${it.list[0].weather[0].icon}@2x.png")
+//                        .into(binding.imgWeather)
+//
+//
+//         }else{
+//             Toast.makeText(requireContext(),"failed",Toast.LENGTH_SHORT).show()
+//         }
+//
+//        }
+//
+//    }
     private fun weatherAndObserve(latitude: Float, longitude: Float) {
-        weatherviewModel.getCurrentWeather(latitude, longitude)
+        weatherviewModel.getWeather(latitude, longitude)
         binding.progressBar.visibility = View.VISIBLE
         weatherviewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    val responseWeather = response.data as CurrentWeather
-                    binding.currentWeather = responseWeather
-//                    Glide.with(requireContext())
-//                        .load("http://api.weatherapi.com${responseWeather.current?.condition?.icon}")
-//                        .into(binding.imgWeather)
-                }
+                    val result=response.data as AllWeather
+                    binding.currentWeather = result
+                    binding.windSpeed.text= getString(R.string.wind_speed)+"\t"+result.list[0].wind!!.speed
+
+                    val dec = DecimalFormat("#.##")
+                    val temp = dec.format((result.list[0].main!!.temp!! -272.25))
+                    binding.txtTemperature.text= temp.toString()+ getString(R.string.c)
+
+                    Glide.with(requireContext())
+                        .load("https://openweathermap.org/img/wn/${result.list[0].weather[0].icon}@2x.png")
+                        .into(binding.imgWeather)   }
 
                 is NetworkResult.Error -> {
-//                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr", response.toString())
                     Toast.makeText(
                         requireContext(),

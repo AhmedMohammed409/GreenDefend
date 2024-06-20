@@ -7,8 +7,6 @@ import com.example.greendefend.domin.model.account.Login
 import com.example.greendefend.domin.model.account.User
 import com.example.greendefend.utli.NetworkResult
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
-import retrofit2.Response
 
 interface AuthRepo {
     suspend fun login(login: Login): NetworkResult<Any>

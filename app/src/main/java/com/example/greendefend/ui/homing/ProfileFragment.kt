@@ -1,5 +1,6 @@
 package com.example.greendefend.ui.homing
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,7 +46,13 @@ class ProfileFragment : Fragment() {
 
         getUserData()
 
-
+binding.btnShare.setOnClickListener {
+    val intent=Intent()
+    intent.action=Intent.ACTION_SEND
+    intent.putExtra(Intent.EXTRA_TEXT,"${binding.txtTitleThreat.text}\n${binding.txtDescription.text}")
+    intent.type="text/plain"
+    startActivity(Intent.createChooser(intent,"Choose your APP"))
+}
 
         binding.btnChangeprofile.setOnClickListener {
             findNavController().navigate(
@@ -65,8 +72,7 @@ class ProfileFragment : Fragment() {
                     result = response.data as UserData
                     binding.txtName.text = result.fullName
 
-                    if (result.bio!=null){
-                    binding.txtBio.text = result.bio}
+                    binding.txtBio.text = result.bio
 
                     Glide.with(requireContext())
                         .load(result.imageUrl)
