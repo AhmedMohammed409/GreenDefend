@@ -1,6 +1,5 @@
 package com.example.greendefend.utli
 
-import android.util.Log
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
@@ -14,7 +13,13 @@ interface ApiHandler {
 //        Log.e("response",response.toString())
         return try {
             val response = execute()
-            NetworkResult.Success(response.code(), response.body()!!)
+            if (response.isSuccessful){
+                NetworkResult.Success(response.code(), response.body()!!)
+            }else{
+                NetworkResult.Error(response.code(),"Failed")
+            }
+
+
 
         }
         catch (e:HttpRetryException){
@@ -26,8 +31,9 @@ interface ApiHandler {
         catch (e: IOException) {
             NetworkResult.Error( 600,"Not Connect Internet ")
 
-        }catch (e: Exception) {
-            NetworkResult.Error(700,e.message+e.cause)
+        }
+        catch (e: Exception) {
+            NetworkResult.Error(700,e.cause.toString())
         }
 
         catch (e: Throwable) {

@@ -51,10 +51,13 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.window:window:1.3.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+
     implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.4.4")
+   // implementation("org.tensorflow:tensorflow-lite-gpu:2.3.0")
+
     implementation("androidx.room:room-common:2.6.1")
-    implementation("org.tensorflow:tensorflow-lite-gpu:2.3.0")
+
     implementation("com.google.android.gms:play-services-tflite-acceleration-service:16.0.0-beta01")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

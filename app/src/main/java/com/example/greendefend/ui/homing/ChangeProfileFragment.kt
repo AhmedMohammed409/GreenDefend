@@ -141,6 +141,10 @@ class ChangeProfileFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
+                    if (response.code==700){
+                        Toast.makeText(requireContext(),response.errMsg, Toast.LENGTH_SHORT).show()
+                        ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_SHORT)
                         .show()

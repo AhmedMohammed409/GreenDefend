@@ -1,14 +1,18 @@
 package com.example.greendefend.ui.homing.home.disease_plants
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentDiseasePlantsBinding
 import com.example.greendefend.domin.model.home.QuestionAnswer
+import com.example.greendefend.ui.homing.HomeActivity
 
 class DiseasePlantsFragment : Fragment() {
     private lateinit var binding:FragmentDiseasePlantsBinding
@@ -37,12 +41,16 @@ class DiseasePlantsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         val passedNumber=args.buttonNumber
 
 
         when (passedNumber) {
             1 -> {
+                binding.titleToolbar.text=getString(R.string.crop_information)
                 listQuestion1.add(QuestionAnswer(getString(R.string.q1_1),getString(R.string.a1_1)))
                 listQuestion1.add(QuestionAnswer(getString(R.string.q2_1),getString(R.string.a2_1)))
                 listQuestion1.add(QuestionAnswer(getString(R.string.q3_1),getString(R.string.a3_1)))
@@ -65,6 +73,7 @@ class DiseasePlantsFragment : Fragment() {
                 listQuestion1.add(QuestionAnswer(getString(R.string.q20_1),getString(R.string.a20_1)))
             }
             2 -> {
+                binding.titleToolbar.text= getString(R.string.plant_diseases)
                 listQuestion1.add(QuestionAnswer(getString(R.string.q1_2),getString(R.string.a1_2)))
                 listQuestion1.add(QuestionAnswer(getString(R.string.q2_2),getString(R.string.a2_2)))
                 listQuestion1.add(QuestionAnswer(getString(R.string.q3_2),getString(R.string.a3_2)))
@@ -82,6 +91,7 @@ class DiseasePlantsFragment : Fragment() {
                 listQuestion1.add(QuestionAnswer(getString(R.string.q15_2),getString(R.string.a15_2)))
             }
             3 -> {
+                binding.titleToolbar.text= getString(R.string.plant_observation)
                 listQuestion1.add(QuestionAnswer(getString(R.string.q1_3),getString(R.string.a1_3)))
                 listQuestion1.add(QuestionAnswer(getString(R.string.q2_3),getString(R.string.a2_3)))
                 listQuestion1.add(QuestionAnswer(getString(R.string.q3_3),getString(R.string.a3_3)))
@@ -108,6 +118,15 @@ class DiseasePlantsFragment : Fragment() {
 
         binding.myRecyclerView2.adapter=adapter
 
+    }
+    override fun onAttach(context: Context) {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
+        super.onAttach(context)
+    }
+
+    override fun onDestroy() {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
+        super.onDestroy()
     }
 
 

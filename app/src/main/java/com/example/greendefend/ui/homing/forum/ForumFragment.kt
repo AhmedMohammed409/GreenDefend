@@ -14,6 +14,7 @@ import com.example.greendefend.databinding.FragmentForumBinding
 import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.domin.useCase.viewModels.ForumViewModel
+import com.example.greendefend.ui.homing.HomeActivity
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,14 +32,14 @@ class ForumFragment : Fragment() {
                     it.likeStatus!!
                 )
             )
-        }, onLikeClicked = { id, like ->
+        }, onLikeClicked = { id, _ ->
 
             addReactAndObserve(React(true, Constants.Id, id))
-            Toast.makeText(requireContext(), "local$like",Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), "local$like",Toast.LENGTH_SHORT).show()
         },
-            onDisLikeClicked = { id, like ->
+            onDisLikeClicked = { id, _ ->
                 addReactAndObserve(React(false, Constants.Id, id))
-                Toast.makeText(requireContext(), "local$like",Toast.LENGTH_SHORT).show()
+             //   Toast.makeText(requireContext(), "local$like",Toast.LENGTH_SHORT).show()
             }, onCommentClicked = {
                 findNavController().navigate(
                     ForumFragmentDirections.actionForumFragmentToPostFragment(
@@ -86,7 +87,11 @@ class ForumFragment : Fragment() {
                     Log.e("response react server ",result.toString())
                 }
                 is NetworkResult.Error -> {
-                    Toast.makeText(requireContext(),"Failed",Toast.LENGTH_SHORT).show()
+                    if (result.code==700){
+                        Toast.makeText(requireContext(),result.errMsg,Toast.LENGTH_SHORT).show()
+                        ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }
+                   // Toast.makeText(requireContext(),result.errMsg,Toast.LENGTH_SHORT).show()
                     Log.e("react",result.toString()) }
                 is NetworkResult.Exception -> {
 
@@ -102,11 +107,17 @@ class ForumFragment : Fragment() {
         forumViewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+
                     binding.progressBar.visibility = View.GONE
                     val posts: List<Post>? = (response.data as? List<*>)?.filterIsInstance<Post>()
+                    Log.e("posts", posts.toString())
                     adapter.submitList(posts)
                 }
                 is NetworkResult.Error -> {
+                    if (response.code==700){
+                        Toast.makeText(requireContext(),response.errMsg,Toast.LENGTH_SHORT).show()
+                        ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }
                     binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr", response.toString())
                 }

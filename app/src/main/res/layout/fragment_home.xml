@@ -5,6 +5,7 @@
     tools:context=".ui.homing.home.HomeFragment">
 
     <data>
+
         <variable
             name="currentWeather"
             type="com.example.greendefend.domin.model.weather.AllWeather" />
@@ -35,13 +36,13 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
+                    android:fontFamily="sans-serif-medium"
                     android:gravity="start"
+                    android:lineSpacingExtra="4dp"
                     android:text="@string/know_your_plant_s_disease_and_treat_it_easily"
                     android:textColor="@color/black"
                     android:textSize="28sp"
                     android:textStyle="bold"
-                    android:lineSpacingExtra="4dp"
-                    android:fontFamily="sans-serif-medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -70,9 +71,9 @@
                             android:layout_width="50dp"
                             android:layout_height="30dp"
                             android:layout_margin="15dp"
+                            android:background="@drawable/bnt_style_treat"
                             android:gravity="center"
                             android:padding="5dp"
-                            android:background="@drawable/bnt_style_treat"
                             android:text="@string/threat"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
@@ -119,7 +120,6 @@
                 </androidx.cardview.widget.CardView>
 
 
-
                 <TextView
                     android:id="@+id/txt_weather"
                     android:layout_width="wrap_content"
@@ -138,8 +138,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="11dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="11dp"
                     android:layout_marginBottom="16dp"
                     app:cardCornerRadius="40dp"
                     app:cardElevation="3dp"
@@ -151,19 +151,28 @@
                         android:layout_height="wrap_content"
                         android:background="#2B8ABCA4"
                         android:orientation="vertical"
-                        android:padding="10dp"
-                        >
+                        android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/txt_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
                             android:textColor="@color/black"
+                            android:textSize="30sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/img_weather"
+                            app:layout_constraintStart_toEndOf="@+id/img_weather"
+                            app:layout_constraintTop_toTopOf="@+id/img_weather"
+                            tools:text="Sunday" />
+
+                        <TextView
                             android:id="@+id/txt_location"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:textSize="15sp"
                             android:text="@{currentWeather.city.name}"
-
-
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="@string/february_3_new_damietta_city" />
@@ -183,11 +192,11 @@
                             android:id="@+id/img_weather"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            tools:background="@drawable/mdi_weather_night"
                             android:padding="20dp"
                             android:scaleType="fitXY"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txt_location"
+                            tools:background="@drawable/mdi_weather_night"
                             tools:ignore="ContentDescription,ImageContrastCheck" />
 
 
@@ -196,13 +205,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="20dp"
 
-                            android:textSize="30sp"
+                            android:layout_marginStart="10dp"
                             android:textColor="@color/black"
-
+                            android:textSize="30sp"
                             app:layout_constraintBottom_toBottomOf="@id/img_weather"
-                            app:layout_constraintStart_toEndOf="@id/img_weather"
+                            app:layout_constraintStart_toEndOf="@+id/txt_day"
                             app:layout_constraintTop_toTopOf="@id/img_weather"
                             tools:text="@string/_18_c" />
 
@@ -211,8 +219,8 @@
                             android:id="@+id/note_weather"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="5dp"
                             android:layout_marginEnd="10dp"
+                            android:padding="5dp"
                             android:text="@{currentWeather.list.get(0).weather.get(0).description}"
                             android:textColor="@color/black"
                             android:textSize="20sp"
@@ -225,10 +233,10 @@
                             android:id="@+id/wind_speed"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
                             android:padding="5dp"
                             android:textColor="@color/black"
                             android:textSize="20sp"
-                            android:layout_marginStart="10dp"
                             app:layout_constraintEnd_toEndOf="parent"
 
                             app:layout_constraintStart_toEndOf="@+id/note_weather"
@@ -266,18 +274,17 @@
                 </androidx.cardview.widget.CardView>
 
 
-
                 <!--                        maalomat almahesel-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_1"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+
+                    android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="32dp"
                     app:layout_constraintTop_toBottomOf="@+id/card_weather">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -292,7 +299,7 @@
                             android:layout_marginStart="5dp"
                             android:text="@string/crop_information"
                             android:textColor="@color/black"
-                            android:textSize="20dp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -322,11 +329,11 @@
                 <!--                        second btn-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn2"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btn_1">
@@ -342,7 +349,7 @@
                             android:layout_marginStart="5dp"
                             android:text="@string/plant_diseases"
                             android:textColor="@color/black"
-                            android:textSize="20dp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -371,12 +378,12 @@
                 <!--                        third btn-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn3"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="32dp"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="32dp"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -393,8 +400,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:text="@string/plant_observation"
-                            android:textSize="20dp"
                             android:textColor="@color/black"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -420,18 +427,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

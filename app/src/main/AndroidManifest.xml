@@ -39,7 +39,8 @@
         </activity>
         <activity
             android:name=".ui.homing.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
             android:exported="false">

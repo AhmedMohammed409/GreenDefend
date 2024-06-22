@@ -95,7 +95,7 @@
     <string name="diagnostic_results">نتائج التشخيص</string>
     <string name="please_enter_code">Please Enter Code</string>
 
-<!--    desha-->
+    <!--    desha-->
     <string name="q1_1">ما هي المحاصيل الرئيسية التي تُزرع في العالم؟ </string>
     <string name="a1_1">تشمل المحاصيل الرئيسية التي تُزرع في العالم القمح، والأرز، والذرة، والشعير، والبطاطا، والفول السوداني، والفول، والقطن، والسكريات.</string>
     <string name="q2_1">ما هي أنواع البيئات المناسبة لنمو المحاصيل؟ </string>
@@ -216,4 +216,8 @@
     <string name="change_language">تغيير اللغه</string>
     <string name="wind_speed">سرعه الرياح</string>
     <string name="c">د</string>
+    <string name="description">الوصف:</string>
+    <string name="treatment">العلاج:</string>
+    <string name="prevention">الوقاية:</string>
+    <string name="reason">السبب:</string>
 </resources>

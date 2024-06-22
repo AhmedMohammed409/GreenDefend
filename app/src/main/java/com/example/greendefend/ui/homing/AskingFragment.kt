@@ -115,6 +115,10 @@ class AskingFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
+                    if (response.code==700){
+                        Toast.makeText(requireContext(),response.errMsg, Toast.LENGTH_SHORT).show()
+                        ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }
                     binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr Error", response.toString())
                     Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_LONG).show()

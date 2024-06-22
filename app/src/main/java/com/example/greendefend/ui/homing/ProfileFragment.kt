@@ -2,10 +2,10 @@ package com.example.greendefend.ui.homing
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -80,6 +80,10 @@ binding.btnShare.setOnClickListener {
                 }
 
                 is NetworkResult.Error -> {
+                    if (response.code==700){
+                        Toast.makeText(requireContext(),response.errMsg, Toast.LENGTH_SHORT).show()
+                        ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }
                     binding.progressBar.visibility = View.GONE
                     binding.txtName.text = Constants.Name
                     binding.txtBio.text = Constants.Bio

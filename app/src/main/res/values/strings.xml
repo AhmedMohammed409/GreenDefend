@@ -225,4 +225,11 @@
     <string name="c">C</string>
     <string name="like">Like</string>
     <string name="unlike">unlike</string>
+
+    <string name="description">description:</string>
+    <string name="treatment">treatment:</string>
+    <string name="prevention">prevention:</string>
+    <string name="reason">reason:</string>
+    <string name="comment">comment</string>
+    <string name="change_password">Change Password</string>
 </resources>

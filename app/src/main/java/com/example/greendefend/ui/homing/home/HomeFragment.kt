@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.icu.text.DecimalFormat
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
@@ -20,9 +19,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.greendefend.R
+import com.example.greendefend.data.local.Converters
 import com.example.greendefend.databinding.FragmentHomeBinding
 import com.example.greendefend.domin.model.weather.AllWeather
 import com.example.greendefend.domin.useCase.viewModels.WeatherViewModel
+import com.example.greendefend.ui.MainActivity
+import com.example.greendefend.ui.homing.HomeActivity
 import com.example.greendefend.utli.NetworkResult
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -62,11 +64,12 @@ class HomeFragment : Fragment() {
 
     private fun checkPermissionOrShowDialog() {
         if (hasPermission(permissions)) {
-            if (isLocationEnable()){
-            getCurrentLocation()}
-            else{
-                startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            if (isLocationEnable()) {
+                getCurrentLocation()
             }
+//            else{
+//                startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+//            }
         } else {
             permissionLauncher.launch(permissions)
         }
@@ -95,13 +98,25 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         checkPermissionOrShowDialog()
         binding.btn1.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(1))
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(
+                    1
+                )
+            )
         }
         binding.btn2.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(2))
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(
+                    2
+                )
+            )
         }
         binding.btn3.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(3))
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToDiseasePlantsFragment(
+                    3
+                )
+            )
         }
 
         binding.btnUpload.setOnClickListener {
@@ -138,8 +153,6 @@ class HomeFragment : Fragment() {
         }
 
 
-
-
     }
 
 
@@ -149,24 +162,24 @@ class HomeFragment : Fragment() {
             mFusedLocationProviderClient =
                 LocationServices.getFusedLocationProviderClient(requireActivity())
 
-            mFusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
-                val location=task.result
+            mFusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+                val location = task.result
                 if (location != null) {
                     latitude = location.latitude.toFloat()
                     longitude = location.longitude.toFloat()
                     weatherAndObserve(latitude!!, longitude!!)
-                }
-                else{
-                    Toast.makeText(requireContext(),"Null Recieved",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Please open GPS", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
             }
-        }catch (e:Exception){
-            Toast.makeText(requireContext(),"Please connect by internt",Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Please connect by internt", Toast.LENGTH_SHORT).show()
         }
 
 
-
     }
+
     @SuppressLint("SetTextI18n")
     private fun weatherAndObserve(latitude: Float, longitude: Float) {
         weatherviewModel.getWeather(latitude, longitude)
@@ -175,26 +188,34 @@ class HomeFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    val result=response.data as AllWeather
+                    val result = response.data as AllWeather
                     binding.currentWeather = result
-                    binding.windSpeed.text= getString(R.string.wind_speed)+"\t"+result.list[0].wind!!.speed
+                    binding.windSpeed.text =
+                        getString(R.string.wind_speed) + "\t" + result.list[0].wind!!.speed
 
-                    var temp=(result.list[0].main!!.temp!!).toFloat()-272.25F
-                    temp= temp.roundToInt().toFloat()
+                    var temp = (result.list[0].main!!.temp!!).toFloat() - 272.25F
 
-                    Log.e("temp",  temp.toString())
-                    binding.txtTemperature.text= "$temp C"
+                    binding.txtDay.text =
+                        Converters().convertDateTimeToDayName(result.list[0].dtTxt!!)
+
+                    temp = temp.roundToInt().toFloat()
+
+                    binding.txtTemperature.text = "$temp C"
 
                     Glide.with(requireContext())
                         .load("https://openweathermap.org/img/wn/${result.list[0].weather[0].icon}@2x.png")
-                        .into(binding.imgWeather)   }
+                        .into(binding.imgWeather)
+                }
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
+                    if (response.code==700){
+                        ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }
                     Log.e("MsgErr", response.toString())
                     Toast.makeText(
                         requireContext(),
-                        response.errMsg + "Not found weather",
+                        response.errMsg,
                         Toast.LENGTH_LONG
                     ).show()
                 }

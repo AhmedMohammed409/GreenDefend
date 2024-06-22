@@ -9,7 +9,7 @@
     <color name="green_name">#388B68</color>
     <color name="e4f0e9">#E4F0E9</color>
     <color name="_39c58a">#39C58A</color>
-    <color name="state">#4D00BCD4</color>
+    <color name="state">#2196F3</color>
 
     <!--    Desha Colors-->
     <color name="green_toolBar">#97C3AF</color>
@@ -17,4 +17,5 @@
     <color name="gray">#F5F9F5</color>
     <color name="border_register">#B6BDB7</color>
     <color name="Post">#E4F0E9</color>
+    <color name="green_text_results">#39C58A</color>
 </resources>

@@ -27,9 +27,6 @@
 
         tools:layout="@layout/fragment_forum" >
         <action
-            android:id="@+id/action_forumFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
             android:id="@+id/action_forumFragment_to_askingFragment"
             app:destination="@id/askingFragment" />
         <action
@@ -44,11 +41,6 @@
             android:id="@+id/action_profileFragment_to_changeProfileFragment"
             app:destination="@id/changeProfileFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.greendefend.ui.homing.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/weatherFragment"
         android:name="com.example.greendefend.ui.homing.weather.WeatherFragment"
@@ -135,5 +127,10 @@
         android:name="com.example.greendefend.ui.homing.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/updatePasswordFragment2"
+        android:name="com.example.greendefend.ui.authentication.UpdatePasswordFragment"
+        android:label="fragment_update_password"
+        tools:layout="@layout/fragment_update_password" />
 
 </navigation>

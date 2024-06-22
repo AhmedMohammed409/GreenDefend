@@ -25,6 +25,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentCheckingBinding
+import com.example.greendefend.ml.MyModel1
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
@@ -139,13 +140,14 @@ class CheckingFragment : Fragment() {
 
 
         binding.btnChecking.setOnClickListener {
-            val result = model()
+          //  val result = model()
+            val result = apple()
             Log.e("index", result.toString())
             if (uri != null) {
                 findNavController().navigate(
                     CheckingFragmentDirections.actionCheckingFragmentToDiagnosticResultsFragment(
                         uri!!,
-                        result
+                        1
                     )
                 )
             } else {
@@ -219,6 +221,43 @@ class CheckingFragment : Fragment() {
         }
         model.close()
         return maxId - 1
+    }
+
+
+    fun apple(){
+        val imageProcessor = ImageProcessor.Builder()
+            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR)).build()
+
+        var tensorImage = TensorImage(DataType.FLOAT32)
+        tensorImage.load(bitmap)
+        tensorImage = imageProcessor.process(tensorImage)
+    val model = MyModel1.newInstance(requireContext())
+
+
+        val inputFeature0 =
+            TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+        inputFeature0.loadBuffer(tensorImage.buffer)
+
+// Runs model inference and gets result.
+        val outputs = model.process(inputFeature0)
+        val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
+        for (i in outputFeature0) {
+            Log.e("rrr", i.toString())
+        }
+
+
+        var maxId = 0
+        outputFeature0.forEachIndexed { index, fl ->
+            if (outputFeature0[maxId] < fl) {
+                maxId = index
+            }
+        }
+        Log.e("max perpappppp", outputFeature0[maxId].toString())
+
+
+// Releases model resources if no longer used.
+        model.close()
+
     }
 
     override fun onAttach(context: Context) {

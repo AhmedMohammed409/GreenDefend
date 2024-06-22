@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.icu.text.DecimalFormat
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.greendefend.R
+import com.example.greendefend.data.local.Converters
 import com.example.greendefend.databinding.FragmentWeatherBinding
 import com.example.greendefend.domin.model.weather.AllWeather
 import com.example.greendefend.domin.useCase.viewModels.WeatherViewModel
@@ -61,7 +63,7 @@ private val weatherViewModel:WeatherViewModel by viewModels ()
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "DefaultLocale")
     private fun weatherAndObserve(latitude: Float, longitude: Float) {
         weatherViewModel.getWeather(latitude, longitude)
         weatherViewModel.response.observe(viewLifecycleOwner){response->
@@ -73,11 +75,14 @@ private val weatherViewModel:WeatherViewModel by viewModels ()
             binding.noteWeather.text= result.list[0].weather[0].description
             binding.windSpeed.text= getString(R.string.wind_speed)+"\t"+result.list[0].wind!!.speed
             binding.txtLocation.text=  result.city!!.name
-            binding.txtDate.text=  result.list[0].dtTxt
+                binding.txtDay.text= Converters().convertDateTimeToDayName(result.list[0].dtTxt!!)
            // val dec = DecimalFormat("#")
 
             var temp = result.list[0].main!!.temp!! -272.25F
+                val formattedNum = String.format("%.2f", temp)
+                Log.e("apro num",formattedNum)
                 temp= temp.roundToInt().toFloat()
+
 
 
             binding.txtTemperature.text= "$temp C"

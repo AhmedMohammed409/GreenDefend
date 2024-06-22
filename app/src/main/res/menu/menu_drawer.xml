@@ -21,12 +21,12 @@
         android:icon="@drawable/fourm_icon_black"
         android:title="@string/forum" />
     <item
-        android:id="@+id/settingFragment"
+        android:id="@+id/updatePasswordFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_settings_24"
 
-        android:title="@string/setting"
+        android:title="@string/change_password"
 
 
        />

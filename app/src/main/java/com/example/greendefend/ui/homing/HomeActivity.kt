@@ -102,9 +102,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun hidenFragment(destinationId: Int) {
         when (destinationId) {
-            R.id.searchFragment -> {
-                binding.bottomNavigationView.isVisible = false
-            }
 
             R.id.weatherFragment -> {
                 binding.bottomNavigationView.isVisible = false
@@ -137,7 +134,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    private fun logoutAndObserve() {
+     fun logoutAndObserve() {
         Log.e("id",Constants.Id)
         Log.e("id",Constants.Token)
 
@@ -224,13 +221,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return true
     }
+
     override fun onBackPressed() {
         if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
             binding.drawerLayout.closeDrawer(GravityCompat.START)}
         else{
             super.onBackPressed()}
-
-
     }
 
 

@@ -1,6 +1,6 @@
 package com.example.greendefend.ui.homing.forum.post
 
-import android.annotation.SuppressLint
+ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +27,7 @@ class PostFragment : Fragment() {
     private lateinit var binding: FragmentPostBinding
     private lateinit var postDetail: DetailPost
     private val forumViewModel: ForumViewModel by viewModels()
+
     private val args: PostFragmentArgs by navArgs()
     private lateinit var likeState: String
     private lateinit var adapter: PostAdapter
@@ -46,16 +47,44 @@ class PostFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint("UseCompatLoadingForDrawables", "ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getPostDetailed(args.postId)
         likeState = args.likeStatus
 
-        if (likeState=="Yes"){
-            binding.btnLike.background = requireContext().getDrawable(R.color.state)
-        }else if (likeState=="No"){
-            binding.btnDislike.background = requireContext().getDrawable(R.color.state)
+        when (likeState) {
+            "Yes" -> {
+                binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                    requireContext().getDrawable(R.drawable.like),
+                    null,
+                    null,
+                    null
+                )
+                binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                    requireContext().getDrawable(R.drawable.mdi_dislike),
+                    null,
+                    null,
+                    null
+                )
+
+            }
+
+            "No" -> {
+                binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                    requireContext().getDrawable(R.drawable.dislike),
+                    null,
+                    null,
+                    null
+                )
+                binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                    requireContext().getDrawable(R.drawable.mdi_like),
+                    null,
+                    null,
+                    null
+                )
+
+            }
         }
 
         adapter = PostAdapter(requireContext())
@@ -175,21 +204,50 @@ class PostFragment : Fragment() {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun changeColorReact(click: String) {
-        if (likeState==click){
-            binding.btnLike.background = null
-            binding.btnDislike.background = null
+    fun changeColorReact( click: String) {
+        if (likeState == click) {
+            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                requireContext().getDrawable(R.drawable.mdi_like),
+                null,
+                null,
+                null
+            )
+            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                requireContext().getDrawable(R.drawable.mdi_dislike),
+                null,
+                null,
+                null
+            )
             likeState = ""
-        }else if (click=="Yes"){
-            binding.btnLike.background = requireContext().getDrawable(R.color.state)
-            binding.btnDislike.background = null
+        } else if (click == "Yes") {
+            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                requireContext().getDrawable(R.drawable.like),
+                null,
+                null,
+                null
+            )
+            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                requireContext().getDrawable(R.drawable.mdi_dislike),
+                null,
+                null,
+                null
+            )
             likeState = "Yes"
-        }else if (click=="No"){
-            binding.btnDislike.background = requireContext().getDrawable(R.color.state)
-            binding.btnLike.background = null
+        } else if (click == "No") {
+            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                requireContext().getDrawable(R.drawable.dislike),
+                null,
+                null,
+                null
+
+            )
+            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                requireContext().getDrawable(R.drawable.mdi_like),
+                null,
+                null,
+                null
+            )
             likeState = "No"
         }
-
-
     }
 }
