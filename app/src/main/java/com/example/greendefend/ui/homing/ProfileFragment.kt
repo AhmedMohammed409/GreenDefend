@@ -6,16 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.greendefend.Constants
+import com.example.greendefend.data.repository.DataStorePrefrenceImpl
 import com.example.greendefend.databinding.FragmentProfileBinding
 import com.example.greendefend.domin.model.account.UserData
 import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
 import com.example.greendefend.utli.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -23,7 +27,8 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private val authViewModel: AuthViewModel by viewModels()
     private lateinit var result: UserData
-
+    @Inject
+    lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,6 +60,7 @@ binding.btnShare.setOnClickListener {
 }
 
         binding.btnChangeprofile.setOnClickListener {
+            (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
             findNavController().navigate(
                 ProfileFragmentDirections.actionProfileFragmentToChangeProfileFragment(
                     result
@@ -70,10 +76,15 @@ binding.btnShare.setOnClickListener {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
                     result = response.data as UserData
-                    binding.txtName.text = result.fullName
+                    saveLocal(result)
+                    runBlocking {  saveAtPrefrences(result) }
 
+                    binding.txtName.text = result.fullName
                     binding.txtBio.text = result.bio
 
+
+
+                    (requireActivity() as HomeActivity).updateHeadearDrawer()
                     Glide.with(requireContext())
                         .load(result.imageUrl)
                         .into(binding.imgPerson)
@@ -107,4 +118,42 @@ binding.btnShare.setOnClickListener {
             }
         }
     }
+
+
+    private suspend fun saveAtPrefrences(userData: UserData) {
+  
+        dataStorePrefrenceImpl.putPreference(
+            DataStorePrefrenceImpl.Email_KEY,
+            userData.email
+        )
+        dataStorePrefrenceImpl.putPreference(
+            DataStorePrefrenceImpl.Bio_KEY,
+            userData.bio
+        )
+        dataStorePrefrenceImpl.putPreference(
+            DataStorePrefrenceImpl.userId_KEY,
+            userData.userId
+        )
+        dataStorePrefrenceImpl.putPreference(
+            DataStorePrefrenceImpl.Name_KEY,
+            userData.fullName
+        )
+        dataStorePrefrenceImpl.putPreference(
+            DataStorePrefrenceImpl.Country_KEY,
+            userData.country
+        )
+        dataStorePrefrenceImpl.putPreference(
+            DataStorePrefrenceImpl.ImageUrl_KEY,
+            userData.imageUrl
+        )
+    }
+
+    private fun saveLocal(userData: UserData){
+        Constants.Name=userData.fullName
+        Constants.Bio=userData.bio
+        Constants.Email=userData.email
+        Constants.imageUrl=userData. imageUrl.toUri()
+    }
+
+
 }

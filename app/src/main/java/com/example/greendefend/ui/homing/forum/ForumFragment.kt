@@ -91,7 +91,7 @@ class ForumFragment : Fragment() {
                         Toast.makeText(requireContext(),result.errMsg,Toast.LENGTH_SHORT).show()
                         ( requireActivity() as HomeActivity).logoutAndObserve()
                     }
-                   // Toast.makeText(requireContext(),result.errMsg,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),result.errMsg,Toast.LENGTH_SHORT).show()
                     Log.e("react",result.toString()) }
                 is NetworkResult.Exception -> {
 
@@ -117,6 +117,8 @@ class ForumFragment : Fragment() {
                     if (response.code==700){
                         Toast.makeText(requireContext(),response.errMsg,Toast.LENGTH_SHORT).show()
                         ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }else if(response.code==600){
+                        Toast.makeText(requireContext(),response.errMsg,Toast.LENGTH_SHORT).show()
                     }
                     binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr", response.toString())

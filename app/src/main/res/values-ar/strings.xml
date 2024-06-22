@@ -210,14 +210,25 @@
     <string name="a19_3">•	يمكن استخدام الحواجز الطبيعية مثل الأشجار لتقليل تأثير الرياح، وتوفير الظل للحماية من الحرارة الشديدة.</string>
     <string name="q20_3">ما هي الخطوات الأساسية التي يجب اتخاذها للتعامل مع أي ظروف طارئة تؤثر على صحة النباتات، مثل الفيضانات أو الحرائق؟</string>
     <string name="a20_3">•	يجب إجلاء النباتات المعرضة للخطر في حالات الطوارئ مثل الفيضانات، واتخاذ إجراءات الوقاية من الحرائق مثل إزالة النباتات الجافة المتراكمة.</string>
-    <string name="add_comment">add_comment deshadesha</string>
+    <string name="add_comment">اضف التعليق</string>
     <string name="no_permission_granted">لم يتم السماح</string>
     <string name="not_select_image">لم يتم اختيار صورة</string>
     <string name="change_language">تغيير اللغه</string>
+    <string name="enter_comment">ادخل التعليق</string>
     <string name="wind_speed">سرعه الرياح</string>
     <string name="c">د</string>
+    <string name="like">اعجبني</string>
+    <string name="unlike">اغضبني</string>
     <string name="description">الوصف:</string>
     <string name="treatment">العلاج:</string>
     <string name="prevention">الوقاية:</string>
     <string name="reason">السبب:</string>
+    <string name="comment">تعليق</string>
+    <string name="change_password">تغير كلمة المرور</string>
+    <string name="enter_current_password">كلمة المرور الحالية</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="share">مشاركه</string>
+    <string name="rate_us">تقييم</string>
+    <string name="communication">تواصل</string>
+    <string name="new_password">كلمة المرور الجديدة</string>
 </resources>

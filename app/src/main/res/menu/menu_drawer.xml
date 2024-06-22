@@ -7,21 +7,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_person_24"
-        android:title="@string/profile"
-        />
+        android:title="@string/profile" />
     <item
         android:id="@+id/homeFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_home_24"
-        android:title="@string/home"
-       />
+        android:title="@string/home" />
     <item
         android:id="@+id/forumFragment"
         android:icon="@drawable/fourm_icon_black"
         android:title="@string/forum" />
     <item
-        android:id="@+id/updatePasswordFragment"
+        android:id="@+id/changePasswordFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_settings_24"
@@ -29,56 +27,15 @@
         android:title="@string/change_password"
 
 
-       />
-
+        />
+    <item
+        android:id="@+id/logoutFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/logout"
+        android:title="@string/logout" />
 
 
 </menu>
 
 
-<!--<item-->
-<!--android:id="@+id/translate"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:icon="@drawable/icon_translate"-->
-
-<!--android:title="@string/change_language"-->
-
-
-<!--    />-->
-<!--<item-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:title="@string/profile" >-->
-<!--<menu-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent" >-->
-<!--    <item-->
-<!--        android:id="@+id/logout"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:icon="@drawable/baseline_login_24"-->
-<!--        android:title="@string/logout" />-->
-<!--</menu>-->
-<!--</item>-->
-<!--<item-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:title="@string/communication" >-->
-<!--<menu-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent" >-->
-<!--    <item-->
-<!--        android:id="@+id/share"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:icon="@drawable/baseline_share_24"-->
-<!--        android:title="@string/share" />-->
-<!--    <item-->
-<!--        android:id="@+id/rate_us"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:icon="@drawable/baseline_rate_review_24"-->
-<!--        android:title="@string/rate_us" />-->
-<!--</menu>-->
-<!--</item>-->

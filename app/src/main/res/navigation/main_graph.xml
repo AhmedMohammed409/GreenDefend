@@ -123,14 +123,14 @@
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.example.greendefend.ui.homing.SettingFragment"
-        android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.greendefend.ui.homing.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
     <fragment
-        android:id="@+id/updatePasswordFragment2"
-        android:name="com.example.greendefend.ui.authentication.UpdatePasswordFragment"
-        android:label="fragment_update_password"
-        tools:layout="@layout/fragment_update_password" />
+        android:id="@+id/logoutFragment"
+        android:name="com.example.greendefend.ui.homing.LogoutFragment"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" />
 
 </navigation>

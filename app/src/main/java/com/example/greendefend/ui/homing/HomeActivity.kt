@@ -82,13 +82,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         // add info header
-        val header = binding.navigationView.getHeaderView(0)
-        val userNameText = header.findViewById<TextView>(R.id.txt_username)
-        val gmailText = header.findViewById<TextView>(R.id.txt_Email)
-        val imageUser=header.findViewById<ImageView>(R.id.img_user)
-        userNameText.text = Constants.Name
-        gmailText.text = Constants.Email
-        Glide.with(this).load(Constants.imageUrl).into(imageUser)
+           updateHeadearDrawer()
+
 
 
 
@@ -124,6 +119,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.diagnosticResultsFragment -> {
+                binding.bottomNavigationView.isVisible = false
+            }
+            R.id.changePasswordFragment -> {
                 binding.bottomNavigationView.isVisible = false
             }
 
@@ -229,7 +227,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()}
     }
 
-
+ fun updateHeadearDrawer(){
+    val header = binding.navigationView.getHeaderView(0)
+    val userNameText = header.findViewById<TextView>(R.id.txt_username)
+    val gmailText = header.findViewById<TextView>(R.id.txt_Email)
+    val imageUser=header.findViewById<ImageView>(R.id.img_user)
+    userNameText.text = Constants.Name
+    gmailText.text = Constants.Email
+    Glide.with(this).load(Constants.imageUrl).into(imageUser)
+}
 
 }
 

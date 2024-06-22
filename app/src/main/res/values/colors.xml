@@ -18,4 +18,9 @@
     <color name="border_register">#B6BDB7</color>
     <color name="Post">#E4F0E9</color>
     <color name="green_text_results">#39C58A</color>
+
+    <color name="gray_co">#797777</color>
+    <color name="background_Post">#E4F0E9</color>
+    <color name="comment_raw_color">#F6FAF6</color>
+    <color name="border_comment_profile">#E3D8D8</color>
 </resources>

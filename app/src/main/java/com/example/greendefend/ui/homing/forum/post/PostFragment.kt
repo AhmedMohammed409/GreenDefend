@@ -6,7 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+ import android.widget.Toast
+ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -55,13 +56,13 @@ class PostFragment : Fragment() {
 
         when (likeState) {
             "Yes" -> {
-                binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     requireContext().getDrawable(R.drawable.like),
                     null,
                     null,
                     null
                 )
-                binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     requireContext().getDrawable(R.drawable.mdi_dislike),
                     null,
                     null,
@@ -71,13 +72,13 @@ class PostFragment : Fragment() {
             }
 
             "No" -> {
-                binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     requireContext().getDrawable(R.drawable.dislike),
                     null,
                     null,
                     null
                 )
-                binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     requireContext().getDrawable(R.drawable.mdi_like),
                     null,
                     null,
@@ -120,9 +121,9 @@ class PostFragment : Fragment() {
         forumViewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.visibility = View.VISIBLE
-//                    Toast.makeText(requireContext(), "Add Comment is Sucessful", Toast.LENGTH_SHORT)
-//                        .show()
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Add Comment is Sucessful", Toast.LENGTH_SHORT)
+                        .show()
                     //getCommentsAndObserve()
                 }
 
@@ -206,13 +207,13 @@ class PostFragment : Fragment() {
     @SuppressLint("UseCompatLoadingForDrawables")
     fun changeColorReact( click: String) {
         if (likeState == click) {
-            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 requireContext().getDrawable(R.drawable.mdi_like),
                 null,
                 null,
                 null
             )
-            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 requireContext().getDrawable(R.drawable.mdi_dislike),
                 null,
                 null,
@@ -220,13 +221,13 @@ class PostFragment : Fragment() {
             )
             likeState = ""
         } else if (click == "Yes") {
-            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 requireContext().getDrawable(R.drawable.like),
                 null,
                 null,
                 null
             )
-            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 requireContext().getDrawable(R.drawable.mdi_dislike),
                 null,
                 null,
@@ -234,14 +235,14 @@ class PostFragment : Fragment() {
             )
             likeState = "Yes"
         } else if (click == "No") {
-            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 requireContext().getDrawable(R.drawable.dislike),
                 null,
                 null,
                 null
 
             )
-            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 requireContext().getDrawable(R.drawable.mdi_like),
                 null,
                 null,

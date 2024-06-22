@@ -140,8 +140,8 @@ class CheckingFragment : Fragment() {
 
 
         binding.btnChecking.setOnClickListener {
-          //  val result = model()
-            val result = apple()
+            val result = model()
+//            val result = apple()
             Log.e("index", result.toString())
             if (uri != null) {
                 findNavController().navigate(
@@ -224,7 +224,7 @@ class CheckingFragment : Fragment() {
     }
 
 
-    fun apple(){
+    private fun apple(){
         val imageProcessor = ImageProcessor.Builder()
             .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR)).build()
 

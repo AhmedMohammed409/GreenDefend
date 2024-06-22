@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.homing.ChangeProfileFragment">
+
     <data>
+
         <variable
             name="userdata"
             type="com.example.greendefend.domin.model.account.UserData" />
@@ -12,21 +14,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView_background"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -53,7 +56,7 @@
                                 android:contentDescription="@string/profile"
                                 android:scaleType="fitXY"
 
-                                android:src="@drawable/user" />
+                                android:src="@drawable/user_defult" />
 
 
                         </androidx.cardview.widget.CardView>
@@ -72,6 +75,7 @@
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:id="@+id/txt_name"
                     android:layout_width="wrap_content"
@@ -96,24 +100,24 @@
 
                 <TextView
                     android:id="@+id/txt_Introduce"
-                    app:layout_constraintTop_toBottomOf="@id/et_name"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="15dp"
+                    android:gravity="center"
                     android:text="@string/introduce_yourself_to_others"
-                    android:gravity="center"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_name" />
+
                 <ProgressBar
                     android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="gone"
                     android:indeterminate="true"
-                    />
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <EditText
@@ -132,24 +136,25 @@
                     android:id="@+id/txt_country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/et_bio"
                     android:layout_margin="15dp"
                     android:text="@string/country"
                     app:layout_constraintStart_toStartOf="parent"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/et_bio" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/txt_country"
+                    android:layout_margin="15dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="15dp">
+                    app:layout_constraintTop_toBottomOf="@id/txt_country">
 
                     <AutoCompleteTextView
                         android:id="@+id/et_country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/country"
+                        android:minHeight="48dp"
                         android:text="@{userdata.country}"
                         tools:ignore="TouchTargetSizeCheck" />
 
@@ -170,7 +175,6 @@
                     app:layout_constraintTop_toBottomOf="@id/text_input_country" />
 
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
@@ -178,12 +182,12 @@
 
 </layout>
 
-<!--<com.hbb20.CountryPickerView-->
-<!--android:id="@+id/countrypicker"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_margin="15dp"-->
-<!--android:minHeight="48dp"-->
-<!--android:transitionName="Egypt"-->
-<!--app:layout_constraintStart_toStartOf="parent"-->
-<!--app:layout_constraintTop_toBottomOf="@id/txt_country" />-->
+    <!--<com.hbb20.CountryPickerView-->
+    <!--android:id="@+id/countrypicker"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="15dp"-->
+    <!--android:minHeight="48dp"-->
+    <!--android:transitionName="Egypt"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@id/txt_country" />-->

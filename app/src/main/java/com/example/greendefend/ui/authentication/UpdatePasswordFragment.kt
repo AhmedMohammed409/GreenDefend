@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.Constants
+import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentUpdatePasswordBinding
 import com.example.greendefend.domin.model.account.AddNewPassword
 import com.example.greendefend.domin.useCase.viewModels.AuthViewModel
@@ -32,6 +33,8 @@ class UpdatePasswordFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding= FragmentUpdatePasswordBinding.inflate(inflater,container,false)
+        binding.etPassword.hint=requireContext().getString(R.string.password)
+        binding.etConfirm.hint=requireContext().getString(R.string.confirm)
         return binding.root
     }
 
@@ -61,6 +64,9 @@ class UpdatePasswordFragment : Fragment() {
                     findNavController().navigate(UpdatePasswordFragmentDirections.actionUpdatePasswordFragmentToLoginFragment())
                                    }
                 is NetworkResult.Error -> {
+                  if(response.code==600){
+                      Toast.makeText(requireContext(),response.errMsg,Toast.LENGTH_SHORT).show()
+                  }
                     Toast.makeText(
                         requireContext(),
                         response.errMsg.toString(),
@@ -72,7 +78,7 @@ class UpdatePasswordFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),"exeption"+
                         response.e.message.toString(),
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }

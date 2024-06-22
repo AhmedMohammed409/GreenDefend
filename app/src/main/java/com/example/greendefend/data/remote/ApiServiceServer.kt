@@ -1,6 +1,5 @@
 package com.example.greendefend.data.remote
 
-import android.media.session.MediaSession
 import com.example.greendefend.domin.model.account.AddNewPassword
 import com.example.greendefend.domin.model.account.ChangePassword
 import com.example.greendefend.domin.model.account.Confirm
@@ -47,8 +46,8 @@ interface ApiServiceServer {
 
     @POST("Account/AddingNewPassword")
     suspend fun addingNewPassword(@Body addNewPassword: AddNewPassword): Response<ResponseBody>
-    @POST("Account/AddingNewPassword")
-    suspend fun changePassword(@Body changePassword: ChangePassword): Response<String>
+    @POST("Account/ChangePassword")
+    suspend fun changePassword(@Body changePassword: ChangePassword): Response<ResponseBody>
 
     @PUT("Account/EditProfile")
     suspend fun editProfile(@Body body: RequestBody): Response<ResponseBody>

@@ -31,7 +31,7 @@ class ChangeProfileFragment : Fragment() {
     private val args: ChangeProfileFragmentArgs by navArgs()
     private lateinit var binding: FragmentChangeprofileBinding
     private val viewModelAccount: AuthViewModel by viewModels()
-    private var selectedfile: Uri? = null
+    private var uriImageSelected: Uri? = null
     private var permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -45,8 +45,8 @@ class ChangeProfileFragment : Fragment() {
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                selectedfile = result.data!!.data!!
-                binding.imgProfile.setImageURI(selectedfile)
+                uriImageSelected = result.data!!.data!!
+                binding.imgProfile.setImageURI(uriImageSelected)
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -117,7 +117,7 @@ class ChangeProfileFragment : Fragment() {
                 Constants.Id, binding.etName.text.toString(),
                 binding.etBio.text.toString(),
                 binding.etCountry.text.toString(),
-                selectedfile!!
+                uriImageSelected!!
             )
 
 
@@ -164,12 +164,6 @@ class ChangeProfileFragment : Fragment() {
         }
 
 
-    }
-
-    override fun onAttach(context: Context) {
-        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
-        Log.e("user",args.userData.toString())
-        super.onAttach(context)
     }
 
     override fun onDestroy() {

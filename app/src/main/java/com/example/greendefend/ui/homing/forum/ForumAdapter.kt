@@ -46,13 +46,13 @@ class PostAdapter(
 //            binding.btnComment.background = null
             when (item.likeStatus) {
                 "Yes" -> {
-                    binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                    binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         context.getDrawable(R.drawable.like),
                         null,
                         null,
                         null
                     )
-                    binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                    binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         context.getDrawable(R.drawable.mdi_dislike),
                         null,
                         null,
@@ -62,13 +62,13 @@ class PostAdapter(
                 }
 
                 "No" -> {
-                    binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+                    binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         context.getDrawable(R.drawable.dislike),
                         null,
                         null,
                         null
                     )
-                    binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+                    binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         context.getDrawable(R.drawable.mdi_like),
                         null,
                         null,
@@ -113,13 +113,13 @@ class PostAdapter(
     @SuppressLint("UseCompatLoadingForDrawables")
     fun changeColorReact(likeStatus: String, click: String, item: Post, binding: RowPostBinding) {
         if (likeStatus == click) {
-            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 context.getDrawable(R.drawable.mdi_like),
                 null,
                 null,
                 null
             )
-            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 context.getDrawable(R.drawable.mdi_dislike),
                 null,
                 null,
@@ -127,13 +127,13 @@ class PostAdapter(
             )
             item.likeStatus = ""
         } else if (click == "Yes") {
-            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 context.getDrawable(R.drawable.like),
                 null,
                 null,
                 null
             )
-            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 context.getDrawable(R.drawable.mdi_dislike),
                 null,
                 null,
@@ -141,14 +141,14 @@ class PostAdapter(
             )
             item.likeStatus = "Yes"
         } else if (click == "No") {
-            binding.btnDislike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnDislike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 context.getDrawable(R.drawable.dislike),
                 null,
                 null,
                 null
 
             )
-            binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(
+            binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 context.getDrawable(R.drawable.mdi_like),
                 null,
                 null,
