@@ -122,9 +122,9 @@ class PostFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Add Comment is Sucessful", Toast.LENGTH_SHORT)
-                        .show()
-                    //getCommentsAndObserve()
+//                    Toast.makeText(requireContext(), "Add Comment is Sucessful", Toast.LENGTH_SHORT)
+//                        .show()
+                    getCommentsAndObserve()
                 }
 
                 is NetworkResult.Error -> {
@@ -163,31 +163,47 @@ class PostFragment : Fragment() {
 
     }
 
-    private fun getPostDetailed(postId: Int) {
+//    private fun getPostDetailed(postId: Int) {
+//        forumViewModel.getPostDetail(postId)
+//        forumViewModel.response.observe(viewLifecycleOwner) { response ->
+//            when (response) {
+//                is NetworkResult.Success -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    postDetail = response.data as DetailPost
+//                    binding.post = postDetail
+//                    Glide.with(requireContext()).load(postDetail.postImageURL).into(binding.imgPost)
+//                    Glide.with(requireContext()).load(postDetail.userImageURL).into(binding.imgUser)
+//                    Glide.with(requireContext()).load(Constants.imageUrl).into(binding.imageMe)
+//
+//                }
+//
+//                is NetworkResult.Error -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    Log.e("err comment", response.errMsg + response.code)
+////                    Toast.makeText(requireContext(), "Get Comments is Failed", Toast.LENGTH_SHORT)
+////                        .show()
+//                }
+//
+//                is NetworkResult.Exception -> {}
+//            }
+//        }
+//    }
+        private fun getPostDetailed(postId: Int) {
         forumViewModel.getPostDetail(postId)
-        forumViewModel.response.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
+        forumViewModel.liveComments.observe(viewLifecycleOwner) { response ->
+       if (response!=null){
                     binding.progressBar.visibility = View.GONE
-                    postDetail = response.data as DetailPost
-                    binding.post = postDetail
-                    Glide.with(requireContext()).load(postDetail.postImageURL).into(binding.imgPost)
-                    Glide.with(requireContext()).load(postDetail.userImageURL).into(binding.imgUser)
+                    binding.post = response
+                    Glide.with(requireContext()).load(response.postImageURL).into(binding.imgPost)
+                    Glide.with(requireContext()).load(response.userImageURL).into(binding.imgUser)
                     Glide.with(requireContext()).load(Constants.imageUrl).into(binding.imageMe)
-
-                }
-
-                is NetworkResult.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.e("err comment", response.errMsg + response.code)
-//                    Toast.makeText(requireContext(), "Get Comments is Failed", Toast.LENGTH_SHORT)
-//                        .show()
-                }
-
-                is NetworkResult.Exception -> {}
-            }
+       }
         }
     }
+
+
+
+
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun reactAndObseve(react: React) {
@@ -195,7 +211,6 @@ class PostFragment : Fragment() {
         forumViewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-
                 }
 
                 is NetworkResult.Error -> {}

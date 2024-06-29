@@ -103,7 +103,7 @@
                     android:background="@color/background_Post"
                     android:drawableStart="@drawable/mdi_like"
                     android:gravity="center"
-                    android:text="Like"
+                    android:text="@string/like"
                     android:textColor="@color/black70"
                     tools:ignore="HardcodedText" />
 

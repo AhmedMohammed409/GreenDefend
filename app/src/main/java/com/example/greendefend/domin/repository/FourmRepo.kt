@@ -2,6 +2,7 @@ package com.example.greendefend.domin.repository
 
 import androidx.lifecycle.LiveData
 import com.example.greendefend.domin.model.forum.Comment
+import com.example.greendefend.domin.model.forum.DetailPost
 import com.example.greendefend.domin.model.forum.Post
 import com.example.greendefend.domin.model.forum.React
 import com.example.greendefend.utli.NetworkResult
@@ -22,7 +23,10 @@ interface FourmRepo {
         react: React
     ): NetworkResult<Any>
 
-    suspend fun getPostDetail(
-        id:Int
-    ): NetworkResult<Any>
+//    suspend fun getPostDetail(
+//        id:Int
+//    ): NetworkResult<Any>
+suspend fun getPostDetail(
+    id:Int
+): retrofit2.Response<DetailPost>
 }

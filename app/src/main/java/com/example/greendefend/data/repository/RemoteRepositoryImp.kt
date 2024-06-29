@@ -65,8 +65,8 @@ class RemoteRepositoryImp @Inject constructor(
 
 
     override suspend fun addReact(react: React) = handleApi { apiServiceServer.addReact(react) }
-    override suspend fun getPostDetail(id: Int) = handleApi { apiServiceServer.getPostDetail(id) }
-
+//    override suspend fun getPostDetail(id: Int) = handleApi { apiServiceServer.getPostDetail(id) }
+override suspend fun getPostDetail(id: Int) =apiServiceServer.getPostDetail(id)
 
     //Weather
     override suspend fun getWeather(

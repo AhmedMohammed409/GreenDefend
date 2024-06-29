@@ -26,7 +26,7 @@ import javax.inject.Inject
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private val authViewModel: AuthViewModel by viewModels()
-    private lateinit var result: UserData
+    private  var result: UserData?=null
     @Inject
     lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ binding.btnShare.setOnClickListener {
             (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
             findNavController().navigate(
                 ProfileFragmentDirections.actionProfileFragmentToChangeProfileFragment(
-                    result
+                    result!!
                 )
             )
         }
@@ -76,17 +76,17 @@ binding.btnShare.setOnClickListener {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
                     result = response.data as UserData
-                    saveLocal(result)
-                    runBlocking {  saveAtPrefrences(result) }
+                    saveLocal(result!!)
+                    runBlocking {  saveAtPrefrences(result!!) }
 
-                    binding.txtName.text = result.fullName
-                    binding.txtBio.text = result.bio
+                    binding.txtName.text = result!!.fullName
+                    binding.txtBio.text = result!!.bio
 
 
 
                     (requireActivity() as HomeActivity).updateHeadearDrawer()
                     Glide.with(requireContext())
-                        .load(result.imageUrl)
+                        .load(result!!.imageUrl)
                         .into(binding.imgPerson)
                 }
 
@@ -152,7 +152,7 @@ binding.btnShare.setOnClickListener {
         Constants.Name=userData.fullName
         Constants.Bio=userData.bio
         Constants.Email=userData.email
-        Constants.imageUrl=userData. imageUrl.toUri()
+        Constants.imageUrl= userData. imageUrl.toUri()
     }
 
 
