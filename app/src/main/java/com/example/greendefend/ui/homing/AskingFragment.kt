@@ -115,8 +115,7 @@ class AskingFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    if (response.code==700){
-                        Toast.makeText(requireContext(),response.errMsg, Toast.LENGTH_SHORT).show()
+                    if (response.code==401){
                         ( requireActivity() as HomeActivity).logoutAndObserve()
                     }
                     binding.progressBar.visibility = View.GONE
@@ -124,16 +123,7 @@ class AskingFragment : Fragment() {
                     Toast.makeText(requireContext(), response.errMsg.toString(), Toast.LENGTH_LONG).show()
                     findNavController().navigate(AskingFragmentDirections.actionAskingFragmentToForumFragment())
                 }
-                is NetworkResult.Exception -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.e("MsgErr Exeption", response.e.message.toString())
-                    Toast.makeText(
-                        requireContext(),
-                        response.e.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    findNavController().navigate(AskingFragmentDirections.actionAskingFragmentToForumFragment())
-                }
+
 
             }
 

@@ -2,7 +2,6 @@ package com.example.greendefend.ui.homing.weather
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -95,7 +94,7 @@ private val weatherViewModel:WeatherViewModel by viewModels ()
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(requireContext(),"failed to get Weather",Toast.LENGTH_SHORT).show()
             }
-            is NetworkResult.Exception->{}
+
             }
 
         }

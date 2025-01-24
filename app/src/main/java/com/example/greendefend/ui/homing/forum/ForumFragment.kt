@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ForumFragment : Fragment() {
+    private val tag="ForumFragment"
     private lateinit var binding: FragmentForumBinding
     private val forumViewModel: ForumViewModel by viewModels()
 
@@ -84,18 +85,16 @@ class ForumFragment : Fragment() {
         forumViewModel.liveDataReact.observe(viewLifecycleOwner){result->
             when(result){
                 is NetworkResult.Success -> {
-                    Log.e("response react server ",result.toString())
+                    Log.e(tag,result.toString())
                 }
                 is NetworkResult.Error -> {
-                    if (result.code==700){
+                    if (result.code==401){
                         Toast.makeText(requireContext(),result.errMsg,Toast.LENGTH_SHORT).show()
                         ( requireActivity() as HomeActivity).logoutAndObserve()
                     }
                     Toast.makeText(requireContext(),result.errMsg,Toast.LENGTH_SHORT).show()
                     Log.e("react",result.toString()) }
-                is NetworkResult.Exception -> {
 
-                }
 
             }
         }
@@ -114,6 +113,9 @@ class ForumFragment : Fragment() {
                     adapter.submitList(posts)
                 }
                 is NetworkResult.Error -> {
+                    if (response.code==401){
+                        ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }
                     if (response.code==700){
                         Toast.makeText(requireContext(),response.errMsg,Toast.LENGTH_SHORT).show()
                         ( requireActivity() as HomeActivity).logoutAndObserve()
@@ -123,10 +125,7 @@ class ForumFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     Log.e("MsgErr", response.toString())
                 }
-                is NetworkResult.Exception -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.e("MsgErr Exeption", response.e.toString())
-                }
+
             }
         }
 

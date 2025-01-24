@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.greendefend"
-        minSdk = 29
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -64,6 +64,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.3.0")
 //    implementation("org.tensorflow:tensorflow-lite-gpu:2.3.0")
 
 

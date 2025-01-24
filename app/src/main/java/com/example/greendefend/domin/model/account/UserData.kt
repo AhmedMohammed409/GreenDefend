@@ -1,12 +1,13 @@
 package com.example.greendefend.domin.model.account
 
+import android.net.Uri
 import java.io.Serializable
 
 data class UserData(
-    val bio: String,
-    val country: String,
+    var bio: String,
+    var country: String,
     val email: String,
     val fullName: String,
-    val imageUrl: String,
+    var imageUrl: Uri,
     val userId: String
 ):Serializable

@@ -73,7 +73,7 @@ private val authViewModel:AuthViewModel by viewModels()
                     Toast.makeText(requireActivity(), "Failed Logout", Toast.LENGTH_SHORT).show()
                 }
 
-                is NetworkResult.Exception -> {}
+
             }
         }
     }

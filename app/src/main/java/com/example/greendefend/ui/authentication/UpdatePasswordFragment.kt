@@ -74,13 +74,6 @@ class UpdatePasswordFragment : Fragment() {
                     ).show()
                 }
 
-                is NetworkResult.Exception -> {
-                    Toast.makeText(
-                        requireContext(),"exeption"+
-                        response.e.message.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
             }
         }
 

@@ -13,7 +13,9 @@ object Constants{
 
         const val BASE_URL_WEATHER="https://api.openweathermap.org/"
       //  const val BASE_URL_WE="7ad1bde29f203a0b3facac40840f405c"
-        const val BASE_URL_SERVICE="http://farisnho.runasp.net/api/"
+        const val BASE_URL_SERVICE="https://greendefined.runasp.net/api/"
+   // const val BASE_URL_SERVICE_Static="https://greendefined.runasp.net/"
+            //"http://farisnho.runasp.net/api/"
       //  const val KEY="2b910f5a4be44d3c903212503241403"
       const val KEY="8efb4ef21a3aaf5d2e1e4c45c0cf45eb"
        const val APP_DATA_STORE_NAME="GreenDefend"
@@ -24,7 +26,7 @@ object Constants{
      var Name:String=""
      var Country:String=""
      var Bio:String?=null
-    var imageUrl:Uri?=null
+    var imageUrl: Uri?=null
     var fileName:String="be happy"
 
 

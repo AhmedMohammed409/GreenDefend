@@ -60,10 +60,14 @@
         tools:layout="@layout/fragment_checking" >
         <action
             android:id="@+id/action_checkingFragment_to_diagnosticResultsFragment"
-            app:destination="@id/diagnosticResultsFragment" />
+            app:destination="@id/diagnosticResultsFragment"
+            app:popUpTo="@id/homeFragment" />
         <argument
             android:name="temp"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_checkingFragment_to_homeFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/changeProfileFragment"
@@ -99,7 +103,7 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_diagnosticResultsFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/postFragment"

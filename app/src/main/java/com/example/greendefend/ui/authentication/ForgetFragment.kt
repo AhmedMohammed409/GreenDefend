@@ -73,14 +73,6 @@ class ForgetFragment : Fragment() {
                     ).show()
                 }
 
-                is NetworkResult.Exception -> {
-                    Log.e("error msg",response.e.message.toString())
-                    Toast.makeText(
-                        requireContext(),
-                        response.e.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
             }
         }
 

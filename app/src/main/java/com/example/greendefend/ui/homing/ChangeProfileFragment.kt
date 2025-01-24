@@ -1,7 +1,6 @@
 package com.example.greendefend.ui.homing
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -151,15 +150,7 @@ class ChangeProfileFragment : Fragment() {
                     findNavController().navigate(ChangeProfileFragmentDirections.actionChangeProfileFragmentToProfileFragment())
                 }
 
-                is NetworkResult.Exception -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.e("result", response.e.toString())
-                    Toast.makeText(
-                        requireContext(),
-                        response.e.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+
             }
         }
 

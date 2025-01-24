@@ -3,7 +3,6 @@ package com.example.greendefend.ui.homing
 import android.Manifest.permission
 import android.app.Activity
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -25,7 +24,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greendefend.R
 import com.example.greendefend.databinding.FragmentCheckingBinding
+import com.example.greendefend.ml.Model
+import com.example.greendefend.ml.ModelUnquant
 import com.example.greendefend.ml.MyModel1
+import com.example.greendefend.ml.NewModel
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
@@ -37,6 +39,7 @@ import java.io.IOException
 import java.io.InputStream
 
 class CheckingFragment : Fragment() {
+    private val tag="CheckingFragment"
     private lateinit var bitmap: Bitmap
     private val args: CheckingFragmentArgs by navArgs()
     private var uri: Uri? = null
@@ -71,7 +74,7 @@ class CheckingFragment : Fragment() {
                         binding.imgCamera.setImageURI(uri)
                         binding.btnChecking.visibility = View.VISIBLE
                     } else {
-                        bitmap = result.data!!.extras?.get("data") as Bitmap
+                        (result.data!!.extras?.get("data") as Bitmap).also { bitmap = it }
                         uri=saveImageToExternalStorage(bitmap)
                         Log.e("uri",uri.toString())
                         binding.imgCamera.setImageURI(uri)
@@ -129,6 +132,7 @@ class CheckingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (requireActivity() as HomeActivity).binding.toolbar.visibility = View.VISIBLE
         binding = FragmentCheckingBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -140,14 +144,12 @@ class CheckingFragment : Fragment() {
 
 
         binding.btnChecking.setOnClickListener {
-            val result = model()
-//            val result = apple()
-            Log.e("index", result.toString())
+            val idexResult = modeling()
             if (uri != null) {
                 findNavController().navigate(
                     CheckingFragmentDirections.actionCheckingFragmentToDiagnosticResultsFragment(
                         uri!!,
-                        1
+                        idexResult
                     )
                 )
             } else {
@@ -185,90 +187,62 @@ class CheckingFragment : Fragment() {
         }
         dialog.show()
     }
-
-    fun model(): Int {
-
+    private fun imagePreprocessing(image:Bitmap): TensorImage {
         val imageProcessor = ImageProcessor.Builder()
             .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR)).build()
 
         var tensorImage = TensorImage(DataType.FLOAT32)
-        tensorImage.load(bitmap)
+        tensorImage.load(image)
         tensorImage = imageProcessor.process(tensorImage)
-        val model = com.example.greendefend.ml.Model.newInstance(requireContext())
-
-// Creates inputs for reference.
-        val inputFeature0 =
-            TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
-        inputFeature0.loadBuffer(tensorImage.buffer)
-
-// Runs model inference and gets result.
-        val outputs = model.process(inputFeature0)
-        val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
-        Log.e("rss", outputFeature0.toString())
-        for (i in outputFeature0) {
-            Log.e("rrr", i.toString())
-        }
-//         outputFeature0.forEachIndexed { index, fl ->
-//             Log.e("result float",index.toString())
-//         }
-
-        var maxId = 0
-        outputFeature0.forEachIndexed { index, fl ->
-            if (outputFeature0[maxId] < fl) {
-                maxId = index
-//                Log.e("r",index.toString())
-            }
-        }
-        model.close()
-        return maxId - 1
+        return tensorImage
     }
 
-
-    private fun apple(){
-        val imageProcessor = ImageProcessor.Builder()
-            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR)).build()
-
-        var tensorImage = TensorImage(DataType.FLOAT32)
-        tensorImage.load(bitmap)
-        tensorImage = imageProcessor.process(tensorImage)
-    val model = MyModel1.newInstance(requireContext())
-
-
-        val inputFeature0 =
-            TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+    private fun modeling(): Int {
+        val tensorImage = imagePreprocessing(bitmap)
+       // val model = Model.newInstance(requireContext())
+        val model =   Model.newInstance(requireContext())
+// Creates inputs for reference.
+        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
         inputFeature0.loadBuffer(tensorImage.buffer)
-
 // Runs model inference and gets result.
         val outputs = model.process(inputFeature0)
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
-        for (i in outputFeature0) {
-            Log.e("rrr", i.toString())
+        outputFeature0.forEach {
+            Log.i(tag, it.toString())
         }
-
-
-        var maxId = 0
-        outputFeature0.forEachIndexed { index, fl ->
-            if (outputFeature0[maxId] < fl) {
-                maxId = index
-            }
-        }
-        Log.e("max perpappppp", outputFeature0[maxId].toString())
-
-
 // Releases model resources if no longer used.
         model.close()
+        var maxId = 0
+        outputFeature0.forEachIndexed { index, fl ->
+            if (outputFeature0[maxId] <= fl) {
+                maxId = index
+            }
+            Log.e("index $index",outputFeature0[index].toString())
+        }
+        Log.e("rss model ", outputFeature0[maxId-1].toString())
+
+        model.close()
+        Log.e("max_id  model ", maxId.toString())
+        return maxId
+
+//        return if (outputFeature0[maxId]>0.45f)
+//            maxId
+//        else
+//            -1
+
 
     }
 
-    override fun onAttach(context: Context) {
+
+    override fun onStop() {
         (requireActivity() as HomeActivity).binding.toolbar.visibility = View.GONE
-        super.onAttach(context)
+        super.onStop()
     }
 
-    override fun onPause() {
-        (requireActivity() as HomeActivity).binding.toolbar.visibility = View.VISIBLE
-        super.onPause()
-    }
+//    override fun onPause() {
+//        (requireActivity() as HomeActivity).binding.toolbar.visibility = View.VISIBLE
+//        super.onPause()
+//    }
 
 //    fun checkSDK():Boolean{
 //        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
@@ -338,4 +312,23 @@ class CheckingFragment : Fragment() {
 
 
 
+//old model
+/*
+        val imageProcessor = ImageProcessor.Builder()
+            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR)).build()
 
+        var tensorImage = TensorImage(DataType.FLOAT32)
+        tensorImage.load(bitmap)
+        tensorImage = imageProcessor.process(tensorImage)
+        val model = NewModel.newInstance(requireContext())
+
+// Creates inputs for reference.
+        val inputFeature0 =
+            TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+        inputFeature0.loadBuffer(tensorImage.buffer)
+
+// Runs model inference and gets result.
+        val outputs = model.process(inputFeature0)
+        val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
+
+*/

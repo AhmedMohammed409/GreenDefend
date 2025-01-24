@@ -89,15 +89,6 @@ class ChangePasswordFragment : Fragment() {
 
                 }
 
-                is NetworkResult.Exception -> {
-                    Toast.makeText(
-                        requireContext(), "exeption" +
-                                response.e.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                else -> {}
             }
         }
 

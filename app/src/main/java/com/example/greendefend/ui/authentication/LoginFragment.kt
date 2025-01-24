@@ -34,7 +34,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-
+private val tag="LoginFragment"
     private val viewModelAccount: AuthViewModel by viewModels()
 
     @Inject
@@ -87,7 +87,7 @@ class LoginFragment : Fragment() {
                     runBlocking {
                         saveAtPrefrences(responseLogin)
                     }
-                    Log.e("result", responseLogin.toString())
+                    Log.i(tag, responseLogin.toString())
                     startActivity(Intent(requireActivity(), HomeActivity::class.java))
                     requireActivity().finish()
                 }
@@ -95,20 +95,11 @@ class LoginFragment : Fragment() {
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(),response.toString(),Toast.LENGTH_SHORT).show()
-                    Log.e("result error", response.toString())
+                    Log.i(tag, response.toString())
                 }
 
-                is NetworkResult.Exception -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.e("result exeption", response.e.toString())
-                    Toast.makeText(
-                        requireContext(),
-                        response.e.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
 
-                else -> {}
+
             }
         }
 

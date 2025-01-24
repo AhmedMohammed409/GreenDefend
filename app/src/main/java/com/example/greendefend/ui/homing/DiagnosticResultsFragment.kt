@@ -16,6 +16,7 @@ import com.google.gson.Gson
 
 
 class DiagnosticResultsFragment : Fragment() {
+    private val tag="DiagnosticResultsFragment"
     private lateinit var binding: FragmentDiagnosticResultsBinding
     private val args:DiagnosticResultsFragmentArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,18 +42,17 @@ class DiagnosticResultsFragment : Fragment() {
 
        val json=readJSONfromAssets()
 
-
-        val listDisease=getListfromJson(json)
-//        Log.e("list arry",listDisease.toString())
-        Log.e("list arry size ",listDisease.size.toString()+listDisease[0])
-//Toast.makeText(requireContext(),listDisease.size,Toast.LENGTH_LONG).show()
-        binding.img.setImageURI(args.uri)
-        binding.disease=listDisease[args.index]
-        binding.txtDisease.text=listDisease[args.index].name
-        binding.txtDescription.text=listDisease[args.index].description
-        binding.txtReason.text=listDisease[args.index].cause
-        binding.txtProtection.text=listDisease[args.index].prevention
-        binding.txtTreatment.text=listDisease[args.index].treatment
+        Log.i(tag,args.index.toString())
+if (args.index!=-1){
+    val listDisease=getListfromJson(json)
+    binding.img.setImageURI(args.uri)
+    binding.disease=listDisease[args.index]
+    binding.txtDisease.text=listDisease[args.index].name
+    binding.txtDescription.text=listDisease[args.index].description
+    binding.txtReason.text=listDisease[args.index].cause
+    binding.txtProtection.text=listDisease[args.index].prevention
+    binding.txtTreatment.text=listDisease[args.index].treatment
+}
     }
     private fun readJSONfromAssets():String{
         var json:String?=null
@@ -80,20 +80,22 @@ return json!!
     }
 
 
+//    fun onstart() {
+//        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
+//        super.onStart()
+//    }
     override fun onAttach(context: Context) {
         (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
         super.onAttach(context)
     }
 
-    override fun onDestroy() {
+    override fun onStop()
+    {
         (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
-        super.onDestroy()
+        super.onStop()
     }
 
-    override fun onPause() {
-        (requireActivity() as HomeActivity).binding.toolbar.visibility=View.VISIBLE
-        super.onPause()
-    }
+
 
 
 

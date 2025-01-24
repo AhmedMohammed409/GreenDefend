@@ -23,7 +23,6 @@ import com.example.greendefend.data.local.Converters
 import com.example.greendefend.databinding.FragmentHomeBinding
 import com.example.greendefend.domin.model.weather.AllWeather
 import com.example.greendefend.domin.useCase.viewModels.WeatherViewModel
-import com.example.greendefend.ui.MainActivity
 import com.example.greendefend.ui.homing.HomeActivity
 import com.example.greendefend.utli.NetworkResult
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -35,7 +34,7 @@ import kotlin.math.roundToInt
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-
+    private val tag="HomeFragment"
 
     private val weatherviewModel: WeatherViewModel by viewModels()
     private var latitude: Float? = 30.033333F
@@ -167,6 +166,8 @@ class HomeFragment : Fragment() {
                 if (location != null) {
                     latitude = location.latitude.toFloat()
                     longitude = location.longitude.toFloat()
+                    Log.i("Latit : "+tag, latitude.toString())
+                    Log.i("Long  : "+tag, longitude.toString())
                     weatherAndObserve(latitude!!, longitude!!)
                 } else {
                     Toast.makeText(requireContext(), "Please open GPS", Toast.LENGTH_SHORT).show()
@@ -192,16 +193,11 @@ class HomeFragment : Fragment() {
                     binding.currentWeather = result
                     binding.windSpeed.text =
                         getString(R.string.wind_speed) + "\t" + result.list[0].wind!!.speed
-
                     var temp = (result.list[0].main!!.temp!!).toFloat() - 272.25F
-
                     binding.txtDay.text =
                         Converters().convertDateTimeToDayName(result.list[0].dtTxt!!)
-
                     temp = temp.roundToInt().toFloat()
-
                     binding.txtTemperature.text = "$temp C"
-
                     Glide.with(requireContext())
                         .load("https://openweathermap.org/img/wn/${result.list[0].weather[0].icon}@2x.png")
                         .into(binding.imgWeather)
@@ -209,10 +205,16 @@ class HomeFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    if (response.code==700){
+                    if (response.code==401){
                         ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }else if (response.code==400){
+                        Toast.makeText(
+                            requireContext(),
+                           "Bad Request",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-                    Log.e("MsgErr", response.toString())
+                    Log.i(tag, response.toString())
                     Toast.makeText(
                         requireContext(),
                         response.errMsg,
@@ -220,11 +222,6 @@ class HomeFragment : Fragment() {
                     ).show()
                 }
 
-                is NetworkResult.Exception -> {
-//                    binding.progressBar.visibility = View.GONE
-                    Log.e("MsgErr Exeption", response.e.toString())
-
-                }
             }
         }
 

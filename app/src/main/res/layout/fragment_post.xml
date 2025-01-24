@@ -10,230 +10,229 @@
             type="com.example.greendefend.domin.model.forum.DetailPost" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="2"
+       >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/lay_post"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/background_Post"
+            android:orientation="vertical"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/lay_post"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/background_Post"
-                android:orientation="vertical"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="3dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_user"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:contentDescription="person"
+                        android:scaleType="centerCrop"
+                        tools:ignore="HardcodedText,ImageContrastCheck"
+                        tools:src="@drawable/fares" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:orientation="horizontal">
+                        android:layout_margin="15dp"
+                        android:orientation="vertical">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/img_user"
-                            android:layout_width="65dp"
-                            android:layout_height="65dp"
-                            android:contentDescription="person"
-                            android:scaleType="centerCrop"
-                            tools:ignore="HardcodedText,ImageContrastCheck"
-                            tools:src="@drawable/fares" />
-
-                        <LinearLayout
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:orientation="vertical">
+                            android:text="@{post.userName}"
+                            android:textColor="@color/green_button"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText"
+                            tools:text="Fares Oref" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{post.userName}"
-                                android:textColor="@color/green_button"
-                                android:textStyle="bold"
-                                tools:ignore="HardcodedText"
-                                tools:text="Fares Oref" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{post.postDate}"
-                                android:textStyle="bold"
-                                tools:ignore="HardcodedText"
-                                tools:text="time" />
-                        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{post.postDate}"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText"
+                            tools:text="time" />
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{post.postBody}"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:text="@string/what_does_it_take_for_a_potato_to_grow_well_knowing_that_it_has_about_50_days_in_yellowing_of_leaves" />
-
-                    <ImageView
-                        android:id="@+id/img_post"
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp"
-                        android:layout_marginTop="16dp"
-                        android:contentDescription="text post"
-                        android:scaleType="fitXY"
-                        tools:ignore="HardcodedText,ImageContrastCheck"
-                        tools:src="@drawable/post" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@color/gray_co" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btn_like"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@color/background_Post"
-                            android:drawableStart="@drawable/mdi_like"
-                            android:gravity="center"
-                            android:text="@string/like"
-                            android:textColor="@color/black70" />
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btn_dislike"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@color/background_Post"
-                            android:drawableStart="@drawable/mdi_dislike"
-                            android:gravity="center"
-                            android:text="@string/unlike"
-                            android:textColor="@color/black70"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_margin="1dp"
-                        android:background="@color/gray_co" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:itemCount="1"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@id/constraintLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lay_post"
-                tools:listitem="@layout/row_comment" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="60dp"
-                android:layout_marginBottom="10dp"
-                android:background="#E4F0E9"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_comment">
-
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/image_me"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="@color/border_comment_profile"
-                    android:layout_margin="5dp"
-                    android:importantForAccessibility="no"
-
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/background_onboarding2" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textfield_email"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{post.postBody}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:text="@string/what_does_it_take_for_a_potato_to_grow_well_knowing_that_it_has_about_50_days_in_yellowing_of_leaves" />
+
+                <ImageView
+                    android:id="@+id/img_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="16dp"
+                    android:contentDescription="text post"
+                    android:scaleType="fitXY"
+                    tools:ignore="HardcodedText,ImageContrastCheck"
+                    tools:src="@drawable/post" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:hint="@string/enter_comment"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_send"
-                    app:layout_constraintStart_toEndOf="@id/image_me">
+                    android:background="@color/gray_co" />
 
-                    <EditText
-                        android:id="@+id/et_comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:padding="15dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_like"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@color/background_Post"
+                        android:drawableStart="@drawable/mdi_like"
                         android:gravity="center"
-                        android:lines="5"
-                        android:textColorHint="@color/black"
-                        android:textSize="20sp"
-                        tools:ignore="TouchTargetSizeCheck"
-                        tools:text="add coment" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:text="@string/like"
+                        android:textColor="@color/black70" />
 
-                <ImageButton
-                    android:id="@+id/btn_send"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@null"
-                    android:contentDescription="icon send"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/vector_send"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText,TouchTargetSizeCheck" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_dislike"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@color/background_Post"
+                        android:drawableStart="@drawable/mdi_dislike"
+                        android:gravity="center"
+                        android:text="@string/unlike"
+                        android:textColor="@color/black70"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="1dp"
+                    android:background="@color/gray_co" />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:itemCount="2"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/row_comment" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:indeterminate="true"
+               android:layout_centerHorizontal="true"
+                android:indeterminate="true" />
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
+            android:layout_marginBottom="10dp"
+            android:background="#E4F0E9"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_comment">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_me"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/border_comment_profile"
+                android:layout_margin="5dp"
+                android:importantForAccessibility="no"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/background_onboarding2" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textfield_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/enter_comment"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_send"
+                app:layout_constraintStart_toEndOf="@id/image_me">
+
+                <EditText
+                    android:id="@+id/et_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:padding="15dp"
+                    android:gravity="center"
+                    android:lines="5"
+                    android:textColorHint="@color/black"
+                    android:textSize="20sp"
+                    tools:ignore="TouchTargetSizeCheck"
+                    tools:text="add coment" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@null"
+                android:contentDescription="icon send"
+                android:scaleType="fitXY"
+                android:src="@drawable/vector_send"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>

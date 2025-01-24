@@ -81,15 +81,7 @@ class SignupFragment : Fragment() {
                     Log.e("result eror", response.toString())
                 }
 
-                is NetworkResult.Exception -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.e("result", response.e.toString())
-                    Toast.makeText(
-                        requireContext(),
-                        response.e.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+
             }
         }
 

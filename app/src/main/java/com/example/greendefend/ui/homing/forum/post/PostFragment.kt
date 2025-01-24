@@ -1,30 +1,29 @@
 package com.example.greendefend.ui.homing.forum.post
 
  import android.annotation.SuppressLint
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
- import android.widget.Toast
+ import android.os.Bundle
+ import android.util.Log
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
  import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.example.greendefend.Constants
-import com.example.greendefend.R
-import com.example.greendefend.databinding.FragmentPostBinding
-import com.example.greendefend.domin.model.forum.Comment
-import com.example.greendefend.domin.model.forum.DetailPost
-import com.example.greendefend.domin.model.forum.React
-import com.example.greendefend.domin.useCase.viewModels.ForumViewModel
-import com.example.greendefend.utli.NetworkResult
-import dagger.hilt.android.AndroidEntryPoint
+ import androidx.fragment.app.viewModels
+ import androidx.navigation.fragment.navArgs
+ import com.bumptech.glide.Glide
+ import com.example.greendefend.Constants
+ import com.example.greendefend.R
+ import com.example.greendefend.databinding.FragmentPostBinding
+ import com.example.greendefend.domin.model.forum.Comment
+ import com.example.greendefend.domin.model.forum.DetailPost
+ import com.example.greendefend.domin.model.forum.React
+ import com.example.greendefend.domin.useCase.viewModels.ForumViewModel
+ import com.example.greendefend.utli.NetworkResult
+ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class PostFragment : Fragment() {
-
+private val tag="PostFragment"
     private lateinit var binding: FragmentPostBinding
     private lateinit var postDetail: DetailPost
     private val forumViewModel: ForumViewModel by viewModels()
@@ -88,9 +87,10 @@ class PostFragment : Fragment() {
             }
         }
 
+        getCommentsAndObserve()
         adapter = PostAdapter(requireContext())
         binding.rvComment.adapter = adapter
-        getCommentsAndObserve()
+
 
 
 
@@ -122,24 +122,16 @@ class PostFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-//                    Toast.makeText(requireContext(), "Add Comment is Sucessful", Toast.LENGTH_SHORT)
-//                        .show()
+                    Log.i(tag,"add Comment is sucess")
                     getCommentsAndObserve()
                 }
-
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Log.e("err comment", response.errMsg + response.code)
-//                    Toast.makeText(requireContext(), "Add Comment is Failed", Toast.LENGTH_SHORT)
-//                        .show()
+                    Log.i(tag, response.errMsg + response.code)
                 }
-
-                is NetworkResult.Exception -> {}
             }
         }
-
     }
-
     private fun getCommentsAndObserve() {
         forumViewModel.getPostDetail(args.postId)
         forumViewModel.response.observe(viewLifecycleOwner) { response ->
@@ -147,63 +139,43 @@ class PostFragment : Fragment() {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
                     val result = response.data as DetailPost
+                    Log.i(tag,response.toString())
                     adapter.submitList(result.comments)
                 }
 
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Log.e("err comment", response.errMsg + response.code)
-//                    Toast.makeText(requireContext(), "Get Comments is Failed", Toast.LENGTH_SHORT)
-//                        .show()
+                    Log.e(tag, response.errMsg + response.code)
                 }
 
-                is NetworkResult.Exception -> {}
+
             }
         }
 
     }
 
-//    private fun getPostDetailed(postId: Int) {
-//        forumViewModel.getPostDetail(postId)
-//        forumViewModel.response.observe(viewLifecycleOwner) { response ->
-//            when (response) {
-//                is NetworkResult.Success -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    postDetail = response.data as DetailPost
-//                    binding.post = postDetail
-//                    Glide.with(requireContext()).load(postDetail.postImageURL).into(binding.imgPost)
-//                    Glide.with(requireContext()).load(postDetail.userImageURL).into(binding.imgUser)
-//                    Glide.with(requireContext()).load(Constants.imageUrl).into(binding.imageMe)
-//
-//                }
-//
-//                is NetworkResult.Error -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    Log.e("err comment", response.errMsg + response.code)
-////                    Toast.makeText(requireContext(), "Get Comments is Failed", Toast.LENGTH_SHORT)
-////                        .show()
-//                }
-//
-//                is NetworkResult.Exception -> {}
-//            }
-//        }
-//    }
-        private fun getPostDetailed(postId: Int) {
+    private fun getPostDetailed(postId: Int) {
         forumViewModel.getPostDetail(postId)
-        forumViewModel.liveComments.observe(viewLifecycleOwner) { response ->
-       if (response!=null){
+        forumViewModel.response.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    binding.post = response
-                    Glide.with(requireContext()).load(response.postImageURL).into(binding.imgPost)
-                    Glide.with(requireContext()).load(response.userImageURL).into(binding.imgUser)
+                    postDetail = response.data as DetailPost
+                    binding.post = postDetail
+                    Glide.with(requireContext()).load(postDetail.postImageURL).into(binding.imgPost)
+                    Glide.with(requireContext()).load(postDetail.userImageURL).into(binding.imgUser)
                     Glide.with(requireContext()).load(Constants.imageUrl).into(binding.imageMe)
-       }
+                    adapter.submitList(response.data.comments)
+                    Log.i(tag, response.toString())
+                }
+
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.i(tag, response.toString())
+                }
+            }
         }
     }
-
-
-
-
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun reactAndObseve(react: React) {
@@ -212,9 +184,8 @@ class PostFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                 }
-
                 is NetworkResult.Error -> {}
-                is NetworkResult.Exception -> {}
+
             }
         }
     }

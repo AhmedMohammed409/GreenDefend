@@ -1,12 +1,11 @@
 package com.example.greendefend.ui.homing
-
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,15 +23,17 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
+    private val tag="ProfileFragment"
     private lateinit var binding: FragmentProfileBinding
     private val authViewModel: AuthViewModel by viewModels()
-    private  var result: UserData?=null
+    private  var result: UserData =UserData(Constants.Bio!!,Constants.Country,Constants.Email,Constants.fileName,
+        Constants.imageUrl!!,Constants.Id)
+
     @Inject
     lateinit var dataStorePrefrenceImpl: DataStorePrefrenceImpl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -47,23 +48,22 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.txtName.text = Constants.Name
 
         getUserData()
-
-binding.btnShare.setOnClickListener {
+        Log.i(tag, result.toString())
+        binding.btnShare.setOnClickListener {
     val intent=Intent()
     intent.action=Intent.ACTION_SEND
     intent.putExtra(Intent.EXTRA_TEXT,"${binding.txtTitleThreat.text}\n${binding.txtDescription.text}")
     intent.type="text/plain"
     startActivity(Intent.createChooser(intent,"Choose your APP"))
 }
-
         binding.btnChangeprofile.setOnClickListener {
             (requireActivity() as HomeActivity).binding.toolbar.visibility=View.GONE
+
             findNavController().navigate(
                 ProfileFragmentDirections.actionProfileFragmentToChangeProfileFragment(
-                    result!!
+                    result
                 )
             )
         }
@@ -76,24 +76,25 @@ binding.btnShare.setOnClickListener {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
                     result = response.data as UserData
-                    saveLocal(result!!)
-                    runBlocking {  saveAtPrefrences(result!!) }
-
-                    binding.txtName.text = result!!.fullName
-                    binding.txtBio.text = result!!.bio
-
-
+                    binding.txtName.text = result.fullName
 
                     (requireActivity() as HomeActivity).updateHeadearDrawer()
-                    Glide.with(requireContext())
-                        .load(result!!.imageUrl)
-                        .into(binding.imgPerson)
+                    Log.i(tag,result.toString())
+
+                        Glide.with(requireContext())
+                            .load(result.imageUrl)
+                            .into(binding.imgPerson)
+
+                    saveLocal(result)
+                    runBlocking {  saveAtPrefrences(result) }
                 }
 
                 is NetworkResult.Error -> {
-                    if (response.code==700){
-                        Toast.makeText(requireContext(),response.errMsg, Toast.LENGTH_SHORT).show()
+                    if (response.code==401){
                         ( requireActivity() as HomeActivity).logoutAndObserve()
+                    }else{
+                        Toast.makeText(requireContext(),response.errMsg,Toast.LENGTH_SHORT).show()
+                        Log.i(tag,response.toString())
                     }
                     binding.progressBar.visibility = View.GONE
                     binding.txtName.text = Constants.Name
@@ -102,34 +103,29 @@ binding.btnShare.setOnClickListener {
                         .load(Constants.imageUrl)
                         .into(binding.imgPerson)
 
-                    result = UserData(
-                        Constants.Bio!!,
-                        Constants.Country,
-                        Constants.Email,
-                        Constants.Name,
-                        Constants.imageUrl.toString(),
-                        Constants.Id
-                    )
-                }
-
-                is NetworkResult.Exception -> {
 
                 }
+
             }
         }
     }
 
 
     private suspend fun saveAtPrefrences(userData: UserData) {
-  
         dataStorePrefrenceImpl.putPreference(
-            DataStorePrefrenceImpl.Email_KEY,
-            userData.email
+            DataStorePrefrenceImpl.Country_KEY,
+            userData.country
         )
+        dataStorePrefrenceImpl.putPreference(
+            DataStorePrefrenceImpl.ImageUrl_KEY,
+            userData.imageUrl.toString()
+        )
+
         dataStorePrefrenceImpl.putPreference(
             DataStorePrefrenceImpl.Bio_KEY,
             userData.bio
         )
+
         dataStorePrefrenceImpl.putPreference(
             DataStorePrefrenceImpl.userId_KEY,
             userData.userId
@@ -139,20 +135,18 @@ binding.btnShare.setOnClickListener {
             userData.fullName
         )
         dataStorePrefrenceImpl.putPreference(
-            DataStorePrefrenceImpl.Country_KEY,
-            userData.country
+            DataStorePrefrenceImpl.Email_KEY,
+            userData.email
         )
-        dataStorePrefrenceImpl.putPreference(
-            DataStorePrefrenceImpl.ImageUrl_KEY,
-            userData.imageUrl
-        )
+
+
     }
 
     private fun saveLocal(userData: UserData){
         Constants.Name=userData.fullName
         Constants.Bio=userData.bio
         Constants.Email=userData.email
-        Constants.imageUrl= userData. imageUrl.toUri()
+       Constants.imageUrl= userData. imageUrl
     }
 
 
